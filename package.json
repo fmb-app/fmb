@@ -1,0 +1,25 @@
+{
+  "name": "fmb",
+  "version": "1.0.0",
+  "description": "Find My Bork - Backend",
+  "main": "app/server.js",
+  "dependencies": {
+    "dotenv": "^6.2.0",
+    "express": "^4.16.4",
+    "volleyball": "^1.5.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shappe/fmb.git"
+  },
+  "author": "Group 50",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/shappe/fmb/issues"
+  },
+  "homepage": "https://github.com/shappe/fmb#readme"
+}
