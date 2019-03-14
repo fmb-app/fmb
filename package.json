@@ -5,5 +5,9 @@
     "start": "node server/app/server.js",
     "build": "npm run build --prefix ./client && cd server && npm install"
   },
+  "engines": {
+    "node": "10.3.0",
+    "npm": "6.x"
+  },
   "license": "MIT"
 }
