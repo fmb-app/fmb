@@ -4,7 +4,7 @@
   "scripts": {
     "start": "node server/app/server.js",
     "build": "npm run build --prefix ./server",
-    "heroku-postbuild": "npm run build --prefix ./client"
+    "heroku-postbuild": "cd client && npm install && npm run build"
   },
   "engines": {
     "node": "10.3.0",
