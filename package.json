@@ -3,7 +3,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node server/app/server.js",
-    "build": "npm install --prefix ./server"
+    "build": "npm run build --prefix ./client && cd server && npm install"
   },
   "license": "MIT"
 }

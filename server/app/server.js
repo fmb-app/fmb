@@ -14,8 +14,9 @@ app.use(express.urlencoded({ extended: true })); // Parse URLs
 app.use(volleyball); // Logging middleware
 
 const routes = require('./routes/index');
+app.use('/api', routes);
 
-app.use('/', routes);
+app.use('/', express.static(path.join(__dirname, '../../client/build')))
 
 // Hostname and Port
 const HOST = '127.0.0.1';
