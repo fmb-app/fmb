@@ -2,8 +2,7 @@
   "name": "findmybork",
   "main": "index.js",
   "scripts": {
-    "start": "node server/app/server.js",
-    // "build": "cd server && npm install && npm start"
+    "start": "node server/app/server.js"
   },
   "license": "MIT",
   "dependencies": {    
