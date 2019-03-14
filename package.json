@@ -3,7 +3,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node server/app/server.js",
-    "build": "cd server && npm install && npm start"
+    // "build": "cd server && npm install && npm start"
   },
   "license": "MIT",
   "dependencies": {    
