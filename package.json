@@ -1,8 +1,8 @@
 {
   "name": "findmybork",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "start": "node server/app/server.js",
+    "start": "cd server && node app/server.js",
     "build": "cd server && npm install"
   },
   "license": "MIT"
