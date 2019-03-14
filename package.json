@@ -3,7 +3,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node server/app/server.js",
-    "build": "npm run build --prefix ./server",
+    "heroku-prebuild": "npm run build --prefix ./server",
     "heroku-postbuild": "cd client && npm install && npm run build"
   },
   "engines": {
