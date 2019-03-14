@@ -2,6 +2,7 @@
 
 // Imports
 const express = require('express');
+const path = require('path');
 
 // Dev tools
 require('dotenv').config(); // Import environment variables
