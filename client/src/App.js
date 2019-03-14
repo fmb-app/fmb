@@ -11,7 +11,7 @@ const style = {
     color: '#F8478C',
     fontSize: '2rem',
     fontFamily: 'Marck Script',
-    wordSpacing: '3px',
+    wordSpacing: '-1rem',
     backgroundColor: 'rgba(0,0,0,0.8)',
 	}
 }
