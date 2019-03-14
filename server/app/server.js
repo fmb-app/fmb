@@ -22,6 +22,6 @@ const HOST = '127.0.0.1';
 const PORT = process.env.PORT || 8080;
 
 // Start an HTTP server.
-app.listen(PORT, HOST, () => {
-    console.log(`Running on http://${HOST}:${PORT}`);
+app.listen(PORT, () => {
+    console.log(`Running on port: ${PORT}`);
 });

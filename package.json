@@ -1,0 +1,9 @@
+{
+  "name": "findmybork",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server/app/server.js",
+    "build": "npm install --prefix ./server"
+  },
+  "license": "MIT"
+}
