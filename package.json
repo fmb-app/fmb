@@ -2,9 +2,9 @@
   "name": "findmybork",
   "main": "server.js",
   "scripts": {
-    "start": "echo NODE START && node server/app/server.js",
-    "heroku-prebuild": "echo HEROKU PRE && cd server && npm install && npm run build",
-    "heroku-postbuild": "echo HEROKU POST && cd client && npm install && npm run build"
+    "start": "node server/app/server.js",
+    "heroku-prebuild": "cd server && npm install && npm run build",
+    "heroku-postbuild": "cd client && npm install && npm run build"
   },
   "engines": {
     "node": "10.3.0",
