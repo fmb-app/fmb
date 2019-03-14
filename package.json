@@ -1,6 +1,6 @@
 {
   "name": "findmybork",
-  "main": "server.js",
+  "main": "server/app/server.js",
   "scripts": {
     "start": "node server/app/server.js",
     "heroku-prebuild": "cd server && npm install && npm run build",
