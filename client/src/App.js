@@ -1,33 +1,30 @@
-import React from 'react';
-import Typography from "@material-ui/core/Typography";
-import { makeStyles } from '@material-ui/styles';
-import MidSection from './components/MidSection'
-import BottomNavBar from './components/BottomNavBar';
+import React, { useState, useEffect } from 'react';
+import BottomNavBar from './components/BottomNavBar/BottomNavBar';
 
-const useStyles = makeStyles({
-	midWrapper: {
-		display: 'flex',
-		justifyContent: 'center',
-		alignItems: 'center',
-		widht: '100%',
-		marginTop: '1rem',
-	},
+const style = {
 	header: {
-		color: '#EFEFEF !important'
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    height: '6rem',
+    color: '#F8478C',
+    fontSize: '2rem',
+    fontFamily: 'Marck Script',
+    wordSpacing: '3px',
+    backgroundColor: 'rgba(0,0,0,0.8)',
 	}
-});
+}
 
 const App = () => {
-	const classes = useStyles();
+	const [searchTerm, setSearchTerm] = useState('');
+
 	return (
 		<div>
-			<Typography className={classes.header} variant='h1' align='center' color='white'>
-				Find My Bork
-			</Typography>
-			<div className={classes.midWrapper}>
-				<MidSection />
+			<div style={style.header}>
+				<h1>Find my Bork</h1>
 			</div>
-			<BottomNavBar />
+			<BottomNavBar searchTerm={searchTerm} setSearchTerm={setSearchTerm}/>
 		</div>
 	);
 }
