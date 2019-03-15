@@ -1,6 +1,6 @@
 'use strict';
 
-const systemet = require('systemet');
+import systemet from 'systemet';
 
 export const products = () => { 
   console.log('Getting All Products:')

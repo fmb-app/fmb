@@ -1,14 +1,15 @@
 'use strict';
 
 // Imports
-const express = require('express');
-const path = require('path');
-
-const bolaget = require('./bolaget');
+import express from 'express';
+import path from 'path';
+import { products, stores } from './bolaget';
+import routes from './routes/index';
 
 // Dev tools
+import volleyball from 'volleyball'; // logger
 require('dotenv').config(); // Import environment variables
-const volleyball = require('volleyball'); // logger
+
 
 const app = express();
 app.use(express.json()); // Parse json
@@ -16,18 +17,16 @@ app.use(express.urlencoded({ extended: true })); // Parse URLs
 
 app.use(volleyball); // Logging middleware
 
-const routes = require('./routes/index');
 app.use('/api', routes);
 
 app.use('/', express.static(path.join(__dirname, '../../client/build')))
 
 const PORT = process.env.PORT || 8080; // Port
 
-const products = bolaget.products()
+products()
   .then(allProducts => {
     allProducts.map(product => {console.log(product.name)})
   });
-
 
 // Start an HTTP server.
 app.listen(PORT, () => {
