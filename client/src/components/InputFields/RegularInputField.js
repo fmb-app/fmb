@@ -1,20 +1,29 @@
 import React, { useState } from 'react';
+import Radium from 'radium';
+import { themes } from '../../themes/Themes'
 
 const style = {
   inputField: {
     width: '20rem',
     height: '2rem',
     padding: '0rem 1rem',
-    color: '#FAFAFA',
+    color: themes.standardTextColor,
     fontSize: '1rem',
     backgroundColor: 'rgba(255, 255, 255, 0.1)',
     borderStyle: 'none',
-    borderBottom: '2px solid #3B6D96',
-    borderRadius: '2px',
+    borderBottomWidth: '2px',
+    borderBottomStyle: 'solid',
+    borderColor: '#3B6D96',
+    borderRadius: themes.standardRadius,
+    boxSizing: 'border-box',
+    transition: 'border-color 0.4s ease-out',
+    ':focus': {
+      borderColor:'#A2D7FF',
+    }
   }
 }
 
-const RegularInputField = ({type, placeHolder, value, searchTerm, setInputTerm}) => {
+const RegularInputField = ({type, placeholder, value, searchTerm, setInputTerm}) => {
   const onChange = (e) => {
     setInputTerm(e.target.value)
   }
@@ -23,7 +32,7 @@ const RegularInputField = ({type, placeHolder, value, searchTerm, setInputTerm})
     <div>
       <input
         type={type}
-        placeHolder={placeHolder}
+        placeholder={placeholder}
         onChange={onChange}
         value={searchTerm}
         style={style.inputField}
@@ -32,4 +41,4 @@ const RegularInputField = ({type, placeHolder, value, searchTerm, setInputTerm})
   );
 }
 
-export default RegularInputField;
+export default Radium(RegularInputField);

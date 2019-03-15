@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "jss": "^10.0.0-alpha.12",
+    "radium": "^0.25.1",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
     "react-scripts": "2.1.8",
