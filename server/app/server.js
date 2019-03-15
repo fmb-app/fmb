@@ -4,6 +4,8 @@
 const express = require('express');
 const path = require('path');
 
+const bolaget = require('./bolaget');
+
 // Dev tools
 require('dotenv').config(); // Import environment variables
 const volleyball = require('volleyball'); // logger
@@ -19,11 +21,16 @@ app.use('/api', routes);
 
 app.use('/', express.static(path.join(__dirname, '../../client/build')))
 
-// Hostname and Port
-const HOST = '127.0.0.1';
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 8080; // Port
+
+const products = bolaget.products()
+  .then(allProducts => {
+    allProducts.map(product => {console.log(product.name)})
+  });
+
 
 // Start an HTTP server.
 app.listen(PORT, () => {
-    console.log(`Running on port: ${PORT}`);
+  console.log(`Running on port: ${PORT}`);
 });
+
