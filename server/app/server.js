@@ -1,6 +1,4 @@
 'use strict';
-
-// Imports
 import express from 'express';
 import path from 'path';
 import { products, stores } from './bolaget';
