@@ -20,7 +20,7 @@
     "@babel/plugin-transform-runtime": "^7.3.4"
   },
   "scripts": {
-    "start": "nodemon --exec babel-node app/server.js",
+    "start": "npm run build && npm run serve",
     "build": "babel app --out-dir build --ignore node_modules",
     "serve": "node build/server.js"
   },
