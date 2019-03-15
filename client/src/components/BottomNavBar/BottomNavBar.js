@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
+import Radium from 'radium';
 import InputField from '../InputFields/RegularInputField'
+import RegularButton from '../Buttons/RegularButton'
+import { themes } from '../../themes/Themes'
 
 const style = {
   stickToBottom: {
@@ -11,6 +14,7 @@ const style = {
     height: '4rem',
     backgroundColor: 'rgba(0,0,0,0.8)',
     display: 'flex',
+    flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
   }
@@ -23,11 +27,12 @@ const BottomNavBar = (props) => {
         <InputField
           searchTerm={props.searchTerm}
           setInputTerm={props.setSearchTerm}
-          placeHolder='Din Plats'
+          placeholder='Din Plats'
         />
+        <RegularButton label='Sök' bgcolor={themes.primaryButton} color={themes.standardTextColor} />
       </div>
     </div>
   );
 }
 
-export default BottomNavBar;
+export default Radium(BottomNavBar);

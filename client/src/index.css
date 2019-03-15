@@ -6,7 +6,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-image: url(res/images/background.svg);
+  background-image: url(resources/images/background.svg);
   background-size: 20rem;
 }
 
@@ -14,3 +14,5 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+textarea, select, input, button { outline: none; }
