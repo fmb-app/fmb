@@ -2,7 +2,7 @@
   "name": "findmybork",
   "main": "server/app/server.js",
   "scripts": {
-    "start": "node server/app/server.js",
+    "start": "npm start --prefix ./server",
     "heroku-prebuild": "cd server && npm install && npm run build",
     "heroku-postbuild": "cd client && npm install && npm run build"
   },
