@@ -4,23 +4,34 @@
   "description": "Find My Bork - Backend",
   "main": "app/server.js",
   "dependencies": {
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.3.4",
+    "@babel/node": "^7.2.2",
+    "@babel/preset-env": "^7.3.4",
+    "@babel/register": "^7.0.0",
+    "@babel/runtime": "^7.3.4",
     "dotenv": "^6.2.0",
     "express": "^4.16.4",
-    "volleyball": "^1.5.1",
-    "nodemon": "^1.18.10"
+    "nodemon": "^1.18.10",
+    "systemet": "^1.0.0",
+    "volleyball": "^1.5.1"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "@babel/plugin-transform-runtime": "^7.3.4"
+  },
   "scripts": {
-    "start": "node app/server"
+    "start": "nodemon --exec babel-node app/server.js",
+    "build": "babel app --out-dir build --ignore node_modules",
+    "serve": "node build/server.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/shappe/fmb.git"
+    "url": "git+https://github.com/fmb-app/fmb.git"
   },
   "author": "Group 50",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/shappe/fmb/issues"
+    "url": "https://github.com/fmb-app/fmb/issues"
   },
-  "homepage": "https://github.com/shappe/fmb#readme"
+  "homepage": "https://github.com/fmb-app/fmb#readme"
 }
