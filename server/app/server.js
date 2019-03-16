@@ -19,7 +19,7 @@ app.use(express.urlencoded({ extended: true })); // Parse URLs
 app.use(volleyball); // Logging middleware
 
 app.use('/api', routes);
-app.use('/', express.static(path.join(__dirname, '../../client/build')))
+app.use('/', express.static(path.join(__dirname, '../../client/build')));
 
 mongoose.connect(process.env.MONGO_CONNECT_STRING, { useNewUrlParser: true }); // Connect to db
 

@@ -7,8 +7,8 @@ import path from 'path';
 const router = express.Router();
 
 router.get('/', (req, res) => {
-  let msg = '👋 Yo world.'
-  res.json({ message: msg })  
-})
+  let msg = '👋 Yo world.';
+  res.json({ message: msg });
+});
 
 module.exports = router;
