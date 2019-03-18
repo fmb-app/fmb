@@ -9,7 +9,7 @@ export const productSchema = new Schema({
   productId: { type: Number, required: true },
   name1: { type: String, required: true },
   name2: String,
-  group: String,
+  category: String,
   price: Number,
   volume: Number,
   package: String,
