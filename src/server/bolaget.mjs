@@ -35,16 +35,22 @@ export const allStores = () => {
     .then(allStores => {
       stores = allStores.filter(store => store.type === 'Butik' && store.county === 'Stockholms län');
       console.log('Stores loaded');
+      stores.map(store => {
+        const myStore = new Store({
+          storeId: store.nr,
+          name: store.name,
+          street: store.address,
+          postalCode: store.zipCode,
+          city: store.city,
+          rt90x: store.rt90.x,
+          rt90y: store.rt90.y,
+          products: []
+        });
+        console.log('Stored store: ', myStore);
+        myStore.save();
+      });
     });
 };
-
-const myStore = new Store({
-  name: 'Jarlaplan',
-  longitude: 123,
-  latitude: 456,
-  address: 'Birger Jarlsgatan 142'
-});
-console.log(myStore.name);
 
 console.log('Stores loading...');
 allStores();
