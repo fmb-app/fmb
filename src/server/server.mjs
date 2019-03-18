@@ -10,7 +10,6 @@ dotenv.config(); // Import environment variables
 const app = express();
 app.use(express.json()); // Parse json
 app.use(express.urlencoded({ extended: true })); // Parse URLs
-
 app.use('/api', routes);
 app.use('/', express.static('dist'));
 
