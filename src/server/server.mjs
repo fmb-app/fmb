@@ -15,7 +15,9 @@ const app = express();
 app.use(express.json()); // Parse json
 app.use(express.urlencoded({ extended: true })); // Parse URLs
 
-app.use(volleyball); // Logging middleware
+if (process.env.NODE_ENV === 'development') {
+  app.use(volleyball); // Logging middleware
+}
 
 app.use('/api', routes);
 app.use('/', express.static('dist'));
