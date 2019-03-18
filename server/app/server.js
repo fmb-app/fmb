@@ -4,7 +4,6 @@ import mongoose from 'mongoose';
 import path from 'path';
 import { getProducts, getStores, fetchInitialData } from './models/products';
 import routes from './routes/index';
-import bolaget from './bolaget';
 
 // Dev tools
 import volleyball from 'volleyball'; // logger
