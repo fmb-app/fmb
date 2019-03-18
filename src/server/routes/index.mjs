@@ -8,7 +8,7 @@ const router = express.Router();
 
 router.get('/', (req, res) => {
   let msg = '👋 Yo world.'
-  res.json({ message: msg })  
+  res.json({ message: msg })
 })
 
-module.exports = router;
+export default router;

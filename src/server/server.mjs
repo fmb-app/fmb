@@ -3,12 +3,13 @@
 // Imports
 import express from 'express';
 import path from 'path';
-import { products, stores } from './bolaget';
-import routes from './routes/index';
+import { products, stores } from './bolaget.mjs';
+import routes from './routes/index.mjs';
 
 // Dev tools
 import volleyball from 'volleyball'; // logger
-require('dotenv').config(); // Import environment variables
+import dotenv from 'dotenv';
+dotenv.config(); // Import environment variables
 
 
 const app = express();
@@ -19,13 +20,13 @@ app.use(volleyball); // Logging middleware
 
 app.use('/api', routes);
 
-app.use('/', express.static(path.join(__dirname, '../../client/build')))
+app.use('/', express.static('dist'));
 
 const PORT = process.env.PORT || 8080; // Port
 
 products()
   .then(allProducts => {
-    allProducts.map(product => {console.log(product.name)})
+    allProducts.map(product => { console.log(product.name) })
   });
 
 // Start an HTTP server.
