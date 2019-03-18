@@ -3,7 +3,7 @@ import Radium from 'radium';
 import BottomNavBar from './components/BottomNavBar/BottomNavBar';
 import MidSection from './components/MidSection/MidSection';
 import { themes } from './themes/Themes';
-import getOldCoordinates from './coordtranslator.js';
+import geodetic_to_grid from './coordtranslator.js';
 const style = {
 	header: {
     display: 'flex',
@@ -41,8 +41,9 @@ const style = {
 
 var array = [60.3633306,17.871843,0];
 
-getOldCoordinates(array[0],array[1]);
+var arr = geodetic_to_grid(array[0],array[1]);
 
+console.log(arr);
 
 const App = () => {
 	const [searchTerm, setSearchTerm] = useState('');
