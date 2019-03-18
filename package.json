@@ -2,12 +2,12 @@
   "name": "findmybork",
   "version": "2.0.0",
   "description": "Find My Bork",
-  "main": "src/server/server.js",
+  "main": "src/server/server.mjs",
   "scripts": {
     "build": "webpack --mode production",
     "start": "npm run build && node --experimental-modules src/server/server.mjs ",
     "client": "webpack-dev-server --mode development --devtool inline-source-map --hot",
-    "server": "nodemon src/server/server.js",
+    "server": "node --experimental-modules src/server/server.mjs",
     "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "engines": {
@@ -23,11 +23,12 @@
   "dependencies": {
     "babel-polyfill": "^6.26.0",
     "express": "^4.16.4",
+    "jss": "^10.0.0-alpha.12",
+    "mongoose": "^5.4.19",
+    "radium": "^0.25.1",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
-    "systemet": "^1.0.0",
-    "jss": "^10.0.0-alpha.12",
-    "radium": "^0.25.1"
+    "systemet": "^1.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",
