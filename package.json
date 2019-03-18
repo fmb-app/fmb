@@ -4,7 +4,7 @@
   "description": "Find My Bork",
   "main": "src/server/server.mjs",
   "scripts": {
-    "build": "webpack --mode production",
+    "build": "npm install && webpack --mode production",
     "start": "npm run build && node --experimental-modules src/server/server.mjs ",
     "client": "webpack-dev-server --mode development --devtool inline-source-map --hot",
     "server": "node --experimental-modules src/server/server.mjs",
