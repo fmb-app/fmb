@@ -5,7 +5,7 @@ import mongoose from 'mongoose';
 
 const Schema = mongoose.Schema;
 
-var productSchema = new Schema({
+export const productSchema = new Schema({
   productId: { type: Number, required: true },
   name1: { type: String, required: true },
   name2: String,
