@@ -5,10 +5,11 @@
   "main": "src/server/server.mjs",
   "scripts": {
     "build": "npm install && webpack --mode production",
-    "start": "npm run build && node --experimental-modules src/server/server.mjs ",
+    "start": "echo START && node --experimental-modules src/server/server.mjs ",
     "client": "webpack-dev-server --mode development --devtool inline-source-map --hot",
     "server": "node --experimental-modules src/server/server.mjs",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "heroku-postbuild": "echo HEROKU POSTBUILD && npm run build"
   },
   "engines": {
     "node": "10.3.0",
