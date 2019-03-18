@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Radium from 'radium';
 import { themes } from '../../themes/Themes'
 
 const style = {
   inputField: {
-    width: '20rem',
+    width: '100%',
+    maxWidth: '20rem',
     height: '2rem',
     padding: '0rem 1rem',
     color: themes.standardTextColor,
@@ -15,29 +16,22 @@ const style = {
     borderBottomStyle: 'solid',
     borderColor: '#3B6D96',
     borderRadius: themes.standardRadius,
-    boxSizing: 'border-box',
     transition: 'border-color 0.4s ease-out',
+    boxSizing: 'border-box',
     ':focus': {
       borderColor:'#A2D7FF',
     }
-  }
+  },
 }
 
-const RegularInputField = ({type, placeholder, value, searchTerm, setInputTerm}) => {
-  const onChange = (e) => {
-    setInputTerm(e.target.value)
-  }
-
+const RegularInputField = ({type, label, placeholder, value, onChange}) => {
   return (
-    <div>
-      <input
-        type={type}
-        placeholder={placeholder}
-        onChange={onChange}
-        value={searchTerm}
-        style={style.inputField}
-      />
-    </div>
+    <input
+      type={type}
+      placeholder={placeholder}
+      onChange={onChange}
+      style={style.inputField}
+    />
   );
 }
 
