@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import Radium from 'radium';
 import BottomNavBar from './components/BottomNavBar/BottomNavBar';
 import MidSection from './components/MidSection/MidSection';
-import { themes } from './themes/Themes'
-
+import { themes } from './themes/Themes';
+import getOldCoordinates from './coordtranslator.js';
 const style = {
 	header: {
     display: 'flex',
@@ -39,9 +39,13 @@ const style = {
 	}
 }
 
+var array = [60.3633306,17.871843,0];
+
+getOldCoordinates(array[0],array[1]);
+
+
 const App = () => {
 	const [searchTerm, setSearchTerm] = useState('');
-
 	return (
 		<div style={style.container}>
 			<div style={style.header}>
