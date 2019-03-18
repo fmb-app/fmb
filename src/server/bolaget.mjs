@@ -3,6 +3,7 @@ import systemet from 'systemet';
 import Store from './models/stores';
 import Product from './models/products';
 import cheerio from 'cheerio';
+import fetch from "node-fetch";
 
 const API_URL = 'http://www.systembolaget.se/api';
 
@@ -13,10 +14,54 @@ export let stocks = [];
 export const allProducts = () => {
   systemet.products()
     .then(allProducts => {
-      products = allProducts.map(product => product.name + '; ' + product.nameExtra);
+      products = allProducts;
+      console.log(allProducts[0]);
+      // products = allProducts.map(product => product.name + '; ' + product.nameExtra);
       console.log('Products loaded');
+      allProducts.map(product => {
+        const myProduct = new Product({
+          productId: product.articleId,
+          name1: product.name,
+          name2: product.nameExtra,
+          category: product.category,
+          price: product.price,
+          volume: product.volume,
+          package: product.packaging,
+          alcohol: product.alcohol,
+          producer: product.producer
+        });
+        console.log('Saving product: ', product.articleId);
+        myProduct.save();
+      });
+      console.log('All products saved!');
     });
 };
+
+const exampleProduct = { 
+  nr: '101',
+  articleId: '1',
+  itemNumber: '1',
+  name: 'Renat',
+  nameExtra: null,
+  price: 204,
+  volume: 700,
+  comparePrice: 291.43,
+  startDate: '1993-10-01',
+  endDate: null,
+  category: 'Vodka och Brännvin',
+  packaging: 'Flaska',
+  seal: null,
+  origin: null,
+  country: 'Sverige',
+  producer: 'Pernod Ricard',
+  supplier: 'Pernod Ricard Sweden AB',
+  year: null,
+  alcohol: 37.5,
+  assortment: 'FS',
+  ecological: false,
+  koscher: false,
+  rawMaterials: 'Säd.'
+}
 
 export const allStocks = () => {
   fetch('http://www.systembolaget.se/api/assortment/stock/xml')
@@ -46,7 +91,7 @@ export const allStores = () => {
           rt90y: store.rt90.y,
           products: []
         });
-        console.log('Stored store: ', myStore);
+        // console.log('Stored store: ', myStore);
         myStore.save();
       });
     });
