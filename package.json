@@ -1,0 +1,14 @@
+{
+  "name": "findmybork",
+  "main": "server/app/server.js",
+  "scripts": {
+    "start": "npm start --prefix ./server",
+    "heroku-prebuild": "cd server && npm install && npm run build",
+    "heroku-postbuild": "cd client && npm install && npm run build"
+  },
+  "engines": {
+    "node": "10.3.0",
+    "npm": "6.x"
+  },
+  "license": "MIT"
+}
