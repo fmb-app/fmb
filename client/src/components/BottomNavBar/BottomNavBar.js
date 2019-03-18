@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Radium from 'radium';
 import InputField from '../InputFields/RegularInputField'
 import RegularButton from '../Buttons/RegularButton'
@@ -13,10 +13,13 @@ const style = {
   navBar: {
     height: '4rem',
     backgroundColor: 'rgba(0,0,0,0.8)',
-    display: 'flex',
-    flexDirection: 'row',
+    display: 'grid',
+    gridTemplateColumns: 'auto auto',
     justifyContent: 'center',
     alignItems: 'center',
+    paddingLeft: themes.standardSpace,
+    paddingRight: themes.standardSpace,
+    boxSizing: 'border-box',
   }
 }
 
@@ -29,7 +32,12 @@ const BottomNavBar = (props) => {
           setInputTerm={props.setSearchTerm}
           placeholder='Din Plats'
         />
-        <RegularButton label='Sök' bgcolor={themes.primaryButton} color={themes.standardTextColor} />
+        <RegularButton
+          label='Sök'
+          bgcolor={themes.primaryButton}
+          color={themes.standardTextColor}
+          onClick={() => {}}
+        />
       </div>
     </div>
   );
