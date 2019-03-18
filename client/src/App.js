@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import Radium from 'radium';
+import React, { useState } from 'react';
 import BottomNavBar from './components/BottomNavBar/BottomNavBar';
 import MidSection from './components/MidSection/MidSection';
 import { themes } from './themes/Themes'
@@ -22,17 +21,16 @@ const style = {
     wordSpacing: '-1rem',
     background: 'linear-gradient(60deg, #e01a8a 39%,#ce8114 100%)',
     backgroundClip: 'text',
-    webkitBackgroundClip: 'text',
-    webkitTextFillColor: 'transparent',
-    webkitUserSelect: 'none',
-  	mozUserSelect: 'none',
+    WebkitBackgroundClip: 'text',
+    WebkitTextFillColor: 'transparent',
+    WebkitUserSelect: 'none',
+  	MozUserSelect: 'none',
   	msUserSelect: 'none',
   	userSelect: 'none',
 	},
 	container: {
 		display: 'flex',
 		flexDirection: 'column',
-		justifyContent: 'center',
 		alignItems: 'center',
 		width: '100%',
 		height: '100vh',
