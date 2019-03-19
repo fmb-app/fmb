@@ -7,7 +7,7 @@ import { productSchema } from './products';
 const Schema = mongoose.Schema;
 
 var storeSchema = new Schema({
-  storeId: { type: Number, required: true },
+  _id: { type: Number, required: true },
   name: { type: String },
   street: { type: String, required: true },
   postalCode: { type: String, required: true },
