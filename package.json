@@ -27,6 +27,7 @@
     "express": "^4.16.4",
     "jss": "^10.0.0-alpha.12",
     "mongoose": "^5.4.19",
+    "node-fetch": "^2.3.0",
     "radium": "^0.25.1",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
