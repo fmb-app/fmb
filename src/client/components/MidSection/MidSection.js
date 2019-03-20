@@ -1,4 +1,5 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
+import FmbContext from '../../context/FmbContext';
 import RegularInputField from '../InputFields/RegularInputField';
 import RegularButton from '../Buttons/RegularButton';
 import HorizontalDivider from '../Dividers/HorizontalDivider';
@@ -35,14 +36,10 @@ const style = {
 }
 
 const MidSection = () => {
+	const context = useContext(FmbContext);
+
 	const initialState = [{text: '', key: 0}];
 	const [inputFields, setInputFields] = useState(initialState);
-
-	const addField = () => {
-		const len = inputFields.length;
-		const newKey = inputFields[len-1].key + 1;
-		setInputFields([...inputFields, {text: '', key: newKey}]);
-	}
 
 	const removeField = (key) => {
 		setInputFields(
@@ -62,19 +59,19 @@ const MidSection = () => {
 	return (
 		<div style={style.midSection}>
 		<h2 style={style.heading2}>Dryck:</h2>
-		{ inputFields.map((item, key) => (
+		{ context.drinks.map((item) => (
 			<div key={item.key} style={{width: '100%'}}>
 				<div style={style.row}>
 					<RegularInputField
-		          placeholder='Dryck'
-		          onChange={(e) => setInput(item.key, e)}
+		          placeholder={item.key}
+		          onChange={context.setDrink.bind(this, item.key)}
 		      />
 		      <RegularButton
 		      	label='X'
 		      	bgcolor={themes.secondaryButton}
 		      	color={themes.standardTextColor}
-		      	onClick={() => removeField(item.key)}
-		      	disabled={inputFields.length === 1}
+		      	onClick={context.removeDrink.bind(this, item.key)}
+		      	disabled={context.drinks.length === 1}
 		      />
 		    </div>
     		<HorizontalDivider />
@@ -84,8 +81,9 @@ const MidSection = () => {
 				label='+' 
 				bgcolor={themes.primaryButton}
 				color={themes.standardTextColor}
-				onClick={addField}
+				onClick={context.addDrink}
 			/>
+			<pre style={{color: 'white'}}>{JSON.stringify(context.drinks,0,2)}</pre>
 		</div>
 	);
 }

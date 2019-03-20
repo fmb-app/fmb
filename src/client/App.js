@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
+import GlobalState from './context/GlobalState';
 import BottomNavBar from './components/BottomNavBar/BottomNavBar';
 import MidSection from './components/MidSection/MidSection';
-import { themes } from './themes/Themes'
+import { themes } from './themes/Themes';
 
 const style = {
 	header: {
@@ -35,20 +36,22 @@ const style = {
 		width: '100%',
 		height: '100vh',
 	}
-}
+};
 
 const App = () => {
 	const [ searchTerm, setSearchTerm ] = useState('');
 
 	return (
-		<div style={style.container}>
-			<div style={style.header}>
-				<h1 style={style.headerFont}>Find my Bork</h1>
+		<GlobalState>
+			<div style={style.container}>
+				<div style={style.header}>
+					<h1 style={style.headerFont}>Find my Bork</h1>
+				</div>
+				<MidSection />
+				<BottomNavBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
 			</div>
-			<MidSection />
-			<BottomNavBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-		</div>
+		</GlobalState>
 	);
-}
+};
 
 export default App;
