@@ -63,7 +63,7 @@ const MidSection = () => {
 			<div key={item.key} style={{width: '100%'}}>
 				<div style={style.row}>
 					<RegularInputField
-		          placeholder={item.key}
+		          placeholder='Dryck'
 		          onChange={context.setDrink.bind(this, item.key)}
 		      />
 		      <RegularButton
