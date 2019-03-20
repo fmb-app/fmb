@@ -5,22 +5,19 @@ import Product from './models/products';
 import cheerio from 'cheerio';
 import fetch from "node-fetch";
 
-const API_URL = 'http://www.systembolaget.se/api';
-
 export let stores = [];
 export let products = [];
 export let stocks = [];
 
 export const allProducts = () => {
+  console.log('Products loading...');
   systemet.products()
     .then(allProducts => {
       products = allProducts;
-      console.log(allProducts[0]);
-      // products = allProducts.map(product => product.name + '; ' + product.nameExtra);
-      console.log('Products loaded');
       allProducts.map(product => {
         const myProduct = new Product({
-          productId: product.articleId,
+          _id: Number(product.articleId),
+          nr: product.nr,
           name1: product.name,
           name2: product.nameExtra,
           category: product.category,
@@ -30,76 +27,72 @@ export const allProducts = () => {
           alcohol: product.alcohol,
           producer: product.producer
         });
-        console.log('Saving product: ', product.articleId);
-        myProduct.save();
+        Product.replaceOne({_id: myProduct._id}, myProduct, {upsert: true},  (err, raw) => {
+          if (err) console.log(err);
+        });
       });
-      console.log('All products saved!');
+      console.log('Products loaded');
+      // console.log('All products saved!');
+      // let pro = Product.find({nr: 1234301}, (err, pros) => {
+      //   console.log(pros);
+      // });
     });
 };
 
-const exampleProduct = { 
-  nr: '101',
-  articleId: '1',
-  itemNumber: '1',
-  name: 'Renat',
-  nameExtra: null,
-  price: 204,
-  volume: 700,
-  comparePrice: 291.43,
-  startDate: '1993-10-01',
-  endDate: null,
-  category: 'Vodka och Brännvin',
-  packaging: 'Flaska',
-  seal: null,
-  origin: null,
-  country: 'Sverige',
-  producer: 'Pernod Ricard',
-  supplier: 'Pernod Ricard Sweden AB',
-  year: null,
-  alcohol: 37.5,
-  assortment: 'FS',
-  ecological: false,
-  koscher: false,
-  rawMaterials: 'Säd.'
-}
-
 export const allStocks = () => {
+  console.log('Stocks loading...');
   fetch('http://www.systembolaget.se/api/assortment/stock/xml')
-    .then(res => {
-      const $ = cheerio.load(res.body, {
-        normalizeWhitespace: true,
-        xmlMode: true
+  .then(res => res.text())
+  .then(data => {
+    const $ = cheerio.load(data, {
+      normalizeWhitespace: true,
+      xmlMode: true
+    });
+    const butiker = $('Butik');
+    butiker.each((i, el) => {
+      let artiklar = [];
+      const butikNr = el.attribs.ButikNr;
+      butiker[i].children.map((artikel) => {
+        const artikelNr = (artikel.children[0].data)
+        artiklar.push(artikelNr)
       });
-      console.log($);
-      // return $('artikel').map((i, el) => toProduct($, el)).get();
+      console.log('BUUUUUTIIIIIIIIIIIIIIIIIK: ', butikNr);
+      console.log(artiklar);
+    }
+    );
+    console.log('Stocks loaded');
     });
 };
 
 export const allStores = () => {
+  console.log('Stores loading...');
   systemet.stores()
     .then(allStores => {
       stores = allStores.filter(store => store.type === 'Butik' && store.county === 'Stockholms län');
-      console.log('Stores loaded');
       stores.map(store => {
         const myStore = new Store({
-          storeId: store.nr,
+          _id: Number(store.nr),
           name: store.name,
           street: store.address,
           postalCode: store.zipCode,
           city: store.city,
           rt90x: store.rt90.x,
           rt90y: store.rt90.y,
+          openingHours: store.openingHours,
           products: []
-        });
-        // console.log('Stored store: ', myStore);
-        myStore.save();
+        });        
+        Store.replaceOne({_id: myStore._id}, myStore, {upsert: true},  (err, raw) => {
+          if (err) console.log(err);
+        })
       });
+      console.log('Stores loaded');
     });
-};
+}
 
-console.log('Stores loading...');
-allStores();
-console.log('Products loading...');
-allProducts();
-// console.log('Stocks loading...');
-// allStocks();
+export const updateModel = () => {
+  // allStores();
+  // allProducts();
+  // allStocks();
+}
+
+updateModel();
