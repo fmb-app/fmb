@@ -14,6 +14,7 @@ var storeSchema = new Schema({
   city: { type: String, required: true },
   rt90x: { type: Number, required: true },
   rt90y: { type: Number, required: true },
+  openingHours: { type: Object },
   products: [ productSchema ]
 });
 
