@@ -12,32 +12,32 @@ export let products = [];
 export let stocks = [];
 
 export const allProducts = () => {
-  systemet.products()
-    .then(allProducts => {
-      products = allProducts;
-      console.log(allProducts[0]);
-      // products = allProducts.map(product => product.name + '; ' + product.nameExtra);
-      console.log('Products loaded');
-      allProducts.map(product => {
-        const myProduct = new Product({
-          productId: product.articleId,
-          name1: product.name,
-          name2: product.nameExtra,
-          category: product.category,
-          price: product.price,
-          volume: product.volume,
-          package: product.packaging,
-          alcohol: product.alcohol,
-          producer: product.producer
-        });
-        console.log('Saving product: ', product.articleId);
-        myProduct.save();
-      });
-      console.log('All products saved!');
-    });
+  // systemet.products()
+  //   .then(allProducts => {
+  //     products = allProducts;
+  //     console.log(allProducts[0]);
+  //     // products = allProducts.map(product => product.name + '; ' + product.nameExtra);
+  //     console.log('Products loaded');
+    //   allProducts.map(product => {
+    //     const myProduct = new Product({
+    //       productId: product.articleId,
+    //       name1: product.name,
+    //       name2: product.nameExtra,
+    //       category: product.category,
+    //       price: product.price,
+    //       volume: product.volume,
+    //       package: product.packaging,
+    //       alcohol: product.alcohol,
+    //       producer: product.producer
+    //     });
+    //     console.log('Saving product: ', product.articleId);
+    //     myProduct.save();
+    //   });
+    //   console.log('All products saved!');
+    // });
 };
 
-const exampleProduct = { 
+const exampleProduct = {
   nr: '101',
   articleId: '1',
   itemNumber: '1',
