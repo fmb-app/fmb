@@ -1,5 +1,5 @@
-import React from 'react';
-import Radium from 'radium';
+import React, {useContext, useEffect} from 'react';
+import FmbContext from '../../context/FmbContext';
 import InputField from '../InputFields/RegularInputField'
 import RegularButton from '../Buttons/RegularButton'
 import { themes } from '../../themes/Themes'
@@ -24,12 +24,15 @@ const style = {
 }
 
 const BottomNavBar = (props) => {
+  const context = useContext(FmbContext);
+
   return (
     <div style={style.stickToBottom}>
       <div style={style.navBar}>
         <InputField
           searchTerm={props.searchTerm}
           setInputTerm={props.setSearchTerm}
+          onChange={context.setLocation}
           placeholder='Din Plats'
         />
         <RegularButton
@@ -43,4 +46,4 @@ const BottomNavBar = (props) => {
   );
 }
 
-export default Radium(BottomNavBar);
+export default BottomNavBar;

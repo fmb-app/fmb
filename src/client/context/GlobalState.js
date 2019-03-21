@@ -1,6 +1,6 @@
 import React, { useState, useReducer } from 'react';
 import FmbContext from './FmbContext';
-import { fmbReducer, ADD_DRINK, SET_DRINK, REMOVE_DRINK } from './Reducer';
+import { fmbReducer, ADD_DRINK, SET_DRINK, REMOVE_DRINK, SET_LOCATION, SEARCH } from './Reducer';
 
 const GlobalState = props => {
 	const initialState = {
@@ -22,13 +22,24 @@ const GlobalState = props => {
 		dispatch({type: SET_DRINK, drink: event.target.value, key: key});
 	}
 
+	const setLocation = event => {
+		dispatch({type: SET_LOCATION, location: event.target.value});
+	}
+
+	const search = location => {
+		dispatch({type: SEARCH, location: location});
+	}
+
 	return (
 		<FmbContext.Provider
 			value={{
+				location: state.location,
 				drinks: state.drinks,
 				addDrink: addDrink,
 				setDrink: setDrink,
-				removeDrink: removeDrink
+				removeDrink: removeDrink,
+				setLocation: setLocation,
+				search: search,
 			}}
 		>
 			{props.children}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import GlobalState from './context/GlobalState';
 import BottomNavBar from './components/BottomNavBar/BottomNavBar';
 import MidSection from './components/MidSection/MidSection';
@@ -39,7 +39,6 @@ const style = {
 };
 
 const App = () => {
-	const [ searchTerm, setSearchTerm ] = useState('');
 
 	return (
 		<GlobalState>
@@ -48,7 +47,7 @@ const App = () => {
 					<h1 style={style.headerFont}>Find my Bork</h1>
 				</div>
 				<MidSection />
-				<BottomNavBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+				<BottomNavBar />
 			</div>
 		</GlobalState>
 	);
