@@ -17,7 +17,7 @@ From the Trafiklab API we will get the route to the closest Systembolaget. From 
 ## What we have done so far
 
 ### Setting up the project
-A lot of time and effort was spent on setting up the project. Initializing the project with Node, React, Webpack and Babel as well as deploying it to Heroku. Troubleshooting was tedious when we tried deploying, but it is finally up and running!
+A lot of time and effort was spent on setting up the project. Initializing the project with Node, React, Webpack and Babel as well as deploying it to Heroku. Troubleshooting was tedious when we tried deploying, especially getting ES6 syntax to work. Eventually we got it to work and now it is up and running!
 
 ### Systembolaget's API
 We spent a lot of time on getting data from Systembolaget's API, as it is not really an API in the common sense, but rather 3 .xml (?!) files containing the Products, Stores, and which Products are in Stock in all Stores.
@@ -45,5 +45,16 @@ On the backend we have some things left to figure out.
 
  1. We need to implement drag'n'drop search on the frontend.
 
+ 2. 
+
 ## Project Structure
 
+The project is divided into two parts, the client and the server. Both folders reside in the src folder. The client is built separately and will be bundled into a /dist folder that is served statically by the backend.
+
+
+### Server
+
+ * server.mjs: This is where the Express app is initiated, and the routes are directed to their respective files.
+ * /APIcalls: This is where we put all our API calls(Google API and Systembolaget API)
+ * /models: This is where we put our Mongoose.js models(products and stores)
+ * /routes: This is where we put our Express routes (currently only API route.)
