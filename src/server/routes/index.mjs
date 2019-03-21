@@ -1,7 +1,7 @@
 'use strict';
 
 import express from 'express';
-import { findStoresWithGivenProductNrs } from '../bolaget/bolaget';
+import { findStoresWithGivenProductNrs } from '../APICalls/bolaget';
 import { googleFetch } from '../APICalls/googleAPIcall'
 
 const router = express.Router();
