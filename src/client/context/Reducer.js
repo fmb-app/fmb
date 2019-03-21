@@ -5,7 +5,7 @@ export const ADD_DRINK    = 'ADD_DRINK';
 export const SET_DRINK		= 'SET_DRINK';
 export const REMOVE_DRINK = 'REMOVE_DRINK';
 export const SET_LOCATION = 'SET_LOCATION';
-export const SEARCH 			= 'SEARCH';
+export const SET_RESULTS  = 'SET_RESULTS';
 
 const addDrink = state => {
 	const len    				= state.drinks.length;
@@ -30,19 +30,8 @@ const setLocation = (location, state) => {
 	return {...state, location: location};
 }
 
-const search = (location, state) => {
-	const gps = navigator.geolocation.getCurrentPosition((position) => {
-	  return position.coords.latitude + ' ' + position.coords.longitude;
-	});
-	const results = fetch('https://findmybork.herokuapp.com/', {
-		method: 'GET',
-		headers: {
-			'Content-Type': 'application/json'
-		}
-	}).then((res) => {
-		return res.json();
-	})
-	console.log(result);
+const setResults = (results, state) => {
+	return {...state, results: results};
 }
 
 export const fmbReducer = (state, action) => {
@@ -55,8 +44,8 @@ export const fmbReducer = (state, action) => {
 			return removeDrink(action.key, state);
 		case SET_LOCATION:
 			return setLocation(action.location, state);
-		case SEARCH:
-			return search(action.location, state);
+		case SET_RESULTS:
+			return setResults(action.results, state);
 		default:
 			return state;
 	}

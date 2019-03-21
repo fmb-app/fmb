@@ -40,8 +40,12 @@ const MidSection = () => {
 
 	return (
 		<div style={style.midSection}>
-		<h2 style={style.heading2}>Resultat:</h2>
-		<pre style={{color: 'white'}}>{JSON.stringify(context)}</pre>
+		<h2 style={style.heading2}>Närmsta Systembolag:</h2>
+		<ol>
+			{context.results.map((store, index) => {
+				return (<li style={{color: 'white'}} key={index}>{store.vicinity}</li>);
+			})}
+		</ol>
 		</div>
 	);
 }
