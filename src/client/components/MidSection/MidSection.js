@@ -38,52 +38,14 @@ const style = {
 const MidSection = () => {
 	const context = useContext(FmbContext);
 
-	const initialState = [{text: '', key: 0}];
-	const [inputFields, setInputFields] = useState(initialState);
-
-	const removeField = (key) => {
-		setInputFields(
-			inputFields.filter(
-				(elem) => elem.key !== key
-			)
-		);
-	}
-
-	const setInput = (affectedKey, e) => {
-		const newText = e.target.value;
-		setInputFields(
-			inputFields.map((elem, key) => affectedKey === key ? ({text: newText, key: key}) : elem)
-		);
-	}
-
 	return (
 		<div style={style.midSection}>
-		<h2 style={style.heading2}>Dryck:</h2>
-		{ context.drinks.map((item) => (
-			<div key={item.key} style={{width: '100%'}}>
-				<div style={style.row}>
-					<RegularInputField
-		          placeholder='Dryck'
-		          onChange={context.setDrink.bind(this, item.key)}
-		      />
-		      <RegularButton
-		      	label='X'
-		      	bgcolor={themes.secondaryButton}
-		      	color={themes.standardTextColor}
-		      	onClick={context.removeDrink.bind(this, item.key)}
-		      	disabled={context.drinks.length === 1}
-		      />
-		    </div>
-    		<HorizontalDivider />
-    	</div>
-		))}
-			<RegularButton 
-				label='+' 
-				bgcolor={themes.primaryButton}
-				color={themes.standardTextColor}
-				onClick={context.addDrink}
-			/>
-			<pre style={{color: 'white'}}>{JSON.stringify(context.drinks,0,2)}</pre>
+		<h2 style={style.heading2}>Närmsta Systembolag:</h2>
+		<ol>
+			{context.results.map((store, index) => {
+				return (<li style={{color: 'white'}} key={index}>{store.vicinity}</li>);
+			})}
+		</ol>
 		</div>
 	);
 }
