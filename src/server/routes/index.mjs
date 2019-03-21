@@ -2,7 +2,6 @@
 
 import express from 'express';
 import path from 'path';
-import { stores, products, stocks } from '../bolaget';
 
 const router = express.Router();
 
