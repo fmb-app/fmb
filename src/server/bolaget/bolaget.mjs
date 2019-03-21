@@ -5,11 +5,9 @@ import Product from '../models/products';
 import cheerio from 'cheerio';
 import fetch from "node-fetch";
 
-// export let storeNrs = [];
+let storeNrs = [];
+let sthlmStores = [];
 let $ = null;
-// export let products = [];
-// export let stocks = [];
-// export let products = {};
 
 // Saves all products to the database.
 const saveProductsToDB = (products) => {
@@ -49,13 +47,13 @@ const saveStoresToDB = (stores) => {
       Store.replaceOne({_id: myStore._id}, myStore, {upsert: true},  (err, raw) => {
         if (err) console.log(err);
       })
-      // storeNrs.push(store.nr);
+      storeNrs.push(store.nr);
     }
   });
 }
 
 // Fetches all products from Systembolagets API and saves to our database.
-export const loadAllProducts = async () => {
+const loadAllProducts = async () => {
   console.log('Products loading...');
   const products = await systemet.products()
   console.log('Products loaded!');
@@ -63,7 +61,8 @@ export const loadAllProducts = async () => {
 }
 
 // Fetches all stores from Systembolagets API and saves to our database.
-export const loadAllStores = async () => {
+const loadAllStores = async () => {
+  storeNrs = [];
   console.log('Stores loading...');
   const stores = await systemet.stores()
   console.log('Stores loaded!');
@@ -71,16 +70,21 @@ export const loadAllStores = async () => {
 }
 
 // Loads the stock xml file from Systembolagets API into the cheerio $ object
-export const loadAllStocks = async () => {
+const loadAllStocks = async () => {
   console.log('Stocks loading...');
   const res = await fetch('http://www.systembolaget.se/api/assortment/stock/xml');
   const data = await res.text();
-
+  console.log('Loading Stocks into $...');
   $ = cheerio.load(data, {
     normalizeWhitespace: true,
     xmlMode: true
   });
   console.log('Stocks loaded!');
+  sthlmStores = $('Butik').filter((i, butik) => {
+    return storeNrs.includes($(butik).attr('ButikNr'));
+  })
+
+  // let sTs = findStoresWithGivenProductNrs(['8685501', '141212']); //141212 Norrlands, 8685501 Kraken, 8608901 Tequila
 }
 
 // Updates the database with the latest .xml files from Systembolagets API
@@ -90,37 +94,34 @@ export const updateAPIfromSystemet = () => {
   loadAllStocks();
 }
 
+export const findStoresWithGivenProductNrs = (productNrs) => {
+  console.log(`findStoresWithGivenProductNrs - searching through ${sthlmStores.length} stores in Stockholm...`);
+  const timeBefore = Date.now();
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-const saveStockToDB = (storesNrs) => {
-  // const butiker = $('Butik');
-  $('Butik').each((i, butik) => {
-    let artiklar = [];
-    const butikNr = $(butik).attr('ButikNr');
-    // const butikNr = butik.attribs.ButikNr;
-
-    // Only keep stock info about stores in Stockholms Län   
-    if (storeNrs.includes(butikNr)) {
-      $(butik).children().map((i, artikel) => {
-        const artikelNr = ($(artikel).text());
-        artiklar.push(artikelNr);
-      //   $(artikel, el).children()
-      //   const artikelNr = (artikel.children[0].data)
-      });
-      // console.log(artiklar);
-    }
-  });
+  let matchesToReturn = []; // The return object, the matching stores
+  let matchingStores = sthlmStores;
+  // console.log('Matching Stores:', matchingStores.length);
+  // console.log('Product Numbers:', productNrs);
+  productNrs.map((productNr) => {
+    matchingStores = $(matchingStores).filter((i, store) => {
+      let result = false;
+      $(store).children().each((j, artikel) => {
+        let artikelNr = $(artikel).text();
+        if (artikelNr == productNr) {
+          result = true;
+          return false;
+        }
+      })
+      return result;
+    });
+  })
+  // console.log('Matching Stores after', matchingStores.length);
+  const totalTime = Date.now() - timeBefore;
+  console.log('Total query time:', totalTime);
+  $(matchingStores).map((k, match) => {
+    const itsAMatch = $(match).attr('ButikNr');
+    // console.log('BUTIKnr:', itsAMatch);
+    matchesToReturn.push(itsAMatch);
+  })
+  return matchesToReturn;
 }
