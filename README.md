@@ -30,7 +30,7 @@ We figured out how to use Google Places API to locate the closest Systembolaget 
 
 ### Building the React frontend
 
-We spent countless hours on the design of the frontend. The client is a React app, created only with functional components, using context hooks instead of Redux for state management.
+We don't use classes in our frontend, instead each component is purely functional. In order to avoid passing state down as props, we use a global state with a context. Each component are made to be as reusable as possible.
 
 ## What we plan to do
 
@@ -45,7 +45,9 @@ On the backend we have some things left to figure out.
 
  1. We need to implement drag'n'drop search on the frontend.
 
- 2. 
+ 2. A page with favorite search terms.
+
+ 3. A map with the route to systembolaget.
 
 ## Project Structure
 
@@ -58,3 +60,21 @@ The project is divided into two parts, the client and the server. Both folders r
  * /APIcalls: This is where we put all our API calls(Google API and Systembolaget API)
  * /models: This is where we put our Mongoose.js models(products and stores)
  * /routes: This is where we put our Express routes (currently only API route.)
+
+### Client
+ * App.js: Root application.
+ * index.js: Loads App.js
+ * index.css: Styling that should take effect on all components.
+ * /components: This is where we put all components, each component is put in the responding directory.
+ 	- BottomNavBar: A navigation bar.
+ 	- RegularButton.js: A button.
+ 	- HorizontalDivider.js: A divider for dividing elements.
+ 	- RegularInputField.js: An inputfield. 
+ * /context: This is where the context is put.
+ 	- FmbContext.js: This is the context for the global state.
+ 	- GlobalState.js: This is the global state that is used by components.
+ 	- Reducer.js: A reducer for the state.
+ * /resources: This is where images and other resources are put.
+ 	- background.svg: The background image.
+ * /themes: This is where standard styling for components are stored, such as colors and whatnot.
+ 	- Themes.js: Contains an object with standard styling for the app.
