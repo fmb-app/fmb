@@ -1,13 +1,19 @@
 'use strict';
-import systemet from 'systemet';
-import cheerio from 'cheerio';
 import mongoose from 'mongoose';
 
 const Schema = mongoose.Schema;
 
-var productSchema = new Schema({
-  name: { type: String, required: true },
-  productId: { type: Number, required: true },
+export const productSchema = new Schema({
+  _id: { type: Number, required: true },
+  nr: { type: Number, required: true },
+  name1: { type: String, required: true },
+  name2: { type: String },
+  category: { type: String },
+  price: { type: Number },
+  volume: { type: Number },
+  package: { type: String },
+  alcohol: { type: Number },
+  producer: { type: String }
 });
 
 export default mongoose.model('Product', productSchema);
