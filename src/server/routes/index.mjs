@@ -2,6 +2,8 @@
 
 import express from 'express';
 import path from 'path';
+import { stores, products, stocks } from '../bolaget';
+import {googleFetch} from '../APICalls/googleAPIcall'
 
 const router = express.Router();
 
@@ -21,6 +23,10 @@ router.get('/stocks', (req, res) => {
 router.get('/products', (req, res) => {
   res.json(products);
 });
+
+router.get('/googleAPI', (req, res) => {
+  res.json(googleFetch(59.3633306,17.871843));
+})
 
 router.get('/', (req, res) => {
   let msg = '👋 Yo world.';
