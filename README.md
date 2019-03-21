@@ -1,18 +1,20 @@
 # FindMyBork
 ## About the project
-A webapp that finds the shortest commute to a systembolaget in order to buy non-alcoholic beverages. One should be able to request a specific beverage and it will give the closest systembolag that has that specific beverage.
+A webapp that finds the shortest commute to a Systembolaget in order to buy beverages. The user should be able to request a specific beverage and the webapp will give the closest systembolag that has that specific beverage.
 
 
 ### Frameworks:
  * React
  * Node.js.
+ * Express
 
 ### API to be used:
  * ​www.systembolaget.se/api​
  * www.trafiklab.se
+ * Google Maps Places API
 
 ### Data to be used:
-From the Trafiklab API we will get the route to the closest Systembolaget. From the Systembolaget API we will get the available beverages. Local data will be the position and input from the user, such as beverage choice.
+From the Trafiklab API we will get the route to the closest Systembolaget. From the Systembolaget API we will get the available beverages and stores. Local data will be the position and input from the user, such as beverage choice.
 
 ## What we have done so far
 
@@ -40,6 +42,8 @@ On the backend we have some things left to figure out.
  1. We need to connect the clients' request of some product nr's to those stores that sell them, and find the intersection of those stores and the list of the closest stores we retrieve from the Google Places API.
 
  2. We need to create some endpoints serving the different categories of beverages that the user should be able to search for, which will make it easier for the frontend to filter through products to search for.
+ 
+  3. We need to use the Trafiklabbet API to calculate the travel route to the selected store.
 
 ### Frontend
 
@@ -48,18 +52,27 @@ On the backend we have some things left to figure out.
  2. A page with favorite search terms.
 
  3. A map with the route to systembolaget.
+ 
+ 4. We need to display the top choices for stores with the selected beverage.
+ 
+ 5. We need to display the travel route to the selected store.
 
 ## Project Structure
-
 The project is divided into two parts, the client and the server. Both folders reside in the src folder. The client is built separately and will be bundled into a /dist folder that is served statically by the backend.
 
+The project is divided into frontend, backend and database. For easier deployment in Heroku, the frontend and backend are both put in their respective folder in the src folder. The database is based on MongoDB, using the ODM library Mongoose. In the frontend (client) folder, resources contains resources such as images, themes contains some genereal CSS, components contain the components with the js, html and CSS combined in one file for each component, and context contains files regarding the context. The backend (server) folder contains the files for API calls and interaction with the database.
 
 ### Server
 
  * server.mjs: This is where the Express app is initiated, and the routes are directed to their respective files.
- * /APIcalls: This is where we put all our API calls(Google API and Systembolaget API)
+ * /APICalls: This is where we put all our API calls(Google API and Systembolaget API)
+  - googleAPIcall.mjs: This is where we fetch the 20 closest stores.
+  - bolaget.mjs: This is where we connect to Systembolagets API to load Products and Stores.
  * /models: This is where we put our Mongoose.js models(products and stores)
- * /routes: This is where we put our Express routes (currently only API route.)
+  - products.mjs: This is where the Product model is configured.
+  - stores.mjs: This is where the Store model is configured.
+ * /routes: This is where we put our Express routes.
+  - index.mjs: The main API route.
 
 ### Client
  * App.js: Root application.
@@ -78,3 +91,15 @@ The project is divided into two parts, the client and the server. Both folders r
  	- background.svg: The background image.
  * /themes: This is where standard styling for components are stored, such as colors and whatnot.
  	- Themes.js: Contains an object with standard styling for the app.
+
+### Root
+
+ * .babelrc: The config file for Babel
+ * .env: Our environment variables.
+ * .gitignore: Files to ignore on git.
+ * package.json: node dependencies and project configuration
+ * webpack.config.js: webpack config
+
+ ### Public
+ * favicon.png: our favicon
+ * index.html: the main index file. This is where the app entry point is defined.
