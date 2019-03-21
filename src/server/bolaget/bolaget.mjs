@@ -89,9 +89,9 @@ const loadAllStocks = async () => {
 
 // Updates the database with the latest .xml files from Systembolagets API
 export const updateAPIfromSystemet = () => {
-  loadAllStores();
-  loadAllProducts();
-  loadAllStocks();
+  // loadAllStores();
+  // loadAllProducts();
+  // loadAllStocks();
 }
 
 export const findStoresWithGivenProductNrs = (productNrs) => {
