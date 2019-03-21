@@ -55,6 +55,23 @@ The project is divided into two parts, the client and the server. Both folders r
 ### Server
 
  * server.mjs: This is where the Express app is initiated, and the routes are directed to their respective files.
- * /APIcalls: This is where we put all our API calls(Google API and Systembolaget API)
+ * /APICalls: This is where we put all our API calls(Google API and Systembolaget API)
+  - googleAPIcall.mjs: This is where we fetch the 20 closest stores.
+  - bolaget.mjs: This is where we connect to Systembolagets API to load Products and Stores.
  * /models: This is where we put our Mongoose.js models(products and stores)
- * /routes: This is where we put our Express routes (currently only API route.)
+  - products.mjs: This is where the Product model is configured.
+  - stores.mjs: This is where the Store model is configured.
+ * /routes: This is where we put our Express routes.
+  - index.mjs: The main API route.
+
+### Root
+
+ * .babelrc: The config file for Babel
+ * .env: Our environment variables.
+ * .gitignore: Files to ignore on git.
+ * package.json: node dependencies and project configuration
+ * webpack.config.js: webpack config
+
+ ### Public
+ * favicon.png: our favicon
+ * index.html: the main index file. This is where the app entry point is defined.
