@@ -131,6 +131,10 @@ export const getStoresWithProducts = async productNrs => {
   return finalStores;
 }
 
+export const getNrOfStores = () => {
+  return sthlmStores.length
+};
+
 // Find a specific store in the database.
 export const findStore = storeNr => {
   return new Promise((resolve, reject) => {
