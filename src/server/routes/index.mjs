@@ -55,7 +55,7 @@ router.post('/stores', async (req, res) => {
     let storesFromGoogle = await googleResults;
     let closestStoresWithProducts = storesFromGoogle.results.filter(store => {
       return storesFromBolaget.some(bolag => {
-        return store.vicinity.toLocaleLowerCase('sv').includes(bolag.street.toLocaleLowerCase('sv'));
+        return store.vicinity.toLocaleLowerCase('sv').replace(/[^åäöé\w]+/gmi, '').includes(bolag.street.toLocaleLowerCase('sv').replace(/[^åäöé\w]+/gmi, ''));
       })
     });
     closeStores = [...closeStores, ...closestStoresWithProducts];
