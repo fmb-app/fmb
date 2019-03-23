@@ -9,10 +9,10 @@ const router = express.Router();
 // Get the 20 closest Systembolaget stores from the given coordinates. Uses Google Places API.
 router.get('/stores/:long/:lat', async (req, res) => {
   if (Number(req.params.long) !== NaN && Number(req.params.lat) !== NaN) {
-    let stores = await googleFetch(req.params.long, req.params.lat);
-    let data = await stores;
+    const stores = await googleFetch(req.params.long, req.params.lat);
+    const data = await stores;
     res.json(data);
-  }
+  } else
   res.sendStatus(400);
 });
 
