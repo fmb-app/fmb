@@ -92,7 +92,7 @@ export const updateAPIfromSystemet = async () => {
 }
 
 // Find the store ids of stores that carry all the products with the given productNrs.
-export const findStoresWithGivenProductNrs = productNrs => {
+const findStoresWithGivenProductNrs = productNrs => {
   console.log(`findStoresWithGivenProductNrs():\tfindStoresWithGivenProductNrs - searching through ${sthlmStores.length} stores in Stockholm...`);
   return new Promise(resolve => {
     let matchesToReturn = []; // The return object, the matching stores
