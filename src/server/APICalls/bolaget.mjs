@@ -9,119 +9,134 @@ let storeNrs = [];
 let sthlmStores = [];
 let $ = null;
 
-// Saves all products to the database.
-const saveProductsToDB = (products) => {
-  products.map(product => {
-    const myProduct = new Product({
-      _id: Number(product.articleId),
-      nr: product.nr,
-      name1: product.name,
-      name2: product.nameExtra,
-      category: product.category,
-      price: product.price,
-      volume: product.volume,
-      package: product.packaging,
-      alcohol: product.alcohol,
-      producer: product.producer
-    });
-    Product.replaceOne({_id: myProduct._id}, myProduct, {upsert: true},  (err, raw) => {
-      if (err) console.log(err);
-    });
-  });
-}
-
-// Saves all stores in Stockholms Län to the database
-const saveStoresToDB = (stores) => {
-  stores.map(store => {
-    if (store.type === 'Butik' && store.county === 'Stockholms län') {
-      const myStore = new Store({
-        _id: store.nr,
-        name: store.name,
-        street: store.address,
-        postalCode: store.zipCode,
-        city: store.city,
-        rt90x: store.rt90.x,
-        rt90y: store.rt90.y,
-        openingHours: store.openingHours,
-      });        
-      Store.replaceOne({_id: myStore._id}, myStore, {upsert: true},  (err, raw) => {
-        if (err) console.log(err);
-      })
-      storeNrs.push(store.nr);
-    }
-  });
-}
-
 // Fetches all products from Systembolagets API and saves to our database.
-const loadAllProducts = async () => {
-  console.log('Products loading...');
-  const products = await systemet.products()
-  console.log('Products loaded!');
-  saveProductsToDB(products);
+const saveProductsToDB = () => {
+  return new Promise(async (resolve, reject) => {
+    console.log('saveProductsToDB():\tSaving products to database...');
+    const products = await systemet.products();
+    products.map(product => {
+      const myProduct = new Product({
+        _id: Number(product.articleId),
+        nr: product.nr,
+        name1: product.name,
+        name2: product.nameExtra,
+        category: product.category,
+        price: product.price,
+        volume: product.volume,
+        package: product.packaging,
+        alcohol: product.alcohol,
+        producer: product.producer
+      });
+      Product.replaceOne({_id: myProduct._id}, myProduct, {upsert: true},  err => {if (err) reject(err)});
+    });
+    console.log('saveProductsToDB():\tProducts saved to DB!');
+    resolve();
+  });
 }
 
-// Fetches all stores from Systembolagets API and saves to our database.
-const loadAllStores = async () => {
-  storeNrs = [];
-  console.log('Stores loading...');
-  const stores = await systemet.stores()
-  console.log('Stores loaded!');
-  saveStoresToDB(stores);
+// Fetches all stores in Stockholms Län from Systembolagets API and saves to our database.
+const saveStoresToDB = () => {
+  return new Promise(async (resolve, reject) => {
+    storeNrs = [];
+    const stores = await systemet.stores();
+    console.log('saveStoresToDB():\tSaving stores to database...');
+    stores.map(store => {
+      if (store.type === 'Butik' && store.county === 'Stockholms län') {
+        const myStore = new Store({
+          _id: store.nr,
+          name: store.name,
+          street: store.address,
+          postalCode: store.zipCode,
+          city: store.city,
+          rt90x: store.rt90.x,
+          rt90y: store.rt90.y,
+          openingHours: store.openingHours,
+        });        
+        Store.replaceOne({_id: myStore._id}, myStore, {upsert: true},  err => {if (err) reject(err)});
+        storeNrs.push(store.nr);
+      }
+    });
+    console.log('saveStoresToDB():\tStores saved to DB!');
+    resolve(storeNrs);
+  });
 }
 
 // Loads the stock xml file from Systembolagets API into the cheerio $ object
-const loadAllStocks = async () => {
-  console.log('Stocks loading...');
-  const res = await fetch('http://www.systembolaget.se/api/assortment/stock/xml');
-  const data = await res.text();
-  console.log('Loading Stocks into $...');
-  $ = cheerio.load(data, {
-    normalizeWhitespace: true,
-    xmlMode: true
+const loadAllStocks = () => {
+  return new Promise(async resolve => {
+    console.log('loadAllStocks():\tStocks loading...fetching from Systembolaget\'s API');
+    const res = await fetch('http://www.systembolaget.se/api/assortment/stock/xml');
+    const data = await res.text();
+    $ = cheerio.load(data, { normalizeWhitespace: true, xmlMode: true });
+    sthlmStores = $('Butik').filter((i, butik) => storeNrs.includes($(butik).attr('ButikNr')));
+    console.log('loadAllStocks():\tStocks loaded!');
+    resolve(sthlmStores);
   });
-  console.log('Stocks loaded!');
-  sthlmStores = $('Butik').filter((i, butik) => {
-    return storeNrs.includes($(butik).attr('ButikNr'));
-  })
-
-  // let sTs = findStoresWithGivenProductNrs(['8685501', '141212']); //141212 Norrlands, 8685501 Kraken, 8608901 Tequila
 }
 
 // Updates the database with the latest .xml files from Systembolagets API
-export const updateAPIfromSystemet = () => {
-  // loadAllStores();
-  // loadAllProducts();
-  // loadAllStocks();
+export const updateAPIfromSystemet = async () => {
+  console.log('updateAPIfromSystemet()\tUpdating database with the latest Systembolaget data...');
+  let storesAndStock = new Promise(async resolve => {
+    await saveStoresToDB();
+    await loadAllStocks();
+    console.log('updateAPIfromSystemet():\tFinished loading Stores and Stocks');
+    resolve();
+  });
+  let allLoads = await Promise.all([
+    storesAndStock,
+    // saveProductsToDB()
+  ]);
+  console.log('updateAPIfromSystemet()\tDatabase updated with fresh Systembolaget API data!\n\n\n');
+  return allLoads;
 }
 
-export const findStoresWithGivenProductNrs = (productNrs) => {
-  console.log(`findStoresWithGivenProductNrs - searching through ${sthlmStores.length} stores in Stockholm...`);
-  const timeBefore = Date.now();
+// Find the store ids of stores that carry all the products with the given productNrs.
+export const findStoresWithGivenProductNrs = productNrs => {
+  console.log(`findStoresWithGivenProductNrs():\tfindStoresWithGivenProductNrs - searching through ${sthlmStores.length} stores in Stockholm...`);
+  return new Promise(resolve => {
+    let matchesToReturn = []; // The return object, the matching stores
+    let matchingStores = sthlmStores;
+    console.log('findStoresWithGivenProductNrs():\tStores in Stockholms Län:', matchingStores.length);
+    console.log('findStoresWithGivenProductNrs():\tSearching for products with ids:', productNrs);
+    productNrs.map(productNr => {
+      matchingStores = $(matchingStores).filter((i, store) => {
+        let result = false;
+        $(store).children().each((j, artikel) => {
+          if ($(artikel).text() == productNr) {
+            result = true;
+            return false;
+          }
+        })
+        return result;
+      });
+    })
+    $(matchingStores).map((k, match) => { matchesToReturn.push($(match).attr('ButikNr')) });
+    console.log(`findStoresWithGivenProductNrs():\tFound (${matchesToReturn.length}) matching stores.`);
+    resolve(matchesToReturn);
+  })
+}
 
-  let matchesToReturn = []; // The return object, the matching stores
-  let matchingStores = sthlmStores;
-  // console.log('Matching Stores:', matchingStores.length);
-  // console.log('Product Numbers:', productNrs);
-  productNrs.map((productNr) => {
-    matchingStores = $(matchingStores).filter((i, store) => {
-      let result = false;
-      $(store).children().each((j, artikel) => {
-        let artikelNr = $(artikel).text();
-        if (artikelNr == productNr) {
-          result = true;
-          return false;
-        }
-      })
-      return result;
-    });
-  })
-  // console.log('Matching Stores after', matchingStores.length);
+// Finds all stores that have all the given products in stock. 
+export const getStoresWithProducts = async productNrs => {
+  const timeBefore = Date.now();
+  let storeNrsWithGivenProducts = await findStoresWithGivenProductNrs(productNrs); //141212 Norrlands, 8685501 Kraken, 8608901 Tequila
+  let finalStores = [];
+  await Promise.all(storeNrsWithGivenProducts.map(async storeNr => {
+    const store = await findStore(storeNr);
+    return finalStores.push(store);
+  }));
   const totalTime = Date.now() - timeBefore;
-  console.log('Total query time:', totalTime);
-  $(matchingStores).map((k, match) => {
-    const itsAMatch = $(match).attr('ButikNr');
-    // console.log('BUTIKnr:', itsAMatch);
-    matchesToReturn.push(itsAMatch);
+  console.log('getStoresWithProducts():\tTotal query time:', totalTime);
+  return finalStores;
+}
+
+// Find a specific store in the database.
+export const findStore = storeNr => {
+  return new Promise((resolve, reject) => {
+    Store.findById(storeNr, (err, store) => {
+      if(err) reject(err);
+      resolve(store);
+    })
   })
-  return matchesToReturn;
 }

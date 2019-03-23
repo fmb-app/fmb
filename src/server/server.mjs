@@ -2,13 +2,20 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import routes from './routes/index';
-import { updateAPIfromSystemet } from './APICalls/bolaget';
+import { updateAPIfromSystemet, getStoresWithProducts } from './APICalls/bolaget';
 import dotenv from 'dotenv';
 
 dotenv.config(); // Import environment variables
 
 // @TODO: Schedule this to fetch data every 24hrs.
-updateAPIfromSystemet();
+updateAPIfromSystemet()
+  .then(async () => {
+    let stores = await getStoresWithProducts(['8685501', '141212']);
+    // console.log(stores);
+    console.log(`\n\n\n--- Found ${stores.length} stores ---`);
+    stores.map(store => console.log(store.street));
+  })
+  .catch(err => console.log(err));
 
 const app = express();
 app.use(express.json()); // Parse json
