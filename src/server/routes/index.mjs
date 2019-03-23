@@ -6,34 +6,29 @@ import { googleFetch } from '../APICalls/googleAPIcall'
 
 const router = express.Router();
 
-
 // Get the 20 closest Systembolaget stores from the given coordinates. Uses Google Places API.
-router.get('/stores/:long/:lat', (req, res) => {
-  googleFetch(req.params.long, req.params.lat)
-    .then((data) => {
-      res.json(data);
-    });
+router.get('/stores/:long/:lat', async (req, res) => {
+  if (Number(req.params.long) !== NaN && Number(req.params.lat) !== NaN) {
+    let stores = await googleFetch(req.params.long, req.params.lat);
+    let data = await stores;
+    res.json(data);
+  }
+  res.sendStatus(400);
 });
-
-// router.get('/stores', (req, res) => {
-//   res.json(stores);
-// });
-
-// router.get('/stocks', (req, res) => {
-//   res.json(stocks);
-// });
 
 // router.get('/products', (req, res) => {
 //   res.json(products);
 // });
 
-// {
-// 	"coords": {
-// 		"long": "59.3633306",
-// 		"lat": "17.874037"
-// 	},
-// 	"productNrs": ["8685501", "141212"]
-// }
+/*
+{
+	"coords": {
+		"long": "59.3633306",
+		"lat": "17.874037"
+	},
+	"productNrs": ["8685501", "141212"]
+}
+*/
 
 // Get the stores that holds all the given productNrs, sorted by distance.
 router.post('/stores', async (req, res) => {
@@ -55,7 +50,14 @@ router.post('/stores', async (req, res) => {
     let storesFromGoogle = await googleResults;
     let closestStoresWithProducts = storesFromGoogle.results.filter(store => {
       return storesFromBolaget.some(bolag => {
-        return store.vicinity.toLocaleLowerCase('sv').replace(/[^åäöé\w]+/gmi, '').includes(bolag.street.toLocaleLowerCase('sv').replace(/[^åäöé\w]+/gmi, ''));
+        return store.vicinity
+          .toLocaleLowerCase('sv')
+          .replace(/[^åäöé\w]+/gmi, '')
+          .includes(
+            bolag.street
+              .toLocaleLowerCase('sv')
+              .replace(/[^åäöé\w]+/gmi, '')
+          );
       })
     });
     closeStores = [...closeStores, ...closestStoresWithProducts];
