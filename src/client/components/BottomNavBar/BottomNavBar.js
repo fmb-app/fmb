@@ -1,9 +1,10 @@
-import React, {useContext, useEffect} from 'react';
+import React, {useContext} from 'react';
 import {geolocated} from 'react-geolocated';
 import FmbContext from '../../context/FmbContext';
 import InputField from '../InputFields/RegularInputField'
-import RegularButton from '../Buttons/RegularButton'
-import { themes } from '../../themes/Themes'
+import RegularButton from '../Buttons/RegularButton';
+import GPSIcon from '../Icons/GPSIcon';
+import { themes } from '../../themes/Themes';
 
 const style = {
   stickToBottom: {
@@ -15,7 +16,8 @@ const style = {
     height: '4rem',
     backgroundColor: 'rgba(0,0,0,0.8)',
     display: 'grid',
-    gridTemplateColumns: 'auto auto',
+    gridTemplateColumns: 'auto auto auto',
+    gridColumnGap: themes.standardSpace,
     justifyContent: 'center',
     alignItems: 'center',
     paddingLeft: themes.standardSpace,
@@ -27,10 +29,24 @@ const style = {
 const BottomNavBar = (props) => {
   const context = useContext(FmbContext);
 
-  const handleClick = () => {
-    const long = '59.3489405';
-    const lat = '18.0688579';
-    fetch('/api/stores/' + long + "/" + lat , {
+  const getCoordinates = () => {
+    navigator.geolocation.getCurrentPosition((position) => {
+      context.setCoordinates([position.coords.latitude, position.coords.longitude]);
+    });
+  }
+
+  const getFieldValue = () => {
+    if (context.location.type === 'Address') {
+      return context.location.data;
+    } else if (context.location.type === 'GPS') {
+      return context.location.data[0] + ' ' + context.location.data[1];
+    }
+  }
+
+  const getStores = () => {
+    const lat = context.location.data[0];
+    const long  = context.location.data[1];
+    fetch('/api/stores/' + lat + "/" + long , {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'
@@ -38,34 +54,35 @@ const BottomNavBar = (props) => {
       }).then((res) => {
         return res.json();
       }).then((data) => {
-        console.log(data);
+        console.log(data.results)
         context.setResults(data.results);
     });
   }
+
   return (
     <div style={style.stickToBottom}>
       <div style={style.navBar}>
-        {/*<InputField
+      <RegularButton
+        label={<GPSIcon color='white' />}
+        bgcolor={themes.primaryButton}
+        onClick={getCoordinates}
+      />
+      <InputField
           searchTerm={props.searchTerm}
           setInputTerm={props.setSearchTerm}
           onChange={context.setLocation}
-          placeholder='Din Plats'
+          placeholder='Adress'
+          value={getFieldValue()}
         />
-      */}
         <RegularButton
           label='Sök'
           bgcolor={themes.primaryButton}
           color={themes.standardTextColor}
-          onClick={handleClick}
+          onClick={getStores}
         />
       </div>
     </div>
   );
 }
 
-export default geolocated({
-  positionOptions: {
-    enableHighAccuracy: false,
-  },
-  userDecisionTimeout: 10000,
-})(BottomNavBar);
+export default BottomNavBar;

@@ -5,7 +5,7 @@ import { fmbReducer, ADD_DRINK, SET_DRINK, REMOVE_DRINK, SET_LOCATION, SET_RESUL
 
 const GlobalState = props => {
 	const initialState = {
-		location: '',
+		location: {type: 'Address', data: ''},
 		drinks: [{name: '', key: 0}],
 		results: [],
 	};
@@ -25,12 +25,17 @@ const GlobalState = props => {
 	}
 
 	const setLocation = event => {
-		dispatch({type: SET_LOCATION, location: event.target.value});
+		dispatch({type: SET_LOCATION, location: {type: 'Address', data: event.target.value}});
+	}
+
+	const setCoordinates = (coordinates) => {
+		dispatch({type: SET_LOCATION, location: {type: 'GPS', data: coordinates}});
 	}
 
 	const setResults = (results) => {
 		dispatch({type: SET_RESULTS, results: results});
 	}
+
 
 	return (
 		<FmbContext.Provider
@@ -41,6 +46,7 @@ const GlobalState = props => {
 				setDrink: setDrink,
 				removeDrink: removeDrink,
 				setLocation: setLocation,
+				setCoordinates: setCoordinates,
 				setResults: setResults,
 				results: state.results,
 			}}
