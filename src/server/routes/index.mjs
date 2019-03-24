@@ -4,6 +4,7 @@ import express from 'express';
 import { getStoresWithProducts, getNrOfStores } from '../APICalls/bolaget';
 import { googleFetch } from '../APICalls/googleAPIcall';
 import Product from '../models/products';
+import Store from '../models/stores';
 
 const router = express.Router();
 
@@ -13,8 +14,15 @@ router.get('/stores/:long/:lat', async (req, res) => {
     const stores = await googleFetch(req.params.long, req.params.lat);
     const data = await stores;
     res.json(data);
-  } else
-  res.sendStatus(400);
+  } else res.sendStatus(400);
+});
+
+// Return all stores in Stockholms Län
+router.get('/stores', (req, res) => {
+  Store.find({}, null, null, (err, stores) => {
+    if (err) res.sendStatus(500);
+    else res.json(stores);
+  });
 });
 
 // Return all products of a specific category, e.g. 'Öl'.
