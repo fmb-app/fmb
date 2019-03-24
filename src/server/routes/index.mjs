@@ -2,7 +2,8 @@
 
 import express from 'express';
 import { getStoresWithProducts, getNrOfStores } from '../APICalls/bolaget';
-import { googleFetch } from '../APICalls/googleAPIcall'
+import { googleFetch } from '../APICalls/googleAPIcall';
+import Product from '../models/products';
 
 const router = express.Router();
 
@@ -16,9 +17,21 @@ router.get('/stores/:long/:lat', async (req, res) => {
   res.sendStatus(400);
 });
 
-// router.get('/products', (req, res) => {
-//   res.json(products);
-// });
+// Return all products of a specific category, e.g. 'Öl'.
+router.get('/products/:category', async (req, res) => {  
+  Product.find({ category: req.params.category}, null, null, (err, products) => {
+    if (err) res.sendStatus(500);
+    else res.json(products);
+  });
+});
+
+// Return all products in the database.
+router.get('/products', async (req, res) => {
+  Product.find({}, null, null, (err, products) => {
+    if (err) res.sendStatus(500);
+    else res.json(products);
+  });
+});
 
 /*
 {
@@ -62,7 +75,7 @@ router.post('/stores', async (req, res) => {
     });
     closeStores = [...closeStores, ...closestStoresWithProducts];
     console.log('Total stores: ', closeStores.length);
-    closeStores.map((store, i) => console.log('Store #',i,':', store, '\n\n'))
+    closeStores.map((store, i) => console.log('Store #',i,':\n', store, '\n-------------------------\n'))
     storesLeft -= 20;
     offset += 20;
   }
