@@ -24,9 +24,9 @@ router.get('/stores/:long/:lat', async (req, res) => {
 {
 	"coords": {
 		"long": "59.3633306",
-		"lat": "17.874037"
+"lat": "17.874037"
 	},
-	"productNrs": ["8685501", "141212"]
+	"productNrs": ["8685501", "141212", "25602"]
 }
 */
 
@@ -62,7 +62,7 @@ router.post('/stores', async (req, res) => {
     });
     closeStores = [...closeStores, ...closestStoresWithProducts];
     console.log('Total stores: ', closeStores.length);
-    closeStores.map(store => console.log(store.vicinity))
+    closeStores.map((store, i) => console.log('Store #',i,':', store, '\n\n'))
     storesLeft -= 20;
     offset += 20;
   }
