@@ -33,6 +33,14 @@ router.get('/products', async (req, res) => {
   });
 });
 
+// Return all available product categories.
+router.get('/categories', (req, res) => {
+  Product.distinct('category', (err, categories) => {
+    if (err) res.sendStatus(500);
+    else res.json(categories);
+  });  
+});
+
 /*
 {
 	"coords": {
