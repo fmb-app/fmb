@@ -1,11 +1,11 @@
 /*
  * Enumerations describing actions
  */
-export const ADD_DRINK    = 'ADD_DRINK';
-export const SET_DRINK		= 'SET_DRINK';
-export const REMOVE_DRINK = 'REMOVE_DRINK';
-export const SET_LOCATION = 'SET_LOCATION';
-export const SET_RESULTS  = 'SET_RESULTS';
+export const ADD_DRINK    	 = 'ADD_DRINK';
+export const SET_DRINK			 = 'SET_DRINK';
+export const REMOVE_DRINK 	 = 'REMOVE_DRINK';
+export const SET_LOCATION 	 = 'SET_LOCATION';
+export const SET_RESULTS  	 = 'SET_RESULTS';
 
 const addDrink = state => {
 	const len    				= state.drinks.length;
