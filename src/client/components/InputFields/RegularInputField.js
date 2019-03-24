@@ -31,6 +31,7 @@ const RegularInputField = ({type, label, placeholder, value, onChange}) => {
       placeholder={placeholder}
       onChange={onChange}
       style={style.inputField}
+      value={value}
     />
   );
 }

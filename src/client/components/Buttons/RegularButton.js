@@ -4,7 +4,6 @@ import { themes } from '../../themes/Themes'
 
 const style = {
   button: {
-    marginLeft: themes.standardSpace,
     height: '2rem',
     width: '3rem',
     borderStyle: 'none',
