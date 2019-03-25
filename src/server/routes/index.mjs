@@ -79,8 +79,8 @@ router.get('/travel', async (req, res) => {
 
 // Get the stores that holds all the given productNrs, sorted by distance.
 router.post('/stores', async (req, res) => {
-  const long = req.body.coords.long;
   const lat = req.body.coords.lat;
+  const long = req.body.coords.long;
   const productNrs = req.body.productNrs;
   // Validate post body
   if (Number(long) === NaN || Number(lat) === NaN || productNrs.some(nr => Number(nr) === NaN)) {
@@ -88,15 +88,16 @@ router.post('/stores', async (req, res) => {
   };
   const storesFromBolaget = await getStoresWithProducts(productNrs);
   let storesLeft = getNrOfStores();
-  let offset = 0;
+  let nextToken = "";
   let closeStores = [];
 
   while (storesLeft > 0 && closeStores.length < 3) {
 
-    let googleResults = await googleFetch(long, lat, offset);
+    let googleResults = await googleFetch(lat, long, nextToken);
     let storesFromGoogle = await googleResults;
-    let closestStoresWithProducts = storesFromGoogle.results.filter(store => {
-      return storesFromBolaget.some(bolag => {
+    let closestStoresWithProducts = [];
+    storesFromGoogle.results.forEach(store => {
+      let rattBolag = storesFromBolaget.find(bolag => {
         return store.vicinity
           .toLocaleLowerCase('sv')
           .replace(/[^åäöé\w]+/gmi, '')
@@ -105,13 +106,17 @@ router.post('/stores', async (req, res) => {
               .toLocaleLowerCase('sv')
               .replace(/[^åäöé\w]+/gmi, '')
           );
-      })
+      })if(rattBolag!==undefined){
+        //TODO Make our own JSON that we need
+      }
+      return "nej"
     });
+    nextToken = googleResults.next_page_token;
+    console.log(nextToken);
     closeStores = [...closeStores, ...closestStoresWithProducts];
     console.log('Total stores: ', closeStores.length);
     closeStores.map((store, i) => console.log('Store #',i,':\n', store, '\n-------------------------\n'))
     storesLeft -= 20;
-    offset += 20;
   }
 
 
