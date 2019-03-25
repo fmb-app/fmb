@@ -3,6 +3,7 @@
 import express from 'express';
 import { getStoresWithProducts, getNrOfStores } from '../APICalls/bolaget';
 import { googleFetch } from '../APICalls/googleAPIcall';
+import { slFetch } from '../APICalls/slAPIcall';
 import Product from '../models/products';
 import Store from '../models/stores';
 
