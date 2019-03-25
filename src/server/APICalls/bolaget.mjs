@@ -51,7 +51,7 @@ const saveStoresToDB = () => {
           rt90x: store.rt90.x,
           rt90y: store.rt90.y,
           openingHours: store.openingHours,
-        });        
+        });
         Store.replaceOne({_id: myStore._id}, myStore, {upsert: true},  err => {if (err) reject(err)});
         storeNrs.push(store.nr);
       }
@@ -117,7 +117,7 @@ const findStoresWithGivenProductNrs = productNrs => {
   })
 }
 
-// Finds all stores that have all the given products in stock. 
+// Finds all stores that have all the given products in stock.
 export const getStoresWithProducts = async productNrs => {
   const timeBefore = Date.now();
   let storeNrsWithGivenProducts = await findStoresWithGivenProductNrs(productNrs); //141212 Norrlands, 8685501 Kraken, 8608901 Tequila
