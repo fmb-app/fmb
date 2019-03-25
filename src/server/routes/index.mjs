@@ -82,12 +82,10 @@ router.post('/stores', async (req, res) => {
   let closeStores = [];
 
   while (storesLeft > 0 && closeStores.length < 3) {
-
     let googleResults = await googleFetch(lat, long, nextToken);
     let storesFromGoogle = await googleResults;
-    let closestStoresWithProducts = [];
     storesFromGoogle.results.forEach(store => {
-      let rattBolag = storesFromBolaget.find(bolag => {
+      let matchingBolag = storesFromBolaget.find(bolag => {
         return store.vicinity
           .toLocaleLowerCase('sv')
           .replace(/[^åäöé\w]+/gmi, '')
@@ -96,14 +94,27 @@ router.post('/stores', async (req, res) => {
               .toLocaleLowerCase('sv')
               .replace(/[^åäöé\w]+/gmi, '')
           );
-      })if(rattBolag!==undefined){
-        //TODO Make our own JSON that we need
+      });
+      // Return combined store objects
+      if(matchingBolag !== undefined) {
+        const returnStore = {
+          nr: matchingBolag._id,
+          name: matchingBolag.name,
+          street: matchingBolag.street,
+          postalCode: matchingBolag.postalCode,
+          city: matchingBolag.city,          
+          openingHours: matchingBolag.openingHours,
+          coords: {
+            long: store.geometry.location.lng,
+            lat: store.geometry.location.lat,
+            rt90x: matchingBolag.rt90x,
+            rt90y: matchingBolag.rt90y
+          }
+        };
+        closeStores.push(returnStore);
       }
-      return "nej"
     });
     nextToken = googleResults.next_page_token;
-    console.log(nextToken);
-    closeStores = [...closeStores, ...closestStoresWithProducts];
     console.log('Total stores: ', closeStores.length);
     closeStores.map((store, i) => console.log('Store #',i,':\n', store, '\n-------------------------\n'))
     storesLeft -= 20;
@@ -112,10 +123,5 @@ router.post('/stores', async (req, res) => {
 
   res.json({stores: closeStores});
 })
-
-router.get('/', (req, res) => {
-  let msg = '👋 Yo world.';
-  res.json({ message: msg });
-});
 
 export default router;
