@@ -41,6 +41,23 @@ router.get('/categories', (req, res) => {
   });  
 });
 
+// // 
+// router.get('/travel/:long/:lat', async (req, res) => {
+//   if (Number(req.params.long) !== NaN && Number(req.params.lat) !== NaN) {
+//     const stores = await googleFetch(req.params.long, req.params.lat);
+//     const data = await stores;
+//     res.json(data);
+//   } else
+//   res.sendStatus(400);
+// });
+
+// 
+router.get('/travel', async (req, res) => {
+    const trip = await slFetch();
+    const data = await trip;
+    res.json(data);
+});
+
 /*
 {
 	"coords": {

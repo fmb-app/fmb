@@ -85,7 +85,7 @@ export const updateAPIfromSystemet = async () => {
   });
   let allLoads = await Promise.all([
     storesAndStock,
-    // saveProductsToDB()
+    saveProductsToDB()
   ]);
   console.log('updateAPIfromSystemet()\tDatabase updated with fresh Systembolaget API data!\n\n\n');
   return allLoads;
