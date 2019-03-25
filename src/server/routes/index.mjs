@@ -53,8 +53,7 @@ router.get('/categories', (req, res) => {
 // Get the travel route from given coordinates to given coordinates. Uses Trafiklab API.
 router.get('/travel/:olat/:olong/:dlat/:dlong', async (req, res) => {
     const trip = await slFetch(req.params.olat, req.params.olong, req.params.dlat, req.params.dlong);
-    const data = await trip;
-    res.json(data);
+    res.json(trip);
 });
 
 /*
@@ -104,23 +103,29 @@ router.post('/stores', async (req, res) => {
           postalCode: matchingBolag.postalCode,
           city: matchingBolag.city,          
           openingHours: matchingBolag.openingHours,
-          coords: {
-            long: store.geometry.location.lng,
-            lat: store.geometry.location.lat,
-            rt90x: matchingBolag.rt90x,
-            rt90y: matchingBolag.rt90y
+          location: {
+            coords: {
+              lat: store.geometry.location.lat,
+              long: store.geometry.location.lng,
+            },
+            rt90: {
+              x: matchingBolag.rt90x,
+              y: matchingBolag.rt90y
+            }
           }
-        };
+        }
         closeStores.push(returnStore);
-      }
+      };
     });
     nextToken = googleResults.next_page_token;
     console.log('Total stores: ', closeStores.length);
     closeStores.map((store, i) => console.log('Store #',i,':\n', store, '\n-------------------------\n'))
     storesLeft -= 20;
   }
-
-
+  if (closeStores.length > 0) {
+    const trip = await slFetch(lat, long, closeStores[0].location.coords.lat, closeStores[0].location.coords.long);
+    closeStores[0].sl = trip;
+  }
   res.json({stores: closeStores});
 })
 
