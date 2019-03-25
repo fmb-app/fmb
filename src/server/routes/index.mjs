@@ -9,9 +9,9 @@ import Store from '../models/stores';
 const router = express.Router();
 
 // Get the 20 closest Systembolaget stores from the given coordinates. Uses Google Places API.
-router.get('/stores/:long/:lat', async (req, res) => {
+router.get('/stores/:lat/:long', async (req, res) => {
   if (Number(req.params.long) !== NaN && Number(req.params.lat) !== NaN) {
-    const stores = await googleFetch(req.params.long, req.params.lat);
+    const stores = await googleFetch(req.params.lat, req.params.long);
     const data = await stores;
     res.json(data);
   } else res.sendStatus(400);
@@ -26,7 +26,7 @@ router.get('/stores', (req, res) => {
 });
 
 // Return all products of a specific category, e.g. 'Öl'.
-router.get('/products/:category', async (req, res) => {  
+router.get('/products/:category', async (req, res) => {
   Product.find({ category: req.params.category}, null, null, (err, products) => {
     if (err) res.sendStatus(500);
     else res.json(products);
@@ -46,10 +46,10 @@ router.get('/categories', (req, res) => {
   Product.distinct('category', (err, categories) => {
     if (err) res.sendStatus(500);
     else res.json(categories);
-  });  
+  });
 });
 
-// // 
+// //
 // router.get('/travel/:long/:lat', async (req, res) => {
 //   if (Number(req.params.long) !== NaN && Number(req.params.lat) !== NaN) {
 //     const stores = await googleFetch(req.params.long, req.params.lat);
@@ -59,7 +59,7 @@ router.get('/categories', (req, res) => {
 //   res.sendStatus(400);
 // });
 
-// 
+//
 router.get('/travel', async (req, res) => {
     const trip = await slFetch();
     const data = await trip;
@@ -92,7 +92,7 @@ router.post('/stores', async (req, res) => {
 
   while (storesLeft > 0 && closeStores.length < 3) {
 
-    let googleResults = await googleFetch(long, lat, offset);  
+    let googleResults = await googleFetch(long, lat, offset);
     let storesFromGoogle = await googleResults;
     let closestStoresWithProducts = storesFromGoogle.results.filter(store => {
       return storesFromBolaget.some(bolag => {
