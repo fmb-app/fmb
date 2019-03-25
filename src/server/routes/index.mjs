@@ -50,19 +50,9 @@ router.get('/categories', (req, res) => {
   });
 });
 
-// //
-// router.get('/travel/:long/:lat', async (req, res) => {
-//   if (Number(req.params.long) !== NaN && Number(req.params.lat) !== NaN) {
-//     const stores = await googleFetch(req.params.long, req.params.lat);
-//     const data = await stores;
-//     res.json(data);
-//   } else
-//   res.sendStatus(400);
-// });
-
-//
-router.get('/travel', async (req, res) => {
-    const trip = await slFetch();
+// Get the travel route from given coordinates to given coordinates. Uses Trafiklab API.
+router.get('/travel/:olat/:olong/:dlat/:dlong', async (req, res) => {
+    const trip = await slFetch(req.params.olat, req.params.olong, req.params.dlat, req.params.dlong);
     const data = await trip;
     res.json(data);
 });
