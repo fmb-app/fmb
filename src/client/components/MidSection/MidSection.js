@@ -56,7 +56,7 @@ const containerStyle = (isDraggingOver) => ({
 	alignContent: 'start',
 	overflowY: 'auto',
 	height: '90%',
-	overflow: 'scroll',
+	overflowY: 'auto',
 	boxSizing: 'borderBox',
 });
 
