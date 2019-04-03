@@ -180,11 +180,6 @@ const combineStoreObjects = (matchingBolag, store) => {
   }
 }
 
-const isCurrentlyOpen = (bolag) => {
-  // console.log(bolag.openingHours);
-  return true;
-}
-
 // Get the stores that holds all the given productNrs, sorted by distance.
 export const findStoresWithProduct = async (lat, long, productNrs) => {
   // Validate post body
@@ -197,10 +192,10 @@ export const findStoresWithProduct = async (lat, long, productNrs) => {
   let closeStores = [];
 
   while (storesLeft > 0 && closeStores.length < 3) {
-    let googleResults = await googleFetch(lat, long, nextToken);
-    let storesFromGoogle = await googleResults;
+    const googleResults = await googleFetch(lat, long, nextToken);
+    const storesFromGoogle = await googleResults;
     storesFromGoogle.results.forEach(store => {
-      let matchingBolag = storesFromBolaget.find(bolag => bolagMatchesStore(store, bolag) && isCurrentlyOpen(bolag));
+      const matchingBolag = storesFromBolaget.find(bolag => bolagMatchesStore(store, bolag));
       // Return combined store objects
       if(matchingBolag !== undefined) {
         closeStores.push(combineStoreObjects(matchingBolag, store));
