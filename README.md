@@ -61,8 +61,8 @@ The project is divided into two parts, the client and the server. Both folders r
 ### Server
 
  * server.mjs: This is where the Express app is initiated, and the routes are directed to their respective files.
- * /APICalls: This is where we put all our API calls(Google API and Systembolaget API)
-  - googleAPIcall.mjs: This is where we fetch the 20 closest stores.
+ * /api: This is where we put all our API calls(Google API and Systembolaget API)
+  - google.mjs: This is where we fetch the 20 closest stores.
   - bolaget.mjs: This is where we connect to Systembolagets API to load Products and Stores.
  * /models: This is where we put our Mongoose.js models(products and stores)
   - products.mjs: This is where the Product model is configured.
