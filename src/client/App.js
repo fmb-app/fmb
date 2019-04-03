@@ -1,4 +1,5 @@
 import React from 'react';
+import { DragDropContext } from 'react-beautiful-dnd';
 import GlobalState from './context/GlobalState';
 import BottomNavBar from './components/BottomNavBar/BottomNavBar';
 import MidSection from './components/MidSection/MidSection';
@@ -39,7 +40,6 @@ const style = {
 };
 
 const App = () => {
-
 	return (
 		<GlobalState>
 			<div style={style.container}>

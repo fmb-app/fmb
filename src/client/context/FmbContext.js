@@ -1,12 +1,11 @@
 import React, { createContext } from 'react';
 
 const FmbContext = createContext({
-	location: {type: 'Address', data:''},
-	drinks: [],
+	categories: [{}],
+	selectedDrinks: [{}],
+	location: {},
 	results: [],
-	addDrink: () => {},
-	setDrink: drink => {},
-	removeDrink: drink => {},
+	setSelectedDrinks: drink => {},
 	setLocation: location => {},
 	setResults: results => {}
 });

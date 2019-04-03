@@ -1,28 +1,17 @@
 import React, { useState, useReducer } from 'react';
 import {geolocated} from 'react-geolocated';
 import FmbContext from './FmbContext';
-import { fmbReducer, ADD_DRINK, SET_DRINK, REMOVE_DRINK, SET_LOCATION, SET_RESULTS } from './Reducer';
+import { fmbReducer, SET_LOCATION, SET_RESULTS, REMOVE_CATEGORY, SET_SELECTED_DRINKS } from './Reducer';
 
 const GlobalState = props => {
 	const initialState = {
+		categories: ['Vin', 'Öl', 'Cider', 'Bubbel', 'Korv'],
+		selectedDrinks: [],
 		location: {type: 'Address', data: ''},
-		drinks: [{name: '', key: 0}],
 		results: [],
 	};
 
 	const [state, dispatch] = useReducer(fmbReducer, initialState);
-
-	const addDrink = () => {
-		dispatch({type: ADD_DRINK});
-	}
-
-	const removeDrink = key => {
-		dispatch({type: REMOVE_DRINK, key: key});
-	}
-
-	const setDrink = (key, event) => {
-		dispatch({type: SET_DRINK, drink: event.target.value, key: key});
-	}
 
 	const setLocation = event => {
 		dispatch({type: SET_LOCATION, location: {type: 'Address', data: event.target.value}});
@@ -32,19 +21,27 @@ const GlobalState = props => {
 		dispatch({type: SET_LOCATION, location: {type: 'GPS', data: coordinates}});
 	}
 
+	const removeCategory = (category) => {
+		dispatch({type: REMOVE_CATEGORY, category: category});
+	}
+
 	const setResults = (results) => {
 		dispatch({type: SET_RESULTS, results: results});
 	}
 
+	const setSelectedDrinks = (drink) => {
+		console.log('FECK2 ' + drink);
+		dispatch({type: SET_SELECTED_DRINKS, drink: drink});
+	}
 
 	return (
 		<FmbContext.Provider
 			value={{
-				drinks: state.drinks,
+				categories: state.categories,
+				selectedDrinks: state.selectedDrinks,
+				setSelectedDrinks: setSelectedDrinks,
+				removeCategory: removeCategory,
 				location: state.location,
-				addDrink: addDrink,
-				setDrink: setDrink,
-				removeDrink: removeDrink,
 				setLocation: setLocation,
 				setCoordinates: setCoordinates,
 				setResults: setResults,

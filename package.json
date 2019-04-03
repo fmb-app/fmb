@@ -30,6 +30,7 @@
     "node-fetch": "^2.3.0",
     "radium": "^0.25.1",
     "react": "^16.8.4",
+    "react-beautiful-dnd": "^10.1.0",
     "react-dom": "^16.8.4",
     "react-geolocated": "^2.4.1",
     "systemet": "^1.0.0"
