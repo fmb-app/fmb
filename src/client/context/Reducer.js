@@ -1,7 +1,13 @@
 export const SET_SELECTED_DRINKS = 'SET_SELECTED_DRINKS';
 export const SET_LOCATION 	 		 = 'SET_LOCATION';
 export const SET_RESULTS  	 		 = 'SET_RESULTS';
+export const SET_CATEGORIES  	   = 'SET_CATEGORIES';
 export const REMOVE_CATEGORY  	 = 'REMOVE_CATEGORY';
+
+const setCategories = (categories, state) => {
+	console.log(categories);
+	return {...state, categories: categories};
+}
 
 const setSelectedDrinks = (drink, state) => {
 	const oldDrinks = state.selectedDrinks;
@@ -24,6 +30,8 @@ const setResults = (results, state) => {
 
 export const fmbReducer = (state, action) => {
 	switch (action.type) {
+		case SET_CATEGORIES:
+			return setCategories(action.categories, state);
 		case SET_SELECTED_DRINKS:
 			return setSelectedDrinks(action.drink, state);
 		case REMOVE_CATEGORY:

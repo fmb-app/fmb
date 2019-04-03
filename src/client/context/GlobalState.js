@@ -1,7 +1,13 @@
-import React, { useState, useReducer } from 'react';
+import React, { useState, useEffect, useReducer } from 'react';
 import {geolocated} from 'react-geolocated';
 import FmbContext from './FmbContext';
-import { fmbReducer, SET_LOCATION, SET_RESULTS, REMOVE_CATEGORY, SET_SELECTED_DRINKS } from './Reducer';
+import { fmbReducer,
+				 SET_LOCATION,
+				 SET_RESULTS,
+				 REMOVE_CATEGORY,
+				 SET_SELECTED_DRINKS,
+				 SET_CATEGORIES 
+			 } from './Reducer';
 
 const GlobalState = props => {
 	const initialState = {
@@ -30,9 +36,25 @@ const GlobalState = props => {
 	}
 
 	const setSelectedDrinks = (drink) => {
-		console.log('FECK2 ' + drink);
 		dispatch({type: SET_SELECTED_DRINKS, drink: drink});
 	}
+
+	useEffect(() => {
+    fetch('/api/categories', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+      }).then((res) => {
+        return res.json();
+      }).then((data) => {
+      	// Remove the last element since it is null
+      	const categories = data.slice(0, data.length - 2);
+      	dispatch({type: SET_CATEGORIES, categories: categories});
+    }).catch((err) => {
+    	console.log(err);
+    });
+	}, []);
 
 	return (
 		<FmbContext.Provider
