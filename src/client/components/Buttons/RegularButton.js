@@ -22,7 +22,7 @@ const RegularButton = ({ label, bgcolor, color, onClick, disabled }) => {
   return (
     <div>
       <button 
-        style={[style.button, {...bgcolor, color: color}]}
+        style={[style.button, {...bgcolor, color}]}
         onClick={() => onClick()}
         disabled={disabled}
       >

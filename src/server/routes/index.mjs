@@ -2,23 +2,59 @@
 
 import express from 'express';
 import { getStoresWithProducts, getNrOfStores } from '../APICalls/bolaget';
-import { googleFetch } from '../APICalls/googleAPIcall'
+import { googleFetch } from '../APICalls/googleAPIcall';
+import { slFetch } from '../APICalls/slAPIcall';
+import Product from '../models/products';
+import Store from '../models/stores';
 
 const router = express.Router();
 
 // Get the 20 closest Systembolaget stores from the given coordinates. Uses Google Places API.
-router.get('/stores/:long/:lat', async (req, res) => {
+router.get('/stores/:lat/:long', async (req, res) => {
   if (Number(req.params.long) !== NaN && Number(req.params.lat) !== NaN) {
-    const stores = await googleFetch(req.params.long, req.params.lat);
+    const stores = await googleFetch(req.params.lat, req.params.long);
     const data = await stores;
     res.json(data);
-  } else
-  res.sendStatus(400);
+  } else res.sendStatus(400);
 });
 
-// router.get('/products', (req, res) => {
-//   res.json(products);
-// });
+// Return all stores in Stockholms Län
+router.get('/stores', (req, res) => {
+  Store.find({}, null, null, (err, stores) => {
+    if (err) res.sendStatus(500);
+    else res.json(stores);
+  });
+});
+
+// Return all products of a specific category, e.g. 'Öl'.
+router.get('/products/:category', async (req, res) => {
+  Product.find({ category: req.params.category}, null, null, (err, products) => {
+    if (err) res.sendStatus(500);
+    else res.json(products);
+  });
+});
+
+// Return all products in the database.
+router.get('/products', async (req, res) => {
+  Product.find({}, null, null, (err, products) => {
+    if (err) res.sendStatus(500);
+    else res.json(products);
+  });
+});
+
+// Return all available product categories.
+router.get('/categories', (req, res) => {
+  Product.distinct('category', (err, categories) => {
+    if (err) res.sendStatus(500);
+    else res.json(categories);
+  });
+});
+
+// Get the travel route from given coordinates to given coordinates. Uses Trafiklab API.
+router.get('/travel/:olat/:olong/:dlat/:dlong', async (req, res) => {
+    const trip = await slFetch(req.params.olat, req.params.olong, req.params.dlat, req.params.dlong);
+    res.json(trip);
+});
 
 /*
 {
@@ -32,8 +68,8 @@ router.get('/stores/:long/:lat', async (req, res) => {
 
 // Get the stores that holds all the given productNrs, sorted by distance.
 router.post('/stores', async (req, res) => {
-  const long = req.body.coords.long;
   const lat = req.body.coords.lat;
+  const long = req.body.coords.long;
   const productNrs = req.body.productNrs;
   // Validate post body
   if (Number(long) === NaN || Number(lat) === NaN || productNrs.some(nr => Number(nr) === NaN)) {
@@ -41,15 +77,14 @@ router.post('/stores', async (req, res) => {
   };
   const storesFromBolaget = await getStoresWithProducts(productNrs);
   let storesLeft = getNrOfStores();
-  let offset = 0;
+  let nextToken = "";
   let closeStores = [];
 
   while (storesLeft > 0 && closeStores.length < 3) {
-
-    let googleResults = await googleFetch(long, lat, offset);  
+    let googleResults = await googleFetch(lat, long, nextToken);
     let storesFromGoogle = await googleResults;
-    let closestStoresWithProducts = storesFromGoogle.results.filter(store => {
-      return storesFromBolaget.some(bolag => {
+    storesFromGoogle.results.forEach(store => {
+      let matchingBolag = storesFromBolaget.find(bolag => {
         return store.vicinity
           .toLocaleLowerCase('sv')
           .replace(/[^åäöé\w]+/gmi, '')
@@ -58,22 +93,40 @@ router.post('/stores', async (req, res) => {
               .toLocaleLowerCase('sv')
               .replace(/[^åäöé\w]+/gmi, '')
           );
-      })
+      });
+      // Return combined store objects
+      if(matchingBolag !== undefined) {
+        const returnStore = {
+          nr: matchingBolag._id,
+          name: matchingBolag.name,
+          street: matchingBolag.street,
+          postalCode: matchingBolag.postalCode,
+          city: matchingBolag.city,          
+          openingHours: matchingBolag.openingHours,
+          location: {
+            coords: {
+              lat: store.geometry.location.lat,
+              long: store.geometry.location.lng,
+            },
+            rt90: {
+              x: matchingBolag.rt90x,
+              y: matchingBolag.rt90y
+            }
+          }
+        }
+        closeStores.push(returnStore);
+      };
     });
-    closeStores = [...closeStores, ...closestStoresWithProducts];
+    nextToken = googleResults.next_page_token;
     console.log('Total stores: ', closeStores.length);
-    closeStores.map((store, i) => console.log('Store #',i,':', store, '\n\n'))
+    closeStores.map((store, i) => console.log('Store #',i,':\n', store, '\n-------------------------\n'))
     storesLeft -= 20;
-    offset += 20;
   }
-
-
+  if (closeStores.length > 0) {
+    const trip = await slFetch(lat, long, closeStores[0].location.coords.lat, closeStores[0].location.coords.long);
+    closeStores[0].sl = trip;
+  }
   res.json({stores: closeStores});
 })
-
-router.get('/', (req, res) => {
-  let msg = '👋 Yo world.';
-  res.json({ message: msg });
-});
 
 export default router;

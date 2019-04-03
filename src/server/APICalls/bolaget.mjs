@@ -132,7 +132,7 @@ export const getStoresWithProducts = async productNrs => {
 }
 
 export const getNrOfStores = () => {
-  return sthlmStores.length
+  return sthlmStores.length;
 };
 
 // Find a specific store in the database.
