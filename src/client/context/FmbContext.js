@@ -1,7 +1,8 @@
 import React, { createContext } from 'react';
 
 const FmbContext = createContext({
-	categories: [{}],
+	products: [],
+	categories: [],
 	selectedDrinks: [{}],
 	location: {},
 	results: [],

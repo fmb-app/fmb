@@ -2,22 +2,28 @@ import React, { useState, useEffect, useReducer } from 'react';
 import {geolocated} from 'react-geolocated';
 import FmbContext from './FmbContext';
 import { fmbReducer,
+				 SET_PRODUCTS,
 				 SET_LOCATION,
 				 SET_RESULTS,
+				 SET_CATEGORIES,
 				 REMOVE_CATEGORY,
 				 SET_SELECTED_DRINKS,
-				 SET_CATEGORIES 
 			 } from './Reducer';
 
 const GlobalState = props => {
 	const initialState = {
-		categories: ['Vin', 'Öl', 'Cider', 'Bubbel', 'Korv'],
+		categories: [],
+		products: [],
 		selectedDrinks: [],
 		location: {type: 'Address', data: ''},
 		results: [],
 	};
 
 	const [state, dispatch] = useReducer(fmbReducer, initialState);
+
+	const setProducts = products => {
+		dispatch({type: SET_PRODUCTS, products: products});
+	}
 
 	const setLocation = event => {
 		dispatch({type: SET_LOCATION, location: {type: 'Address', data: event.target.value}});
@@ -59,6 +65,8 @@ const GlobalState = props => {
 	return (
 		<FmbContext.Provider
 			value={{
+				products: state.products,
+				setProducts: setProducts,
 				categories: state.categories,
 				selectedDrinks: state.selectedDrinks,
 				setSelectedDrinks: setSelectedDrinks,
