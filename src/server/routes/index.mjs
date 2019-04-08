@@ -1,9 +1,9 @@
 'use strict';
 
 import express from 'express';
-import { getStoresWithProducts, getNrOfStores } from '../APICalls/bolaget';
-import { googleFetch } from '../APICalls/googleAPIcall';
-import { slFetch } from '../APICalls/slAPIcall';
+import { findStoresWithProduct } from '../api/bolaget';
+import { googleFetch } from '../api/google';
+import { slFetch } from '../api/sl';
 import Product from '../models/products';
 import Store from '../models/stores';
 
@@ -71,62 +71,11 @@ router.post('/stores', async (req, res) => {
   const lat = req.body.coords.lat;
   const long = req.body.coords.long;
   const productNrs = req.body.productNrs;
-  // Validate post body
-  if (Number(long) === NaN || Number(lat) === NaN || productNrs.some(nr => Number(nr) === NaN)) {
-    res.sendStatus(404);
-  };
-  const storesFromBolaget = await getStoresWithProducts(productNrs);
-  let storesLeft = getNrOfStores();
-  let nextToken = "";
-  let closeStores = [];
-
-  while (storesLeft > 0 && closeStores.length < 3) {
-    let googleResults = await googleFetch(lat, long, nextToken);
-    let storesFromGoogle = await googleResults;
-    storesFromGoogle.results.forEach(store => {
-      let matchingBolag = storesFromBolaget.find(bolag => {
-        return store.vicinity
-          .toLocaleLowerCase('sv')
-          .replace(/[^åäöé\w]+/gmi, '')
-          .includes(
-            bolag.street
-              .toLocaleLowerCase('sv')
-              .replace(/[^åäöé\w]+/gmi, '')
-          );
-      });
-      // Return combined store objects
-      if(matchingBolag !== undefined) {
-        const returnStore = {
-          nr: matchingBolag._id,
-          name: matchingBolag.name,
-          street: matchingBolag.street,
-          postalCode: matchingBolag.postalCode,
-          city: matchingBolag.city,          
-          openingHours: matchingBolag.openingHours,
-          location: {
-            coords: {
-              lat: store.geometry.location.lat,
-              long: store.geometry.location.lng,
-            },
-            rt90: {
-              x: matchingBolag.rt90x,
-              y: matchingBolag.rt90y
-            }
-          }
-        }
-        closeStores.push(returnStore);
-      };
-    });
-    nextToken = googleResults.next_page_token;
-    console.log('Total stores: ', closeStores.length);
-    closeStores.map((store, i) => console.log('Store #',i,':\n', store, '\n-------------------------\n'))
-    storesLeft -= 20;
-  }
-  if (closeStores.length > 0) {
-    const trip = await slFetch(lat, long, closeStores[0].location.coords.lat, closeStores[0].location.coords.long);
-    closeStores[0].sl = trip;
-  }
-  res.json({stores: closeStores});
+  
+  const closeStores = await findStoresWithProduct(lat, long, productNrs);
+  closeStores === -1 
+    ? res.sendStatus(404) // There was an error fetching the stores.
+    : res.json({stores: closeStores}); // Return the stores.
 })
 
 export default router;

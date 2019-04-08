@@ -2,7 +2,7 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import routes from './routes/index';
-import { updateAPIfromSystemet, getStoresWithProducts } from './APICalls/bolaget';
+import { updateAPIfromSystemet, getStoresWithProducts } from './api/bolaget';
 import dotenv from 'dotenv';
 
 dotenv.config(); // Import environment variables

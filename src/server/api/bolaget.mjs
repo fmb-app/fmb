@@ -2,6 +2,7 @@
 import systemet from 'systemet';
 import Store from '../models/stores';
 import Product from '../models/products';
+import { googleFetch } from '../api/google';
 import cheerio from 'cheerio';
 import fetch from "node-fetch";
 
@@ -143,4 +144,67 @@ export const findStore = storeNr => {
       resolve(store);
     })
   })
+}
+
+// Check whether the store and the bolag refers to the same Systembolag.
+const bolagMatchesStore = (store, bolag) => {
+  return store.vicinity
+    .toLocaleLowerCase('sv')
+    .replace(/[^åäöé\w]+/gmi, '')
+    .includes(
+      bolag.street
+        .toLocaleLowerCase('sv')
+        .replace(/[^åäöé\w]+/gmi, '')
+    )
+}
+
+// Combines a Systembolaget store and a GoogleAPI store into a single object
+const combineStoreObjects = (matchingBolag, store) => {
+  return {
+    nr: matchingBolag._id,
+    name: matchingBolag.name,
+    street: matchingBolag.street,
+    postalCode: matchingBolag.postalCode,
+    city: matchingBolag.city,          
+    openingHours: matchingBolag.openingHours,
+    location: {
+      coords: {
+        lat: store.geometry.location.lat,
+        long: store.geometry.location.lng,
+      },
+      rt90: {
+        x: matchingBolag.rt90x,
+        y: matchingBolag.rt90y
+      }
+    }
+  }
+}
+
+// Get the stores that holds all the given productNrs, sorted by distance.
+export const findStoresWithProduct = async (lat, long, productNrs) => {
+  // Validate post body
+  if (Number(long) === NaN || Number(lat) === NaN || productNrs.some(nr => Number(nr) === NaN)) {
+    return -1;
+  };
+  const storesFromBolaget = await getStoresWithProducts(productNrs);
+  let storesLeft = getNrOfStores();
+  let nextToken = "";
+  let closeStores = [];
+
+  while (storesLeft > 0 && closeStores.length < 3) {
+    const googleResults = await googleFetch(lat, long, nextToken);
+    const storesFromGoogle = await googleResults;
+    storesFromGoogle.results.forEach(store => {
+      const matchingBolag = storesFromBolaget.find(bolag => bolagMatchesStore(store, bolag));
+      // Return combined store objects
+      if(matchingBolag !== undefined) {
+        closeStores.push(combineStoreObjects(matchingBolag, store));
+      };
+    });
+    nextToken = googleResults.next_page_token;
+    storesLeft -= 20;
+    // console.log('Total stores: ', closeStores.length);
+    // closeStores.map((store, i) => console.log('Store #',i,':\n', store.street, '\n-------------------------\n'))
+  }
+  return closeStores;
 }
