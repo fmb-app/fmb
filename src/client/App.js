@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { DragDropContext } from 'react-beautiful-dnd';
 import GlobalState from './context/GlobalState';
 import BottomNavBar from './components/BottomNavBar/BottomNavBar';
@@ -44,7 +45,9 @@ const App = () => {
 		<GlobalState>
 			<div style={style.container}>
 				<div style={style.header}>
-					<h1 style={style.headerFont}>Find my Bork</h1>
+					<Link to='/' style={{textDecoration: 'none'}}>
+						<h1 style={style.headerFont}>Find my Bork</h1>
+					</Link>
 				</div>
 				<MidSection />
 				<BottomNavBar />
