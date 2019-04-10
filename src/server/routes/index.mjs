@@ -56,16 +56,6 @@ router.get('/travel/:olat/:olong/:dlat/:dlong', async (req, res) => {
     res.json(trip);
 });
 
-/*
-{
-	"coords": {
-		"long": "59.3633306",
-"lat": "17.874037"
-	},
-	"productNrs": ["8685501", "141212", "25602"]
-}
-*/
-
 // Get the stores that holds all the given productNrs, sorted by distance.
 router.post('/stores', async (req, res) => {
   const lat = req.body.coords.lat;
