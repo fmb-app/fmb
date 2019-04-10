@@ -187,6 +187,11 @@ export const findStoresWithProduct = async (lat, long, productNrs) => {
   if (Number(long) === NaN || Number(lat) === NaN || productNrs.some(nr => Number(nr) === NaN)) {
     return -1;
   };
+  // Increment these products' hitCounts by 1:
+  productNrs.forEach(productNr => {
+    Product.findOneAndUpdate({nr: productNr}, { $inc: {hitCount: 1} },  err => {if (err) console.log('Could not update hitcount of product:', productNr, err)})
+  })
+
   const storesFromBolaget = await getStoresWithProducts(productNrs);
   let storesLeft = getNrOfStores();
   let nextToken = "";
