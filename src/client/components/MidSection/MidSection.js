@@ -110,12 +110,6 @@ const MidSection = () => {
 	const search = () => {
 		console.log('Selected Products:', selectedProducts)
 		return (
-			// fetch(`/api/stores/59.3562189/18.0683659`, {
-			// 	method: 'GET',
-			// 	headers: {
-			// 		'Content-Type': 'application/json'
-			// 	}
-			// })
 			fetch(`/api/stores/`, {
 				method: 'POST',
 				headers: {
@@ -130,12 +124,12 @@ const MidSection = () => {
 				})
 			})
 				.then(res => res.json())
-				.then(stores => console.log('Stores:', stores))
+				.then(stores => console.log('Stores:', stores.stores))
 		)
 	}
 
 	return (
-		<div style={{...style.midSection, color: 'white', display: 'flex', flexFlow: 'column wrap'}}>
+		<div style={{...style.midSection, color: 'white', display: 'flex', flexFlow: 'column nowrap'}}>
 			<div style={{padding: '0 0 1rem 0'}}>
 				<h2>Kategorier</h2>
 				<RegularInputField
@@ -176,17 +170,21 @@ const MidSection = () => {
 					{
 						selectedProducts.map((product, index) => <div key={`selected-product-${index}`} ><b>{product.name1}</b> - {product.name2}</div>)
 					}
-					<div onClick={search} style={{
-						width: '100px',
-						height: '100px',
-						borderRadius: '50%',
-						backgroundColor: 'red',
-						alignItems: 'center',
-						textAlign: 'center',
-						display: 'flex',
-						fontWeight: '600',
-						boxShadow: '8px 8px black'
-					}}>FIND MY BORK!</div>
+					<div style={{display: 'flex', justifyContent: 'center'}}>
+						<div onClick={search} style={{
+							width: '100px',
+							height: '100px',
+							borderRadius: '50%',
+							backgroundColor: 'red',
+							alignItems: 'center',
+							textAlign: 'center',
+							display: 'flex',
+							fontWeight: '600',
+							boxShadow: '8px 8px black',
+							margin: '1rem',
+							cursor: 'pointer'
+						}}>FIND MY BORK!</div>
+					</div>
 				</div>
 			}
 
