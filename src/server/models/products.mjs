@@ -13,7 +13,8 @@ export const productSchema = new Schema({
   volume: { type: Number },
   package: { type: String },
   alcohol: { type: Number },
-  producer: { type: String }
+  producer: { type: String },
+  hitCount: {type: Number, default: 0 }
 });
 
 export default mongoose.model('Product', productSchema);

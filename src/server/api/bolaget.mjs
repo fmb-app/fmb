@@ -26,9 +26,10 @@ const saveProductsToDB = () => {
         volume: product.volume,
         package: product.packaging,
         alcohol: product.alcohol,
-        producer: product.producer
+        producer: product.producer,
+        hitCount: 'MANY!'
       });
-      Product.replaceOne({_id: myProduct._id}, myProduct, {upsert: true},  err => {if (err) reject(err)});
+      Product.findOneAndUpdate({_id: myProduct._id}, myProduct, {upsert: true},  err => {if (err) reject(err)});
     });
     console.log('saveProductsToDB():\tProducts saved to DB!');
     resolve();
@@ -53,7 +54,7 @@ const saveStoresToDB = () => {
           rt90y: store.rt90.y,
           openingHours: store.openingHours,
         });        
-        Store.replaceOne({_id: myStore._id}, myStore, {upsert: true},  err => {if (err) reject(err)});
+        Store.findOneAndUpdate({_id: myStore._id}, myStore, {upsert: true},  err => {if (err) reject(err)});
         storeNrs.push(store.nr);
       }
     });
@@ -86,7 +87,7 @@ export const updateAPIfromSystemet = async () => {
   });
   let allLoads = await Promise.all([
     storesAndStock,
-    // saveProductsToDB()
+    saveProductsToDB()
   ]);
   console.log('updateAPIfromSystemet()\tDatabase updated with fresh Systembolaget API data!\n\n\n');
   return allLoads;
@@ -186,6 +187,11 @@ export const findStoresWithProduct = async (lat, long, productNrs) => {
   if (Number(long) === NaN || Number(lat) === NaN || productNrs.some(nr => Number(nr) === NaN)) {
     return -1;
   };
+  // Increment these products' hitCounts by 1:
+  productNrs.forEach(productNr => {
+    Product.findOneAndUpdate({nr: productNr}, { $inc: {hitCount: 1} },  err => {if (err) console.log('Could not update hitcount of product:', productNr, err)})
+  })
+
   const storesFromBolaget = await getStoresWithProducts(productNrs);
   let storesLeft = getNrOfStores();
   let nextToken = "";
