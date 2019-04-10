@@ -1,9 +1,10 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Route } from 'react-router-dom';
 import { DragDropContext } from 'react-beautiful-dnd';
 import GlobalState from './context/GlobalState';
 import BottomNavBar from './components/BottomNavBar/BottomNavBar';
 import MidSection from './components/MidSection/MidSection';
+import Results from './components/Results/ResultsPage';
 import { themes } from './themes/Themes';
 
 const style = {
@@ -49,7 +50,8 @@ const App = () => {
 						<h1 style={style.headerFont}>Find my Bork</h1>
 					</Link>
 				</div>
-				<MidSection />
+				<Route exact path={'/results'} component={Results} />
+				<Route exact path={'/'} component={MidSection} />
 				<BottomNavBar />
 			</div>
 		</GlobalState>
