@@ -1,4 +1,5 @@
 import React, {useState, useEffect, useContext} from 'react';
+import { Link } from 'react-router-dom'
 import FmbContext from '../../context/FmbContext';
 import RegularInputField from '../InputFields/RegularInputField';
 import RegularButton from '../Buttons/RegularButton';
@@ -171,19 +172,25 @@ const MidSection = () => {
 						selectedProducts.map((product, index) => <div key={`selected-product-${index}`} ><b>{product.name1}</b> - {product.name2}</div>)
 					}
 					<div style={{display: 'flex', justifyContent: 'center'}}>
-						<div onClick={search} style={{
-							width: '100px',
-							height: '100px',
-							borderRadius: '50%',
-							backgroundColor: 'red',
-							alignItems: 'center',
-							textAlign: 'center',
-							display: 'flex',
-							fontWeight: '600',
-							boxShadow: '8px 8px black',
-							margin: '1rem',
-							cursor: 'pointer'
-						}}>FIND MY BORK!</div>
+						<Link
+							to={'/results'}
+							onClick={search}
+							style={{
+								width: '100px',
+								height: '100px',
+								borderRadius: '50%',
+								backgroundColor: 'red',
+								alignItems: 'center',
+								textAlign: 'center',
+								display: 'flex',
+								fontWeight: '600',
+								boxShadow: '8px 8px black',
+								margin: '1rem',
+								cursor: 'pointer'
+							}}
+						>
+							FIND MY BORK!
+						</Link>
 					</div>
 				</div>
 			}
