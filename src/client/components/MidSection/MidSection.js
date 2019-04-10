@@ -1,9 +1,7 @@
 import React, {useState, useEffect, useContext} from 'react';
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import FmbContext from '../../context/FmbContext';
 import RegularInputField from '../InputFields/RegularInputField';
 import RegularButton from '../Buttons/RegularButton';
-import DragItem from '../DragItem/DragItem';
 import { themes } from '../../themes/Themes';
 
 const style = {
@@ -81,106 +79,118 @@ const dropContainerStyle = (isDraggingOver) => ({
 const MidSection = () => {
 	const context = useContext(FmbContext);
 
-	const CATEGORY = 'CATEGORY';
-	const PRODUCT  = 'PRODUCT';
+	const [category, setCategory] = useState(null);
+	const [categorySearchQuery, setCategorySearchQuery] = useState('');
+	const [products, setProducts] = useState([]);
+	const [productSearchQuery, setProductSearchQuery] = useState('');
 
-	const [selectMode, setSelectMode] = useState(CATEGORY);
+	const [selectedProducts, setSelectedProducts] = useState([]);
 
-	const onDragEnd = (result) => {
-		if (result.destination.droppableId !== 'dropContainer') {
-      return;
-    }
-
-    switch (selectMode) {
-    	case CATEGORY:
-    		getProducts(result.draggableId).then((data) => {
-      		context.setProducts(data);
-    			setSelectMode(PRODUCT);
-    		})
-    		break;
-    	case PRODUCT:
-    		const drink = context.products.filter((product) => product._id === result.draggableId);
-				context.setSelectedDrinks(drink[0]);
-    		setSelectMode(CATEGORY);
-    		break;
-    }
-	}
-
-	const renderCategories = () => {
-		return (
-			context.categories.map((item, index) => (
-	    	<div key={index}>
-	      	<DragItem item={item} index={index} label={item} />
-	      </div>
-	    ))
-    );
-	}
-
-	const renderProducts = () => {
-		return (
-			context.products.map((item, index) => (
-				<div key={item._id}>
-					<DragItem item={item._id} index={index} label={item.name1} />
-				</div>
-			))
-		);
-	}
-
+	useEffect(() => {
+		getProducts(category)
+			.then(products => {
+				setProducts(products);
+			});
+	}, [category]);
+	
 	/*
 	 * Fetch all products within the given category
 	 */
 	const getProducts = (category) => {
 		return (
-		fetch('/api/products/' + category, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-      }).then((res) => res.json())
+			fetch('/api/products/' + category, {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			}).then((res) => res.json())
+		);
+	}
+
+	const search = () => {
+		console.log('Selected Products:', selectedProducts)
+		return (
+			// fetch(`/api/stores/59.3562189/18.0683659`, {
+			// 	method: 'GET',
+			// 	headers: {
+			// 		'Content-Type': 'application/json'
+			// 	}
+			// })
+			fetch(`/api/stores/`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({
+					'coords': {
+						'lat': '59.3562189', 
+						'long':  '18.0683659'
+					},
+					'productNrs': selectedProducts.map(product => product.nr)
+				})
+			})
+				.then(res => res.json())
+				.then(stores => console.log('Stores:', stores))
 		)
 	}
 
 	return (
-		<DragDropContext onDragEnd={onDragEnd}>
-			<div style={style.midSection}>
-				<Droppable droppableId="categories">
-          {(provided, snapshot) => (
-            <div
-              {...provided.droppableProps}
-              ref={provided.innerRef}
-              style={itemContainerStyle(snapshot.isDraggingOver)}
-            >
-              {selectMode === CATEGORY && renderCategories()}
-              {selectMode === PRODUCT && renderProducts()}
-              {provided.placeholder}
-            </div>
-          )}
-        </Droppable>
-        <div style ={style.leftSidePanel}>
-	        <Droppable droppableId="dropContainer">
-	        	{(provided, snapshot) => (
-	            <div
-	              {...provided.droppableProps}
-	              ref={provided.innerRef}
-	              style={dropContainerStyle(snapshot.isDraggingOver)}
-	            >
-	            	<h2 style={style.instruction}>
-	            		{selectMode === CATEGORY ? 'Dra en kategori hit' : 'Dra en produkt hit'}
-	            	</h2>
-	              {provided.placeholder}
-	            </div>
-	          )}
-	        </Droppable>
-	        <div style={style.results}>
-	        	{context.selectedDrinks.map((drink) => (
-	        		<div style={style.selectedDrink}>
-	        			{drink.name1}
-	        		</div>
-	        	))}
-	        </div>
-	      </div>
+		<div style={{...style.midSection, color: 'white', display: 'flex', flexFlow: 'column wrap'}}>
+			<div style={{padding: '0 0 1rem 0'}}>
+				<h2>Kategorier</h2>
+				<RegularInputField
+					type='text'
+					placeholder='Sök bland kategorier'
+					onChange={(e) => setCategorySearchQuery(e.target.value)}
+				/>
+				<div style={{maxHeight: '10rem', overflowY: 'auto', maxWidth: '30rem'}}>
+					{
+						context.categories
+							.filter((category) => category.toLowerCase().includes(categorySearchQuery.toLowerCase()))
+							.map((category, index) => <div key={`category-${index}`} onClick={() => setCategory(category)}>{category}</div>)
+					}	
+				</div>
 			</div>
-		</DragDropContext>
+
+			{ category &&
+				<div style={{padding: '0 0 1rem 0'}}>
+					<h2>{category}</h2>
+					<RegularInputField
+						type='text'
+						placeholder='Sök efter en product'
+						onChange={(e) => setProductSearchQuery(e.target.value)}
+					/>
+					<div style={{maxHeight: '200px', overflowY: 'auto', maxWidth: '30rem'}}>
+						{
+							products
+								.filter(product => `${product.name1} - ${product.name2}`.toLowerCase().includes(productSearchQuery.toLowerCase()))
+								.map((product, index) => <div key={`product-${index}`} onClick={() => setSelectedProducts([...selectedProducts, product])}><b>{product.name1}</b> - {product.name2}</div>)
+						}
+					</div>
+				</div>
+			}
+
+			{ selectedProducts.length > 0 &&
+				<div>
+					<h2>Selected Products</h2>
+					{
+						selectedProducts.map((product, index) => <div key={`selected-product-${index}`} ><b>{product.name1}</b> - {product.name2}</div>)
+					}
+					<div onClick={search} style={{
+						width: '100px',
+						height: '100px',
+						borderRadius: '50%',
+						backgroundColor: 'red',
+						alignItems: 'center',
+						textAlign: 'center',
+						display: 'flex',
+						fontWeight: '600',
+						boxShadow: '8px 8px black'
+					}}>FIND MY BORK!</div>
+				</div>
+			}
+
+		</div>
 	);
 }
 
