@@ -50,7 +50,7 @@ const App = () => {
 						<h1 style={style.headerFont}>Find my Bork</h1>
 					</Link>
 				</div>
-				<Map />
+				<MidSection />
 				<BottomNavBar />
 			</div>
 		</GlobalState>
