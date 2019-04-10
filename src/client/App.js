@@ -5,6 +5,7 @@ import GlobalState from './context/GlobalState';
 import BottomNavBar from './components/BottomNavBar/BottomNavBar';
 import MidSection from './components/MidSection/MidSection';
 import { themes } from './themes/Themes';
+import Map from './components/Map/Map';
 
 const style = {
 	header: {
@@ -49,7 +50,7 @@ const App = () => {
 						<h1 style={style.headerFont}>Find my Bork</h1>
 					</Link>
 				</div>
-				<MidSection />
+				<Map />
 				<BottomNavBar />
 			</div>
 		</GlobalState>
