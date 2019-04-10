@@ -55,11 +55,22 @@ const GlobalState = props => {
         return res.json();
       }).then((data) => {
       	// Remove the last element since it is null
-      	const categories = data.slice(0, data.length - 2);
+      	const categories = data.filter((cat, index) => cat !== null);
       	dispatch({type: SET_CATEGORIES, categories: categories});
     }).catch((err) => {
     	console.log(err);
     });
+
+		fetch('/api/products', {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		}).then((res) => {
+			return res.json()
+		}).then((res) => {
+			dispatch({type: SET_PRODUCTS, products: res})
+		});
 	}, []);
 
 	return (
