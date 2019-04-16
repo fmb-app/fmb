@@ -18,7 +18,7 @@ const style = {
     height: '4rem',
     backgroundColor: 'rgba(0,0,0,0.8)',
     display: 'grid',
-    gridTemplateColumns: 'auto auto auto',
+    gridTemplateColumns: 'auto auto auto auto',
     gridColumnGap: themes.standardSpace,
     justifyContent: 'center',
     alignItems: 'center',
