@@ -5,6 +5,7 @@ import GlobalState from './context/GlobalState';
 import BottomNavBar from './components/BottomNavBar/BottomNavBar';
 import MidSection from './components/MidSection/MidSection';
 import { themes } from './themes/Themes';
+import Map from './components/Map/Map';
 
 const style = {
 	header: {
