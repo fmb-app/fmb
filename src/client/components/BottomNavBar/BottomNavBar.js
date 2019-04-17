@@ -1,10 +1,12 @@
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 import {geolocated} from 'react-geolocated';
 import FmbContext from '../../context/FmbContext';
 import InputField from '../InputFields/RegularInputField'
 import RegularButton from '../Buttons/RegularButton';
 import GPSIcon from '../Icons/GPSIcon';
 import { themes } from '../../themes/Themes';
+import Map from '../Map/Map';
+
 
 const style = {
   stickToBottom: {
@@ -16,13 +18,16 @@ const style = {
     height: '4rem',
     backgroundColor: 'rgba(0,0,0,0.8)',
     display: 'grid',
-    gridTemplateColumns: 'auto auto auto',
+    gridTemplateColumns: 'auto auto auto auto',
     gridColumnGap: themes.standardSpace,
     justifyContent: 'center',
     alignItems: 'center',
     paddingLeft: themes.standardSpace,
     paddingRight: themes.standardSpace,
     boxSizing: 'border-box',
+  },
+  map: {
+    height: '20rem',
   }
 }
 
@@ -59,30 +64,42 @@ const BottomNavBar = (props) => {
     });
   }
 
-  return (
-    <div style={style.stickToBottom}>
-      <div style={style.navBar}>
-      <RegularButton
-        label={<GPSIcon color='white' />}
-        bgcolor={themes.primaryButton}
-        onClick={getCoordinates}
-      />
-      <InputField
-          searchTerm={props.searchTerm}
-          setInputTerm={props.setSearchTerm}
-          onChange={context.setLocation}
-          placeholder='Adress'
-          value={getFieldValue()}
-        />
-        <RegularButton
-          label='Sök'
-          bgcolor={themes.primaryButton}
-          color={themes.standardTextColor}
-          onClick={getStores}
-        />
-      </div>
-    </div>
-  );
-}
+  const [showMap, setShowMap] = useState(false);
 
-export default BottomNavBar;
+    const toggleMap = () => {
+      setShowMap(!showMap);
+    }
+    return (
+      <div style={style.stickToBottom}>
+      { showMap && <Map/>}
+        <div style={style.navBar}>
+        <RegularButton
+          label={<GPSIcon color='white' />}
+          bgcolor={themes.primaryButton}
+          onClick={getCoordinates}
+        />
+        <InputField
+            searchTerm={props.searchTerm}
+            setInputTerm={props.setSearchTerm}
+            onChange={context.setLocation}
+            placeholder='Adress'
+            value={getFieldValue()}
+          />
+          <RegularButton
+            label='Sök'
+            bgcolor={themes.primaryButton}
+            color={themes.standardTextColor}
+            onClick={getStores}
+          />
+          <RegularButton
+            label='Karta'
+            bgcolor={themes.primaryButton}
+            color={themes.standardTextColor}
+            onClick={toggleMap}
+          />
+        </div>
+      </div>
+    );
+  }
+
+  export default BottomNavBar;

@@ -12,6 +12,9 @@ const style = {
     paddingLeft: themes.mediumSpace,
     paddingRight: themes.mediumSpace,
     boxSizing: 'border-box',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
     ':disabled': {
       background: 'linear-gradient(45deg, #6F6F6F 0%, #B0B0B0 100%)'
     }
@@ -21,7 +24,7 @@ const style = {
 const RegularButton = ({ label, bgcolor, color, onClick, disabled }) => {
   return (
     <div>
-      <button 
+      <button
         style={[style.button, {...bgcolor, color}]}
         onClick={() => onClick()}
         disabled={disabled}
