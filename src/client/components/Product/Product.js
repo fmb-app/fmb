@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import { themes } from '../../themes/Themes';
 
-const style = { 
-	card: {
+const productStyle = isSelected => { 
+	return {
 		padding: themes.standardSpace,
 		borderRadius: themes.standardRadius,
-		backgroundColor: 'red',
+		backgroundColor: isSelected ? 'blue' : 'red',
 		marginTop: themes.smallSpace,
 		height: '2rem',
 		overflow: 'hidden', 
-    whiteSpace: 'nowrap',
+	  whiteSpace: 'nowrap',
 		textOverflow: 'ellipsis',
 		boxSizing: 'border-box',
 		display: 'flex',
@@ -17,7 +17,7 @@ const style = {
 	}
 }
 
-const Product = ({label, altLabel}) => {
+const Product = ({label, altLabel, onClick, isSelected}) => {
 	const productLabel = () => {
 		if (altLabel !== null) {
 			return label + ' - ' + altLabel;
@@ -27,7 +27,10 @@ const Product = ({label, altLabel}) => {
 	}
 
 	return (
-		<div style={style.card}>
+		<div
+			style={productStyle(isSelected)}
+			onClick={onClick}
+		>
 			<p>{productLabel()}</p>
 		</div>
 	);

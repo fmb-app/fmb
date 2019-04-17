@@ -66,7 +66,7 @@ const ProductsContainer = ({filterTerm, category, priceLow, priceHigh, alcoholLo
 		return list.filter((item) => {
 			const info = infoToString(item.name1).toLowerCase() 	 + ' ' +
 							 	   infoToString(item.name2).toLowerCase() 	 + ' ' +
-								   infoToString(item.category).toLowerCase() + ' ';
+								   infoToString(item.category).toLowerCase();
 
 			return info.includes(filterTerm.toLowerCase());
 		});
@@ -82,6 +82,20 @@ const ProductsContainer = ({filterTerm, category, priceLow, priceHigh, alcoholLo
 		);
 	}
 
+	const toggleProduct = (selected) => {
+		console.log(context.selectedProducts);
+		const productExists = context.selectedProducts.filter((product) => product._id === selected._id).length !== 0;
+		console.log(productExists);
+		console.log(context.selectedProducts.filter((product) => product._id === selected._id));
+		if (productExists) {
+			context.removeSelectedProduct(selected);
+		} else {
+			context.setSelectedProducts(selected);
+		}
+	}
+
+	const isSelected = (product) => context.selectedProducts.filter((item) => item._id === product._id).length !== 0;
+
 	return (
 		<div
 			style={style.container}
@@ -91,7 +105,14 @@ const ProductsContainer = ({filterTerm, category, priceLow, priceHigh, alcoholLo
 				getProductList()
 					.slice(0,numberOfProducts)
 						.map((product, key) => 
-							<Product key={key} label={product.name1} altLabel={product.name2}/>
+							<Product 
+								key={key}
+								label={product.name1}
+								altLabel={product.name2}
+								onClick={() => toggleProduct(product)}
+								isSelected={isSelected(product)}
+							>
+							</Product>
 						)
 			}
 		</div>

@@ -77,7 +77,6 @@ const BottomNavBar = (props) => {
           label={<GPSIcon color='white' />}
           bgcolor={themes.primaryButton}
           onClick={getCoordinates}
-          width='100%'
         />
         <InputField
             searchTerm={props.searchTerm}

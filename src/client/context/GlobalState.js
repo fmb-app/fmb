@@ -3,18 +3,19 @@ import {geolocated} from 'react-geolocated';
 import FmbContext from './FmbContext';
 import { fmbReducer,
 				 SET_PRODUCTS,
+				 SET_SELECTED_PRODUCTS,
+				 REMOVE_SELECTED_PRODUCT,
 				 SET_LOCATION,
 				 SET_RESULTS,
 				 SET_CATEGORIES,
 				 REMOVE_CATEGORY,
-				 SET_SELECTED_DRINKS,
 			 } from './Reducer';
 
 const GlobalState = props => {
 	const initialState = {
 		categories: [],
 		products: [],
-		selectedDrinks: [],
+		selectedProducts: [],
 		location: {type: 'Address', data: ''},
 		results: [],
 	};
@@ -23,6 +24,14 @@ const GlobalState = props => {
 
 	const setProducts = products => {
 		dispatch({type: SET_PRODUCTS, products: products});
+	}
+
+	const setSelectedProducts = product => {
+		dispatch({type: SET_SELECTED_PRODUCTS, product: product});
+	}
+
+	const removeSelectedProduct = product => {
+		dispatch({type: REMOVE_SELECTED_PRODUCT, product: product});
 	}
 
 	const setLocation = event => {
@@ -39,10 +48,6 @@ const GlobalState = props => {
 
 	const setResults = (results) => {
 		dispatch({type: SET_RESULTS, results: results});
-	}
-
-	const setSelectedDrinks = (drink) => {
-		dispatch({type: SET_SELECTED_DRINKS, drink: drink});
 	}
 
 	useEffect(() => {
@@ -78,9 +83,10 @@ const GlobalState = props => {
 			value={{
 				products: state.products,
 				setProducts: setProducts,
+				selectedProducts: state.selectedProducts,
+				setSelectedProducts: setSelectedProducts,
+				removeSelectedProduct: removeSelectedProduct,
 				categories: state.categories,
-				selectedDrinks: state.selectedDrinks,
-				setSelectedDrinks: setSelectedDrinks,
 				removeCategory: removeCategory,
 				location: state.location,
 				setLocation: setLocation,
