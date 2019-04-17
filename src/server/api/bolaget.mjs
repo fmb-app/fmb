@@ -202,7 +202,7 @@ export const findStoresWithProduct = async (lat, long, productNrs) => {
     storesFromGoogle.results.forEach(store => {
       const matchingBolag = storesFromBolaget.find(bolag => bolagMatchesStore(store, bolag));
       // Return combined store objects
-      if(matchingBolag !== undefined) {
+      if(matchingBolag !== undefined || !closeStores.some(closeStore => closeStore.nr === store.nr)) {
         closeStores.push(combineStoreObjects(matchingBolag, store));
       };
     });
