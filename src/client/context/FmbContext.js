@@ -9,7 +9,7 @@ const FmbContext = createContext({
 	setSelectedProducts: product => {},
 	removeSelectedProduct: product => {},
 	setLocation: location => {},
-	setResults: results => {}
+	setResults: results => [{}]
 });
 
 export default FmbContext;

@@ -7,6 +7,7 @@ import ProductContainer from '../ProductContainer/ProductContainer';
 import Product from '../Product/Product';
 import CategoryContainer from '../CategoryContainer/CategoryContainer';
 import ExpandableContainer from '../ExpandableContainer/ExpandableContainer';
+import RoundButton from '../Buttons/RoundButton';
 import { themes } from '../../themes/Themes';
 
 const style = {
@@ -24,6 +25,13 @@ const style = {
 		display: 'flex',
 		flexFlow: 'column nowrap',
 	},
+	search: {
+		width: '100%',
+		display: 'flex',
+		justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: themes.standardSpace,
+	}
 }
 
 const MidSection = () => {
@@ -34,10 +42,7 @@ const MidSection = () => {
 	const [products, setProducts] = useState([]);
 	const [productSearchQuery, setProductSearchQuery] = useState('');
 
-	const [selectedProducts, setSelectedProducts] = useState([]);
-
-	const search = () => {
-		console.log('Selected Products:', selectedProducts)
+	const findMyBork = () => {
 		return (
 			fetch(`/api/stores/`, {
 				method: 'POST',
@@ -46,13 +51,17 @@ const MidSection = () => {
 				},
 				body: JSON.stringify({
 					'coords': {
-						'lat': '59.3562189', 
-						'long':  '18.0683659'
+						'lat': context.location.data[0], 
+						'long':  context.location.data[1]
 					},
-					'productNrs': selectedProducts.map(product => product.nr)
+					'productNrs': context.selectedProducts.map(product => product.nr)
 				})
 			})
 				.then(res => res.json())
+				.then((res) => {
+					console.log(res.stores);
+					context.setResults(res.stores);
+				})
 		)
 	}
 
@@ -77,6 +86,17 @@ const MidSection = () => {
 				alcoholLow={0}
 				alcoholHigh={Number.MAX_SAFE_INTEGER}
 			/>
+			<div style={style.search}>
+			<Link
+				to='/results'
+				onClick={findMyBork}
+			>
+				<RoundButton 
+					label='Find my Bork'
+					color={themes.standardTextColor}
+				/>
+			</Link>
+			</div>
 		</div>
 	);
 }
