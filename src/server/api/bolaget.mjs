@@ -26,8 +26,7 @@ const saveProductsToDB = () => {
         volume: product.volume,
         package: product.packaging,
         alcohol: product.alcohol,
-        producer: product.producer,
-        hitCount: 'MANY!'
+        producer: product.producer
       });
       Product.findOneAndUpdate({_id: myProduct._id}, myProduct, {upsert: true},  err => {if (err) reject(err)});
     });
@@ -87,7 +86,7 @@ export const updateAPIfromSystemet = async () => {
   });
   let allLoads = await Promise.all([
     storesAndStock,
-    saveProductsToDB()
+    // saveProductsToDB()
   ]);
   console.log('updateAPIfromSystemet()\tDatabase updated with fresh Systembolaget API data!\n\n\n');
   return allLoads;
