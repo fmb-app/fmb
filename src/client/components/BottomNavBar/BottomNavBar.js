@@ -74,7 +74,7 @@ const BottomNavBar = (props) => {
       { showMap && <Map/>}
         <div style={style.navBar}>
         <RegularButton
-          label={<GPSIcon color='white' />}
+          label={<GPSIcon color='white' width='100%' />}
           bgcolor={themes.primaryButton}
           onClick={getCoordinates}
         />

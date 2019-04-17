@@ -2,10 +2,16 @@ import React, {useContext} from 'react'
 import FmbContext from '../../context/FmbContext'
 import { Map as LeafletMap, TileLayer, Marker, Popup } from 'react-leaflet';
 
-
+const style = {
+  map: {
+    display: 'flex',
+    justifyContent: 'center'
+  }
+}
 
 const Map = () => {
   const context = useContext(FmbContext);
+
   const setMapCoordinates = (e) => {
     console.log(e)
     const {lat,lng} = e.target._latlng
@@ -13,8 +19,7 @@ const Map = () => {
     context.setCoordinates([lat,lng])
   }
     return (
-      <div>
-      <center>
+      <div style={style.map}>
         <LeafletMap
           center={[59.3498, 18.0707]}
           zoom={10}
@@ -36,7 +41,6 @@ const Map = () => {
             </Popup>
           </Marker>
         </LeafletMap>
-        </center>
       </div>
     );
 }
