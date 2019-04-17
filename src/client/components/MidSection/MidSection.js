@@ -7,7 +7,6 @@ import ProductContainer from '../ProductContainer/ProductContainer';
 import Product from '../Product/Product';
 import CategoryContainer from '../CategoryContainer/CategoryContainer';
 import ExpandableContainer from '../ExpandableContainer/ExpandableContainer';
-import RegularSlider from '../Sliders/RegularSlider';
 import { themes } from '../../themes/Themes';
 
 const style = {
