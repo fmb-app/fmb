@@ -8,6 +8,10 @@ body {
   background-size: 20rem;
 }
 
+::-webkit-scrollbar {
+  width: 0px;
+}
+
 p, h1, h2, h3 {
   margin: 0;
 }
