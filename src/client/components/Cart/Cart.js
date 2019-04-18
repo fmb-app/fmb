@@ -8,7 +8,7 @@ const style = {
 	cart: {
     height: '30rem',
 	width: '22rem',
-	backgroundColor: '#1B1B32',
+	backgroundColor: '#262632',
 	display: 'flex',
 	flexDirection: 'column',
     overflowY: 'auto',
