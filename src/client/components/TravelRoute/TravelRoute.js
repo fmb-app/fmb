@@ -7,10 +7,8 @@ const style = {
 	container: {
 		width: '100%',
 		boxSizing: 'border-box',
-		marginTop: themes.standardSpace,
 		borderRadius: themes.standardRadius,
-		// padding: themes.standardSpace,
-		backgroundColor: 'rgba(0,0,0,0.5)',
+		padding: themes.standardSpace,
 		display: 'grid',
 		gridTemplateRows: '1fr',
 		boxSizing: 'border-box',
@@ -18,10 +16,9 @@ const style = {
 		alignContent: 'start',
 	},
 	stop: {
-		// padding: themes.standardSpace,
+		padding: 'none',
 	}
 }
-
 
 const getTravelRoute = (startLat, startLong, destination, setTrips) => {
   return (
@@ -63,8 +60,8 @@ const TravelRoute = ({store}) => {
 		<div style={style.container}>
 			Restid: {trips.time && trips.time}
 			{
-				trips.trip && trips.trip.map((partOfTrip) => 
-					<div style={style.stop}>
+				trips.trip && trips.trip.map((partOfTrip, index) => 
+					<div style={style.stop} key={`trip-${index}`}>
 						{partOfTrip.Origin.time} från {partOfTrip.Origin.name} till {partOfTrip.Destination.name} {partOfTrip.type} {partOfTrip.Product && partOfTrip.Product.name} {partOfTrip.duration} 
 					</div>
 				)
