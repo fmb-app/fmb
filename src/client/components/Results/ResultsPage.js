@@ -6,30 +6,19 @@ import TravelRoute from '../TravelRoute/TravelRoute';
 import { themes } from '../../themes/Themes';
 
 
-const bolagetName = result => {
-  if (result.name) {
-    return result.name + ' - ' + result.street;
-  } else {
-    return result.street;
-  }
-}
+const bolagetName = (result) => result.name ? result.name + ' - ' + result.street : result.street;
 
-const openingHours = result => {
+const openingHours = (result) => {
   const today = moment().format('YYYY-MM-DD');
   const open = result.openingHours[today].from;
   const close = result.openingHours[today].to
-  if (close == '00:00') {
-    return 'Öppettider: Stängt för dagen';
-  } else {
-    return 'Öppettider: ' + open + ' - ' +  close;
-  }
-
+  return `Öppettider: ${close == '00:00' ? 'Stängt för dagen': open + ' - ' +  close}`;
 }
 
-const Result = ({result, index}) => {
+const Result = ({result}) => {
   return (
     <ExpandableContainer
-    label={bolagetName(result)}
+      label={bolagetName(result)}
     >
       <TravelRoute store={result} />
     </ExpandableContainer>
@@ -43,7 +32,7 @@ const Results = () => {
 
   return (
     <div 	style={{
-      width: '22rem',
+      width: '32rem',
       height: '75%',
       marginTop: themes.mediumSpace,
       textAlign: 'left',
@@ -56,9 +45,17 @@ const Results = () => {
       overflowY: 'auto',
       color: 'white'
     }}>
-      <h1 style={{textAlign: 'center'}}>Närmaste Systembolag:</h1>
-      Found: {context.results.length}
-      { context.results.map((result, index) => <Result result={result} index={index+1} key={index+1} />) }
+      <div style={{display: 'flex', flexFlow:'column nowrap', alignItems: 'center'}}>
+        <h2>Närmaste Systembolag:</h2>
+        { context.results.length > 0
+          ? <div>{context.results.length} Systembolag har produkte{context.selectedProducts.length > 1 ? 'rna' : 'n'}:</div>
+          : <div>Inga systembolag matchade din sökning :(</div>
+        }
+      </div>
+      { context.results &&
+        context.results.map((result, index) => 
+        <Result result={result} index={index+1} key={index+1} />
+      )}
     </div>
   );
 }
