@@ -41,18 +41,16 @@ const style = {
 		width: '100%',
 		height: '100vh',
 	},
-	body : {
-		height: '70%',
+	center : {
 		width: '100%',
 		marginTop: '7rem',
 		textAlign: 'left',
-		padding: themes.mediumSpace,
-		borderRadius: themes.standardRadius,
 		boxSizing: 'border-box',
 		overflowY: 'auto',
-		color: themes.standardTextColor,
 		display: 'flex',
-		flexDirection: 'row',
+		flexDirection: 'col',
+		justifyContent: 'flex-start',
+		alignItems: 'center',
 	},
 };
 
@@ -65,7 +63,7 @@ const App = () => {
 						<h1 style={style.headerFont}>Find my Bork</h1>
 					</Link>
 				</div>
-				<div style={style.body}>
+				<div style={style.center}>
 					<Sidebar/>
 					<Route exact path={'/results'} component={Results} />
 					<Route exact path={'/'} component={MidSection} />

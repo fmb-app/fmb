@@ -14,7 +14,6 @@ const style = {
 	midSection: {
 		height: '70%',
 		width: '22rem',
-		marginTop: '7rem',
 		textAlign: 'left',
 		padding: themes.mediumSpace,
 		backgroundColor: 'rgba(0,0,0, 0.5)',
@@ -24,6 +23,7 @@ const style = {
 		color: themes.standardTextColor,
 		display: 'flex',
 		flexFlow: 'column nowrap',
+		alignContent: 'center'
 	},
 	search: {
 		width: '100%',
