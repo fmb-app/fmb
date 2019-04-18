@@ -34,6 +34,7 @@ const GlobalState = props => {
 	}
 
 	const setCoordinates = (coordinates) => {
+		console.log(coordinates.lat)
 		dispatch({type: SET_LOCATION, location: {lat: coordinates.lat, long: coordinates.long}});
 	}
 
@@ -77,8 +78,9 @@ const GlobalState = props => {
 
 		// Ask the user for location permissions
 		navigator.geolocation.getCurrentPosition((position) => {
+			console.log(position.coords)
 			if (position.coords) {
-				context.setCoordinates(
+				setCoordinates(
 					{
 						lat: position.coords.latitude,
 						long: position.coords.longitude 

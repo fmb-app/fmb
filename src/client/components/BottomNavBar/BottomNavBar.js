@@ -32,24 +32,19 @@ const style = {
 
 const BottomNavBar = (props) => {
   const context = useContext(FmbContext);
+  const [showMap, setShowMap] = useState(false);
 
   const getCoordinates = () => {
     navigator.geolocation.getCurrentPosition((position) => {
-      context.setCoordinates([position.coords.latitude, position.coords.longitude]);
+      context.setCoordinates({lat: position.coords.latitude, long: position.coords.longitude});
     });
   }
 
-  const getFieldValue = () => {
-    if (context.location.type === 'Address') {
-      return context.location.data;
-    } else if (context.location.type === 'GPS') {
-      return context.location.data[0] + ' ' + context.location.data[1];
-    }
-  }
+  const getFieldValue = () => context.location.lat + ' ' + context.location.long;
 
   const getStores = () => {
-    const lat = context.location.data[0];
-    const long  = context.location.data[1];
+    const lat = context.location.lat;
+    const long  = context.location.long;
     fetch('/api/stores/' + lat + "/" + long , {
       method: 'GET',
       headers: {
@@ -63,7 +58,6 @@ const BottomNavBar = (props) => {
     });
   }
 
-  const [showMap, setShowMap] = useState(false);
 
     const toggleMap = () => {
       setShowMap(!showMap);
