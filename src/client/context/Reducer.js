@@ -29,7 +29,6 @@ const setCategories = (categories, state) => {
 }
 
 const setSelectedCategory = (category, state) => {
-	console.log(category)
 	return {...state, selectedCategory: category};
 }
 

@@ -23,7 +23,6 @@ const style = {
 };
 const Cart = (props) => {
     const context = useContext(FmbContext);
-    console.log(context)
     return (
       <div style={style.cart}>
         <h3>Dina valda produkter</h3>

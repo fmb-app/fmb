@@ -30,7 +30,6 @@ const getTravelRoute = (startLat, startLong, destination, setTrips) => {
       })
         .then(res => res.json()) 
         .then((travelRoutes) => {
-          console.log('sl: ', travelRoutes); 
           const trip = travelRoutes.Trip[0].LegList.Leg;
           setTrips({trip: trip, time: getTravelTime(trip[0].Origin.time, trip[trip.length-1].Destination.time)});
 
@@ -53,7 +52,6 @@ const TravelRoute = ({store}) => {
 
 	useEffect(() => {
 		getTravelRoute(context.location.lat, context.location.long, store.location.coords, setTrips);
-		console.log('trip: ', trips);
 	}, [])
 
 	return (
