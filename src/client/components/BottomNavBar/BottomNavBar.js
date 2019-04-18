@@ -3,6 +3,8 @@ import FmbContext from '../../context/FmbContext';
 import InputField from '../InputFields/RegularInputField'
 import RegularButton from '../Buttons/RegularButton';
 import GPSIcon from '../Icons/GPSIcon';
+import CartIcon from '../Icons/CartIcon';
+import Cart from '../Cart/Cart';
 import { themes } from '../../themes/Themes';
 import Map from '../Map/Map';
 
@@ -14,25 +16,27 @@ const style = {
     bottom: 0,
   },
   navBar: {
-    height: '4rem',
     backgroundColor: 'rgba(0,0,0,0.8)',
     display: 'grid',
     gridTemplateColumns: 'auto auto auto auto',
     gridColumnGap: themes.standardSpace,
     justifyContent: 'center',
     alignItems: 'center',
-    paddingLeft: themes.standardSpace,
-    paddingRight: themes.standardSpace,
+    padding: themes.standardSpace,
     boxSizing: 'border-box',
   },
-  map: {
-    height: '20rem',
+  popup: {
+    width: '100%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
   }
 }
 
 const BottomNavBar = (props) => {
   const context = useContext(FmbContext);
-  const [showMap, setShowMap] = useState(false);
+  const [showMap, setShowMap]   = useState(false);
+  const [showCart, setShowCart] = useState(false);
 
   const getCoordinates = () => {
     navigator.geolocation.getCurrentPosition((position) => {
@@ -62,32 +66,34 @@ const BottomNavBar = (props) => {
     const toggleMap = () => {
       setShowMap(!showMap);
     }
+
+    const toggleCart = () => {
+      setShowCart(!showCart);
+    }
+
     return (
       <div style={style.stickToBottom}>
-      { showMap && <Map/>}
+        <div style={style.popup}>
+          { showMap && <Map/>}
+          { showCart && <Cart/> }
+        </div>
         <div style={style.navBar}>
-        <RegularButton
-          label={<GPSIcon color='white' width='100%' />}
-          bgcolor={themes.primaryButton}
-          onClick={getCoordinates}
-        />
-        <InputField
-            searchTerm={props.searchTerm}
-            setInputTerm={props.setSearchTerm}
-            placeholder='Adress'
-            value={getFieldValue()}
-          />
           <RegularButton
-            label='Sök'
+            label={<GPSIcon color='white' width='100%' />}
             bgcolor={themes.primaryButton}
-            color={themes.standardTextColor}
-            onClick={getStores}
+            onClick={getCoordinates}
           />
           <RegularButton
             label='Karta'
             bgcolor={themes.primaryButton}
             color={themes.standardTextColor}
             onClick={toggleMap}
+          />
+          <RegularButton
+            label={<CartIcon color='white' width='100%' />}
+            bgcolor={themes.primaryButton}
+            color={themes.standardTextColor}
+            onClick={toggleCart}
           />
         </div>
       </div>

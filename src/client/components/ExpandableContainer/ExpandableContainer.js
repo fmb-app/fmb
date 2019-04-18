@@ -24,7 +24,7 @@ const style = {
 	},
 }
 
-const ExpandableContainer = ({label, children}) => {
+const ExpandableContainer = ({label, children, styleProps}) => {
 	const [expanded, setExpanded] = useState(false);
 
 	const handleClick = () => {
@@ -41,7 +41,7 @@ const ExpandableContainer = ({label, children}) => {
 
 	return (
 		<div style={style.container}>
-			<div style={style.top}>
+			<div style={{...style.top, ...styleProps}}>
 				<h3>{label}</h3>
 				<ExpandButton
 					rotated={expanded}
