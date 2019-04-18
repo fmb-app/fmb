@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import FmbContext from '../../context/FmbContext';
 import Product from '../Product/Product';
 import { themes } from '../../themes/Themes';
@@ -6,7 +6,7 @@ import { themes } from '../../themes/Themes';
 const style = {
 	scrollContainer: {
 		width: '100%',
-		height: '50%',
+		flexBasis: 'auto',
 		boxSizing: 'border-box',
 		marginTop: themes.standardSpace,
 		borderRadius: themes.standardRadius,
@@ -44,11 +44,9 @@ const ProductsContainer = ({filterTerm, category, sorting, selectedProducts}) =>
 
 	const toggleProduct = (selected) => {
 		const productExists = context.selectedProducts.filter((product) => product._id === selected._id).length !== 0;
-		if (productExists) {
-			context.removeSelectedProduct(selected);
-		} else {
-			context.setSelectedProducts(selected);
-		}
+		productExists
+			? context.removeSelectedProduct(selected)
+			: context.setSelectedProducts(selected);
 	}
 
 	const isSelected = (product) => context.selectedProducts.filter((item) => item._id === product._id).length !== 0;
