@@ -65,15 +65,15 @@ const GlobalState = props => {
     });
 
 		// Get all products
-		fetch('/api/products', {
+		fetch('/api/products/null/null/0/POPULAR_DESC', {
 			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json'
 			}
 		}).then((res) => {
 			return res.json()
-		}).then((res) => {
-			dispatch({type: SET_PRODUCTS, products: res})
+		}).then((products) => {
+			dispatch({type: SET_PRODUCTS, products: products})
 		});
 
 		// Ask the user for location permissions
