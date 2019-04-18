@@ -7,6 +7,7 @@ import MidSection from './components/MidSection/MidSection';
 import Results from './components/Results/ResultsPage';
 import { themes } from './themes/Themes';
 import Map from './components/Map/Map';
+import Sidebar from './components/Sidebar/Sidebar';
 
 const style = {
 	header: {
@@ -39,7 +40,20 @@ const style = {
 		alignItems: 'center',
 		width: '100%',
 		height: '100vh',
-	}
+	},
+	body : {
+		height: '70%',
+		width: '100%',
+		marginTop: '7rem',
+		textAlign: 'left',
+		padding: themes.mediumSpace,
+		borderRadius: themes.standardRadius,
+		boxSizing: 'border-box',
+		overflowY: 'auto',
+		color: themes.standardTextColor,
+		display: 'flex',
+		flexDirection: 'row',
+	},
 };
 
 const App = () => {
@@ -51,8 +65,11 @@ const App = () => {
 						<h1 style={style.headerFont}>Find my Bork</h1>
 					</Link>
 				</div>
-				<Route exact path={'/results'} component={Results} />
-				<Route exact path={'/'} component={MidSection} />
+				<div style={style.body}>
+					<Sidebar/>
+					<Route exact path={'/results'} component={Results} />
+					<Route exact path={'/'} component={MidSection} />
+				</div>
 				<BottomNavBar />
 			</div>
 		</GlobalState>

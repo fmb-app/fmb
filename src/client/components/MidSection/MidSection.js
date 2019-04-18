@@ -51,7 +51,7 @@ const MidSection = () => {
 				},
 				body: JSON.stringify({
 					'coords': {
-						'lat': context.location.data[0], 
+						'lat': context.location.data[0],
 						'long':  context.location.data[1]
 					},
 					'productNrs': context.selectedProducts.map(product => product.nr)
@@ -85,6 +85,7 @@ const MidSection = () => {
 				priceHigh={Number.MAX_SAFE_INTEGER}
 				alcoholLow={0}
 				alcoholHigh={Number.MAX_SAFE_INTEGER}
+				selectedProducts={false}
 			/>
 			<div style={style.search}>
 			<Link
@@ -92,7 +93,7 @@ const MidSection = () => {
 				onClick={findMyBork}
 				style={{ textDecoration: 'none' }}
 			>
-				<RoundButton 
+				<RoundButton
 					label='Find my Bork'
 					color={themes.standardTextColor}
 					bgcolor={themes.primaryButton}
@@ -104,4 +105,3 @@ const MidSection = () => {
 }
 
 export default MidSection;
-

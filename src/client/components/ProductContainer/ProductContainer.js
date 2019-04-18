@@ -21,7 +21,7 @@ const style = {
 	}
 }
 
-const ProductsContainer = ({filterTerm, category, priceLow, priceHigh, alcoholLow, alcoholHigh}) => {
+const ProductsContainer = ({filterTerm, category, priceLow, priceHigh, alcoholLow, alcoholHigh, selectedProducts}) => {
 	const context = useContext(FmbContext);
 
 	const [numberOfProducts, setNumberOfProducts] = useState(20);
@@ -61,7 +61,7 @@ const ProductsContainer = ({filterTerm, category, priceLow, priceHigh, alcoholLo
 	const filterOnTerm = (list) => {
 		if (filterTerm === '') {
 			return list;
-		} 
+		}
 
 		return list.filter((item) => {
 			const info = infoToString(item.name1).toLowerCase() 	 + ' ' +
@@ -102,22 +102,30 @@ const ProductsContainer = ({filterTerm, category, priceLow, priceHigh, alcoholLo
 			onScroll={handleScroll}
 		>
 			{
-				getProductList()
-					.slice(0,numberOfProducts)
-						.map((product, key) => 
-							<Product 
-								key={key}
-								label={product.name1}
-								altLabel={product.name2}
-								onClick={() => toggleProduct(product)}
-								isSelected={isSelected(product)}
-							>
-							</Product>
-						)
+				selectedProducts
+				? context.selectedProducts.map((product, key) =>
+					<Product
+					key={key}
+					label={product.name1}
+					altLabel={product.name2}
+					onClick={() => toggleProduct(product)}
+					isSelected={isSelected(product)}
+					/>
+				)
+				: getProductList()
+						.slice(0,numberOfProducts)
+						.map((product, key) =>
+						<Product
+						key={key}
+						label={product.name1}
+						altLabel={product.name2}
+						onClick={() => toggleProduct(product)}
+						isSelected={isSelected(product)}
+						/>
+				)
 			}
 		</div>
 	);
 }
 
 export default ProductsContainer;
-

@@ -52,7 +52,7 @@ const saveStoresToDB = () => {
           rt90x: store.rt90.x,
           rt90y: store.rt90.y,
           openingHours: store.openingHours,
-        });        
+        });
         Store.findOneAndUpdate({_id: myStore._id}, myStore, {upsert: true},  err => {if (err) reject(err)});
         storeNrs.push(store.nr);
       }
@@ -86,7 +86,7 @@ export const updateAPIfromSystemet = async () => {
   });
   let allLoads = await Promise.all([
     storesAndStock,
-    // saveProductsToDB()
+    saveProductsToDB()
   ]);
   console.log('updateAPIfromSystemet()\tDatabase updated with fresh Systembolaget API data!\n\n\n');
   return allLoads;
@@ -118,7 +118,7 @@ const findStoresWithGivenProductNrs = productNrs => {
   })
 }
 
-// Finds all stores that have all the given products in stock. 
+// Finds all stores that have all the given products in stock.
 export const getStoresWithProducts = async productNrs => {
   const timeBefore = Date.now();
   let storeNrsWithGivenProducts = await findStoresWithGivenProductNrs(productNrs); //141212 Norrlands, 8685501 Kraken, 8608901 Tequila
@@ -165,7 +165,7 @@ const combineStoreObjects = (matchingBolag, store) => {
     name: matchingBolag.name,
     street: matchingBolag.street,
     postalCode: matchingBolag.postalCode,
-    city: matchingBolag.city,          
+    city: matchingBolag.city,
     openingHours: matchingBolag.openingHours,
     location: {
       coords: {
