@@ -30,10 +30,6 @@ const GlobalState = props => {
 		dispatch({type: SET_SELECTED_PRODUCTS, product: product});
 	}
 
-	const removeSelectedProduct = product => {
-		dispatch({type: REMOVE_SELECTED_PRODUCT, product: product});
-	}
-
 	const setLocation = event => {
 		dispatch({type: SET_LOCATION, location: address: event.target.value}});
 	}

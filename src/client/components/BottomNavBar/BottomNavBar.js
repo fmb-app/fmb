@@ -81,7 +81,6 @@ const BottomNavBar = (props) => {
         <InputField
             searchTerm={props.searchTerm}
             setInputTerm={props.setSearchTerm}
-            onChange={context.setLocation}
             placeholder='Adress'
             value={getFieldValue()}
           />
