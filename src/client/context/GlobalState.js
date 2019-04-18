@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useReducer } from 'react';
-import {geolocated} from 'react-geolocated';
 import FmbContext from './FmbContext';
 import { fmbReducer,
 				 SET_PRODUCTS,
@@ -50,7 +49,9 @@ const GlobalState = props => {
 		dispatch({type: SET_RESULTS, results: results});
 	}
 
+	// This will run once when the app starts.
 	useEffect(() => {
+		// Get all product categories
     fetch('/api/categories', {
       method: 'GET',
       headers: {
@@ -66,6 +67,7 @@ const GlobalState = props => {
     	console.log(err);
     });
 
+		// Get all products
 		fetch('/api/products', {
 			method: 'GET',
 			headers: {
@@ -76,6 +78,18 @@ const GlobalState = props => {
 		}).then((res) => {
 			dispatch({type: SET_PRODUCTS, products: res})
 		});
+
+		// Ask the user for location permissions
+		navigator.geolocation.getCurrentPosition((position) => {
+			if (position.coords) {
+				context.setCoordinates(
+					{
+						lat: position.coords.latitude,
+						long: position.coords.longitude 
+					}
+					);
+			}
+    });
 	}, []);
 
 	return (

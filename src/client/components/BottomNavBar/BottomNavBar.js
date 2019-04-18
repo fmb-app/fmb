@@ -1,5 +1,4 @@
 import React, {useContext, useState} from 'react';
-import {geolocated} from 'react-geolocated';
 import FmbContext from '../../context/FmbContext';
 import InputField from '../InputFields/RegularInputField'
 import RegularButton from '../Buttons/RegularButton';
