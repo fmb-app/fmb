@@ -16,7 +16,7 @@ const GlobalState = props => {
 		categories: [],
 		products: [],
 		selectedProducts: [],
-		location: {type: 'Address', data: ''},
+		location: {lat: '59.34810925465446', long: '18.071363536039396', address: ''},
 		results: [],
 	};
 
@@ -35,11 +35,11 @@ const GlobalState = props => {
 	}
 
 	const setLocation = event => {
-		dispatch({type: SET_LOCATION, location: {type: 'Address', data: event.target.value}});
+		dispatch({type: SET_LOCATION, location: address: event.target.value}});
 	}
 
 	const setCoordinates = (coordinates) => {
-		dispatch({type: SET_LOCATION, location: {type: 'GPS', data: coordinates}});
+		dispatch({type: SET_LOCATION, location: {lat: coordinates.lat, long: coordinates.long});
 	}
 
 	const removeCategory = (category) => {
