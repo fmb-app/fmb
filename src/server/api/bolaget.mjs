@@ -202,8 +202,10 @@ export const findStoresWithProduct = async (lat, long, productNrs) => {
     storesFromGoogle.results.forEach(store => {
       const matchingBolag = storesFromBolaget.find(bolag => bolagMatchesStore(store, bolag));
       // Return combined store objects
-      if(matchingBolag !== undefined && !closeStores.some(closeStore => closeStore.nr === store.nr)) {
-        closeStores.push(combineStoreObjects(matchingBolag, store));
+      if(matchingBolag !== undefined) {
+        if(!closeStores.some(closeStore => closeStore.nr === matchingBolag._id)) {
+          closeStores.push(combineStoreObjects(matchingBolag, store));
+        }
       };
     });
     nextToken = googleResults.next_page_token;
