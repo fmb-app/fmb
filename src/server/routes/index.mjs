@@ -21,32 +21,59 @@ router.get('/stores/:lat/:long', async (req, res) => {
 // Return all stores in Stockholms Län
 router.get('/stores', (req, res) => {
   Store.find({}, null, null, (err, stores) => {
-    if (err) res.sendStatus(500);
-    else res.json(stores);
+    if (err) {
+      console.log(err);
+      res.sendStatus(500);
+    } else res.json(stores);
   });
 });
 
 // Return all products of a specific category, e.g. 'Öl'.
 router.get('/products/:category', async (req, res) => {
-  Product.find({ category: req.params.category}, null, null, (err, products) => {
-    if (err) res.sendStatus(500);
-    else res.json(products);
+  Product.find({ category: req.params.category }, null, null, (err, products) => {
+    if (err) {
+      console.log(err);
+      res.sendStatus(500);
+    } else res.json(products);
   });
 });
 
 // Return all products in the database.
 router.get('/products', async (req, res) => {
   Product.find({}, null, null, (err, products) => {
-    if (err) res.sendStatus(500);
-    else res.json(products);
+    if (err) {
+      console.log(err);
+      res.sendStatus(500);
+    } else res.json(products);
   });
+});
+
+// Return all products in the database that matches the query and category.
+router.get('/products/:category/:query/:offset', async (req, res) => {
+  const category = req.params.category === 'null' ? '' : req.params.category;
+  const query = req.params.query === 'null' ? '' : req.params.query;
+  const offset = Number(req.params.offset) || 0;
+
+  const toRegEx = (param) => new RegExp(param, 'i')
+  Product.find({ category: toRegEx(category), $or: [{name1: toRegEx(query)}, {name2: toRegEx(query)}]},
+    null,
+    { skip: offset, limit: 20 },
+    (err, products) => {
+      if (err) {
+        console.log(err);
+        res.sendStatus(500);
+      } else res.json(products);
+    }
+  );
 });
 
 // Return all available product categories.
 router.get('/categories', (req, res) => {
   Product.distinct('category', (err, categories) => {
-    if (err) res.sendStatus(500);
-    else res.json(categories);
+    if (err) {
+      console.log(err);
+      res.sendStatus(500);
+    } else res.json(categories);
   });
 });
 
