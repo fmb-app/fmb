@@ -55,30 +55,28 @@ router.get('/products/:category/:query/:offset/:sorting', async (req, res) => {
   const offset = Number(req.params.offset) || 0;
   let sorting = {};
   switch (req.params.sorting) {
-    case 'POPULAR_ASC':
-      sorting.hitCount = 1
+    case 'POPULARITY_ASC':
+      sorting = {hitCount: 1, name1: 1}
       break;
-    case 'POPULAR_DESC':
-      sorting.hitCount = -1
+      case 'POPULARITY_DESC':
+      sorting = {hitCount: -1, name1: 1}
       break;
-    case 'ALPHABETIC_ASC':
-      sorting.name1 = 1
+    case 'ALPHABETICAL_DESC':
+      sorting = {name1: -1}
       break;
     default:
-      sorting.name1 = -1
+      sorting = {name1: 1}
       break;
   }
 
   const toRegEx = (param) => new RegExp(param, 'i')
-  Product.find({ category: toRegEx(category), $or: [{name1: toRegEx(query)}, {name2: toRegEx(query)}]},
-    null,
-    {
-      skip: offset,
-      limit: 20,
-      sort: sorting,
-      collation: {locale: 'sv' }
-    },
-    (err, products) => {
+  Product
+    .find({ category: toRegEx(category), $or: [{name1: toRegEx(query)}, {name2: toRegEx(query)}]})
+    .sort(sorting)
+    .skip(offset)
+    .limit(20)
+    .collation({locale: 'sv' })
+    .exec((err, products) => {
       if (err) {
         console.log(err);
         res.sendStatus(500);

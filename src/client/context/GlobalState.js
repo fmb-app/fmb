@@ -64,7 +64,7 @@ const GlobalState = props => {
     });
 
 		// Get all products
-		fetch('/api/products/null/null/0/POPULAR_DESC', {
+		fetch('/api/products/null/null/0/POPULARITY_DESC', {
 			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json'

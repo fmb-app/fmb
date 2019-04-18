@@ -42,7 +42,7 @@ const ProductsContainer = ({filterTerm, category, sorting, selectedProducts}) =>
 			const newOffset = offset + 20;
 			setOffset(newOffset);
 			const results = await fetch(
-				`/api/products/${category || 'null'}/${filterTerm || 'null'}/${newOffset}/${sorting || 'POPULAR_DESC'}` ,
+				`/api/products/${category || 'null'}/${filterTerm || 'null'}/${newOffset}/${sorting || 'POPULARITY_DESC'}` ,
 				{
 					method: 'GET',
 					headers: {
