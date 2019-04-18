@@ -59,23 +59,19 @@ const Results = () => {
         { context.results.length > 0
           ? <div>{context.results.length} Systembolag har produkte{context.selectedProducts.length > 1 ? 'rna' : 'n'}:</div>
           : <div>Inga systembolag matchade din sökning :(
-                    <Link
-            to='/'
-            style={{ textDecoration: 'none', width: '100%' }}
-          >
-            <FMButton
-              label='Tillbaka till sök'
-              color={themes.standardTextColor}
-              bgcolor={themes.primaryButton}
-            />
-          </Link>
+              <Link to='/' style={{ textDecoration: 'none', width: '100%' }}>
+                <FMButton
+                  label='Tillbaka till sök'
+                  color={themes.standardTextColor}
+                  bgcolor={themes.primaryButton}
+                />
+              </Link>
             </div>
         }
       </div>
       { context.results &&
-        context.results.map((result, index) => 
-        <Result result={result} index={index+1} key={index+1} />
-      )}
+        context.results.map((result, index) => <Result result={result} index={index+1} key={index+1} />)
+      }
     </div>
   );
 }
