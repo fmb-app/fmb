@@ -39,10 +39,10 @@ const ProductsContainer = ({filterTerm, category, sorting, selectedProducts}) =>
 		const bottomReached = lengthScrolled >= event.target.scrollHeight;
 
 		if (bottomReached) {
-			console.log('Bottom REACHED!')
-			setOffset(offset + 20);
+			const newOffset = offset + 20;
+			setOffset(newOffset);
 			const results = await fetch(
-				`/api/products/${category || 'null'}/${filterTerm || 'null'}/${offset}/${sorting || 'POPULAR_DESC'}` ,
+				`/api/products/${category || 'null'}/${filterTerm || 'null'}/${newOffset}/${sorting || 'POPULAR_DESC'}` ,
 				{
 					method: 'GET',
 					headers: {
@@ -51,7 +51,7 @@ const ProductsContainer = ({filterTerm, category, sorting, selectedProducts}) =>
 				}
 			);
 			const fetchedProducts = await results.json();
-			context.setProducts(...context.products, ...fetchedProducts)
+			context.setProducts([...context.products, ...fetchedProducts]);
 		}
 	}
 
