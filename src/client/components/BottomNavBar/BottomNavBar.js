@@ -57,7 +57,6 @@ const BottomNavBar = (props) => {
       }).then((res) => {
         return res.json();
       }).then((data) => {
-        console.log(data.results)
         context.setResults(data.results);
     });
   }

@@ -13,9 +13,7 @@ const Map = () => {
   const context = useContext(FmbContext);
 
   const setMapCoordinates = (e) => {
-    console.log(e)
     const {lat, lng} = e.target._latlng
-    console.log([lat,lng])
     context.setCoordinates({lat: lat, long: lng})
   }
     return (
