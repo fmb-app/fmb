@@ -41,9 +41,8 @@ const getTravelTime = (startTime, endTime) => {
 	const start = moment.utc(startTime, "HH:mm:ss");
 	const end = moment.utc(endTime, "HH:mm:ss");
 	if (end.isBefore(start)) end.add(1, 'day'); // account for crossing over to midnight the next day
-	const d = moment.duration(end.diff(start));
-	const time = moment.utc(+d).format('H:mm');
-	return  time;
+	const diff = moment.duration(end.diff(start));
+	return moment.utc(+diff).format('mm');
 }
 
 const TravelRoute = ({store}) => {
@@ -56,11 +55,14 @@ const TravelRoute = ({store}) => {
 
 	return (
 		<div style={style.container}>
-			Restid: {trips.time && trips.time}
+			<div>
+				<span>{trips.time && trips.time} min till {store.street}</span>
+			</div>
 			{
 				trips.trip && trips.trip.map((partOfTrip, index) => 
 					<div style={style.stop} key={`trip-${index}`}>
-						{partOfTrip.Origin.time} från {partOfTrip.Origin.name} till {partOfTrip.Destination.name} {partOfTrip.type} {partOfTrip.Product && partOfTrip.Product.name} {partOfTrip.duration} 
+						<div>{partOfTrip.Origin.time.slice(0, 5)}</div>
+						 {partOfTrip.Origin.name} till {partOfTrip.Destination.name} {partOfTrip.type} {partOfTrip.Product && partOfTrip.Product.name} {partOfTrip.duration} 
 					</div>
 				)
 			}
