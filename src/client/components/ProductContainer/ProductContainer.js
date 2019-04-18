@@ -15,6 +15,7 @@ const style = {
 		overflowY: 'auto',
 	},
 	products: {
+		boxShadow: 'inset 0 0 30px 30px #000000',
 		width: '100%',
 		display: 'grid',
 		gridTemplateColumns: '1fr',
@@ -23,7 +24,6 @@ const style = {
 		justifyContent: 'start',
 		gridAutoFlow: 'row'
 	}
-
 }
 
 const ProductsContainer = ({filterTerm, category, priceLow, priceHigh, alcoholLow, alcoholHigh, selectedProducts}) => {

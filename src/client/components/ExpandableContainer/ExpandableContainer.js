@@ -7,9 +7,7 @@ const style = {
 	container: {
 		display: 'flex',
 		flexDirection: 'column',
-		backgroundColor: 'black',
 		marginTop: themes.standardSpace,
-		backgroundColor: 'rgba(0,0,0, 0.5)',
 		borderRadius: themes.standardRadius,
 	},
 	top: {

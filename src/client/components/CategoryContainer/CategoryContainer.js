@@ -7,10 +7,9 @@ const style = {
 	container: {
 		width: '100%',
 		boxSizing: 'border-box',
-		marginTop: themes.standardSpace,
 		borderRadius: themes.standardRadius,
 		padding: themes.standardSpace,
-		backgroundColor: 'rgba(0,0,0,0.5)',
+		backgroundColor: 'rgba(0,0,0,0.3)',
 		display: 'grid',
 		gridTemplateRows: '1fr',
 		boxSizing: 'border-box',
@@ -29,7 +28,11 @@ const CategoryContainer = ({}) => {
 		<div style={style.container}>
 			{
 				context.categories.map((category, key) => 
-					<div key={key} style={style.category}>
+					<div
+						key={key}
+						style={style.category}
+						onClick={() => {context.setSelectedCategory(category)}}
+					>
 						{category}
 					</div>
 				)

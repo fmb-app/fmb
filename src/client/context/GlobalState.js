@@ -7,7 +7,7 @@ import { fmbReducer,
 				 SET_LOCATION,
 				 SET_RESULTS,
 				 SET_CATEGORIES,
-				 REMOVE_CATEGORY,
+				 SET_SELECTED_CATEGORY,
 			 } from './Reducer';
 
 const GlobalState = props => {
@@ -34,12 +34,11 @@ const GlobalState = props => {
 	}
 
 	const setCoordinates = (coordinates) => {
-		console.log(coordinates.lat)
 		dispatch({type: SET_LOCATION, location: {lat: coordinates.lat, long: coordinates.long}});
 	}
 
-	const removeCategory = (category) => {
-		dispatch({type: REMOVE_CATEGORY, category: category});
+	const setSelectedCategory = (category) => {
+		dispatch({type: SET_SELECTED_CATEGORY, category: category});
 	}
 
 	const setResults = (results) => {
@@ -78,14 +77,13 @@ const GlobalState = props => {
 
 		// Ask the user for location permissions
 		navigator.geolocation.getCurrentPosition((position) => {
-			console.log(position.coords)
 			if (position.coords) {
 				setCoordinates(
 					{
 						lat: position.coords.latitude,
 						long: position.coords.longitude 
 					}
-					);
+				);
 			}
     });
 	}, []);
@@ -99,7 +97,8 @@ const GlobalState = props => {
 				setSelectedProducts: setSelectedProducts,
 				removeSelectedProduct: removeSelectedProduct,
 				categories: state.categories,
-				removeCategory: removeCategory,
+				selectedCategory: state.selectedCategory,
+				setSelectedCategory: setSelectedCategory,
 				location: state.location,
 				setCoordinates: setCoordinates,
 				setResults: setResults,

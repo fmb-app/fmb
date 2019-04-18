@@ -4,7 +4,7 @@ export const SET_PRODUCTS  	         = 'SET_PRODUCTS';
 export const SET_SELECTED_PRODUCTS   = 'SET_SELECTED_PRODUCTS';
 export const REMOVE_SELECTED_PRODUCT = 'REMOVE_SELECTED_PRODUCT';
 export const SET_CATEGORIES  	       = 'SET_CATEGORIES';
-export const REMOVE_CATEGORY  	     = 'REMOVE_CATEGORY';
+export const SET_SELECTED_CATEGORY   = 'SET_SELECTED_CATEGORY';
 
 const setProducts = (products, state) => {
 	return {...state, products: products};
@@ -24,9 +24,8 @@ const setCategories = (categories, state) => {
 	return {...state, categories: categories};
 }
 
-const removeCategory = (category, state) => {
-	const updatedCategories = state.categories.filter((item, intex) => item.type !== category);
-	return {...state, category: updatedCategories};
+const setSelectedCategory = (category, state) => {
+	return {...state, selectedCategory: category};
 }
 
 const setResults = (results, state) => {
@@ -49,8 +48,8 @@ export const fmbReducer = (state, action) => {
 			return removeSelectedProduct(action.product, state);
 		case SET_CATEGORIES:
 			return setCategories(action.categories, state);
-		case REMOVE_CATEGORY:
-			return removeCategory(action.category, state);
+		case SET_SELECTED_CATEGORY:
+			return setSelectedCategory(action.category, state);
 		case SET_RESULTS:
 			return setResults(action.results, state);
 		case SET_LOCATION:

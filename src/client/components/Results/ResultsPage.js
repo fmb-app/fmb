@@ -42,9 +42,9 @@ const Results = () => {
 
   return (
     <div 	style={{
-      width: '80%',
-      height: '70%',
-      marginTop: '7rem',
+      width: '22rem',
+      height: '75%',
+      marginTop: themes.mediumSpace,
       textAlign: 'left',
       padding: themes.mediumSpace,
       backgroundColor: 'rgba(0,0,0, 0.5)',
