@@ -90,11 +90,13 @@ const MidSection = () => {
 			<Link
 				to='/results'
 				onClick={findMyBork}
+				style={{ textDecoration: 'none' }}
 			>
 				<RoundButton
 					style={{textDecoration: 'none'}}
 					label='Find my Bork'
 					color={themes.standardTextColor}
+					bgcolor={themes.primaryButton}
 				/>
 			</Link>
 			</div>
