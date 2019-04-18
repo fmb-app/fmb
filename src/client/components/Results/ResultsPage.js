@@ -6,6 +6,28 @@ import TravelRoute from '../TravelRoute/TravelRoute';
 import { themes } from '../../themes/Themes';
 
 
+const style = {
+  container: {
+    width: '22rem',
+    height: '75%',
+    marginTop: themes.mediumSpace,
+    textAlign: 'left',
+    padding: themes.mediumSpace,
+    backgroundColor: 'rgba(0,0,0, 0.5)',
+    borderRadius: themes.standardRadius,
+    boxSizing: 'border-box',
+    display: 'flex',
+    flexFlow: 'column nowrap',
+    overflowY: 'auto',
+    color: 'white'
+  },
+  top: {
+    display: 'flex',
+    flexFlow:'column nowrap',
+    alignItems: 'center'
+  }
+}
+
 const bolagetName = (result) => result.name ? result.name + ' - ' + result.street : result.street;
 
 const openingHours = (result) => {
@@ -31,21 +53,8 @@ const Results = () => {
   const context = useContext(FmbContext);
 
   return (
-    <div 	style={{
-      width: '32rem',
-      height: '75%',
-      marginTop: themes.mediumSpace,
-      textAlign: 'left',
-      padding: themes.mediumSpace,
-      backgroundColor: 'rgba(0,0,0, 0.5)',
-      borderRadius: themes.standardRadius,
-      boxSizing: 'border-box',
-      display: 'flex',
-      flexFlow: 'column nowrap',
-      overflowY: 'auto',
-      color: 'white'
-    }}>
-      <div style={{display: 'flex', flexFlow:'column nowrap', alignItems: 'center'}}>
+    <div 	style={style.container}>
+      <div style={style.top}>
         <h2>Närmaste Systembolag:</h2>
         { context.results.length > 0
           ? <div>{context.results.length} Systembolag har produkte{context.selectedProducts.length > 1 ? 'rna' : 'n'}:</div>
