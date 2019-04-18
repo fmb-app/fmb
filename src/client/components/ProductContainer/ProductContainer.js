@@ -6,6 +6,7 @@ import { themes } from '../../themes/Themes';
 const style = {
 	scrollContainer: {
 		width: '100%',
+		height: '100%',
 		flexBasis: 'auto',
 		boxSizing: 'border-box',
 		marginTop: themes.standardSpace,
