@@ -5,6 +5,10 @@ export const SET_SELECTED_PRODUCTS   = 'SET_SELECTED_PRODUCTS';
 export const REMOVE_SELECTED_PRODUCT = 'REMOVE_SELECTED_PRODUCT';
 export const SET_CATEGORIES  	       = 'SET_CATEGORIES';
 export const SET_SELECTED_CATEGORY   = 'SET_SELECTED_CATEGORY';
+export const SET_SEARCH_OFFSET       = 'SET_SEARCH_OFFSET';
+export const SET_SORTING   				   = 'SET_SORTING';
+export const SET_FILTER_TERM         = 'SET_FILTER_TERM';
+export const FETCH_PRODUCTS          = 'FETCH_PRODUCTS';
 
 const setProducts = (products, state) => {
 	return {...state, products: products};
@@ -25,6 +29,7 @@ const setCategories = (categories, state) => {
 }
 
 const setSelectedCategory = (category, state) => {
+	console.log(category)
 	return {...state, selectedCategory: category};
 }
 
@@ -33,9 +38,19 @@ const setResults = (results, state) => {
 }
 
 const setLocation = (coordinates, state) => {
-	console.log('korv')
-	console.log(coordinates)
-	return {...state, location: coordinates}
+	return {...state, location: coordinates};
+}
+
+const setSearchOffset = (offset, state) => {
+	return {...state, searchOffset: offset};
+}
+
+const setSorting = (sorting, state) => {
+	return {...state, sorting: sorting};
+}
+
+const setFilterTerm = (term, state) => {
+	return {...state, filterTerm: term};
 }
 
 export const fmbReducer = (state, action) => {
@@ -54,6 +69,14 @@ export const fmbReducer = (state, action) => {
 			return setResults(action.results, state);
 		case SET_LOCATION:
 			return setLocation(action.location, state);
+		case SET_SEARCH_OFFSET:
+			return setSearchOffset(action.offset, state);
+		case SET_SORTING:
+			return setSorting(action.sorting, state);
+		case SET_FILTER_TERM:
+			return setFilterTerm(action.term, state);
+		case FETCH_PRODUCTS:
+			return fetchProducts(action.offset, state);
 		default:
 			return state;
 	}

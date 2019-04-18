@@ -21,21 +21,13 @@ const style = {
 	}
 }
 
-const CategoryContainer = ({}) => {
+const CategoryContainer = ({onCategoryChange}) => {
 	const context = useContext(FmbContext);
 
 	const bgColor = (cat) => {
 		const isSelected = cat === context.selectedCategory;
 		return {
-			backgroundColor: isSelected ? 'red' : 'blue'
-		}
-	}
-
-	const toggleCategory = (cat) => {
-		if (cat === context.selectedCategory) {
-			context.setSelectedCategory('');
-		} else {
-			context.setSelectedCategory(cat);
+			backgroundColor: isSelected ? 'blue' : 'red'
 		}
 	}
 
@@ -46,7 +38,7 @@ const CategoryContainer = ({}) => {
 					<div
 						key={key}
 						style={{...style.category, ...bgColor(category)}}
-						onClick={() => {toggleCategory(category)}}
+						onClick={() => {onCategoryChange(category)}}
 					>
 						{category}
 					</div>

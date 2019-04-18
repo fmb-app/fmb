@@ -29,8 +29,6 @@ const style = {
 const ProductsContainer = ({filterTerm, category, sorting, selectedProducts}) => {
 	const context = useContext(FmbContext);
 
-	const [offset, setOffset] = useState(0);
-
 	/*
 	 * Updates the number of products if user has scrolled down to the bottom
 	 */
@@ -39,27 +37,13 @@ const ProductsContainer = ({filterTerm, category, sorting, selectedProducts}) =>
 		const bottomReached = lengthScrolled >= event.target.scrollHeight;
 
 		if (bottomReached) {
-			const newOffset = offset + 20;
-			setOffset(newOffset);
-			const results = await fetch(
-				`/api/products/${category || 'null'}/${filterTerm || 'null'}/${newOffset}/${sorting || 'POPULAR_DESC'}` ,
-				{
-					method: 'GET',
-					headers: {
-						'Content-Type': 'application/json'
-					}
-				}
-			);
-			const fetchedProducts = await results.json();
-			context.setProducts([...context.products, ...fetchedProducts]);
+			const newOffset = context.searchOffset + 20;
+			context.setSearchOffset(newOffset);
 		}
 	}
 
 	const toggleProduct = (selected) => {
-		console.log(context.selectedProducts);
 		const productExists = context.selectedProducts.filter((product) => product._id === selected._id).length !== 0;
-		console.log(productExists);
-		console.log(context.selectedProducts.filter((product) => product._id === selected._id));
 		if (productExists) {
 			context.removeSelectedProduct(selected);
 		} else {

@@ -60,10 +60,23 @@ const MidSection = () => {
 			})
 				.then(res => res.json())
 				.then((res) => {
-					console.log(res.stores);
 					context.setResults(res.stores);
 				})
 		)
+	}
+
+	const onInputChange = (event) => {
+		context.setFilterTerm(event.target.value);
+		context.setSearchOffset(0);
+	}
+
+	const onCategoryChange = (cat) => {
+		if (cat === context.selectedCategory) {
+			context.setSelectedCategory('');
+		} else {
+			context.setSelectedCategory(cat);
+		}
+		context.setSearchOffset(0);
 	}
 
 	return (
@@ -72,12 +85,14 @@ const MidSection = () => {
 			<RegularInputField
 				type='text'
 				placeholder='Sök produkt eller kategori'
-				onChange={(e) => setProductSearchQuery(e.target.value)}
+				onChange={(event) => onInputChange(event)}
 			/>
 			<ExpandableContainer
 				label='Kategorier'
 			>
-				<CategoryContainer />
+				<CategoryContainer 
+					onCategoryChange={onCategoryChange}
+				/>
 			</ExpandableContainer>
 			<ProductContainer
 				filterTerm={productSearchQuery}

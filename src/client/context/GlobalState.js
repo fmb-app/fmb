@@ -8,6 +8,10 @@ import { fmbReducer,
 				 SET_RESULTS,
 				 SET_CATEGORIES,
 				 SET_SELECTED_CATEGORY,
+				 SET_SEARCH_OFFSET,
+				 SET_SORTING,
+				 SET_FILTER_TERM,
+				 FETCH_PRODUCTS,
 			 } from './Reducer';
 
 const GlobalState = props => {
@@ -16,6 +20,9 @@ const GlobalState = props => {
 		products: [],
 		selectedProducts: [],
 		selectedCategory: '',
+		searchOffset: 0,
+		filterTerm: '',
+		sorting: 'POPULAR_DESC',
 		location: {lat: '59.34810925465446', long: '18.071363536039396', address: ''},
 		results: [],
 	};
@@ -46,6 +53,22 @@ const GlobalState = props => {
 		dispatch({type: SET_RESULTS, results: results});
 	}
 
+	const setSearchOffset = (offset) => {
+		dispatch({type: SET_SEARCH_OFFSET, offset: offset});
+	}
+
+	const setSorting = (sorting) => {
+		dispatch({type: SET_SORTING, sorting: sorting});
+	}
+
+	const setFilterTerm = (term) => {
+		dispatch({type: SET_FILTER_TERM, term: term});
+	}
+
+	const fetchProducts = (offset) => {
+		dispatch({type: FETCH_PRODUCTS, offset: offset});
+	}
+
 	// This will run once when the app starts.
 	useEffect(() => {
 		// Get all product categories
@@ -64,18 +87,6 @@ const GlobalState = props => {
     	console.log(err);
     });
 
-		// Get all products
-		fetch('/api/products/null/null/0/POPULAR_DESC', {
-			method: 'GET',
-			headers: {
-				'Content-Type': 'application/json'
-			}
-		}).then((res) => {
-			return res.json()
-		}).then((products) => {
-			dispatch({type: SET_PRODUCTS, products: products})
-		});
-
 		// Ask the user for location permissions
 		navigator.geolocation.getCurrentPosition((position) => {
 			if (position.coords) {
@@ -89,6 +100,34 @@ const GlobalState = props => {
     });
 	}, []);
 
+	useEffect(() => {
+		const cat    = state.selectedCategory     === '' ? 'null' : state.selectedCategory;
+		const term   = state.filterTerm   === '' ? 'null' : state.filterTerm;
+
+		// Get all products
+		fetch(`/api/products/${cat}/${term}/${state.searchOffset}/${state.sorting}`, {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		}).then((res) => {
+			return res.json()
+		}).then((products) => {
+			if (state.searchOffset === 0) {
+				dispatch({type: SET_PRODUCTS, products: products});
+			} else {
+				const updateProducts = [...state.products, ...products];
+				dispatch({type: SET_PRODUCTS, products: updateProducts});
+			}
+		});
+	}, [
+			 state.selectedCategory,
+			 state.filterTerm,
+			 state.sorting,
+			 state.searchOffset,
+		 ]
+	)
+
 	return (
 		<FmbContext.Provider
 			value={{
@@ -98,6 +137,12 @@ const GlobalState = props => {
 				setSelectedProducts: setSelectedProducts,
 				removeSelectedProduct: removeSelectedProduct,
 				categories: state.categories,
+				filterTerm: state.filterTerm,
+				sorting: state.sorting,
+				searchOffset: state.searchOffset,
+				setSearchOffset: setSearchOffset,
+				setSorting: setSorting,
+				setFilterTerm: setFilterTerm,
 				selectedCategory: state.selectedCategory,
 				setSelectedCategory: setSelectedCategory,
 				location: state.location,
