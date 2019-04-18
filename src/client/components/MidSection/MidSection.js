@@ -91,7 +91,8 @@ const MidSection = () => {
 				to='/results'
 				onClick={findMyBork}
 			>
-				<RoundButton 
+				<RoundButton
+					style={{textDecoration: 'none'}}
 					label='Find my Bork'
 					color={themes.standardTextColor}
 				/>
