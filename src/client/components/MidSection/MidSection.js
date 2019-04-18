@@ -32,6 +32,9 @@ const style = {
 		justifyContent: 'center',
     alignItems: 'center',
     marginTop: themes.largeSpace,
+	},
+	productHeader: {
+		marginTop: themes.standardSpace,
 	}
 }
 
@@ -52,7 +55,7 @@ const MidSection = () => {
 				},
 				body: JSON.stringify({
 					'coords': {
-						'lat': context.location.lat, 
+						'lat': context.location.lat,
 						'long':  context.location.long
 					},
 					'productNrs': context.selectedProducts.map(product => product.nr)
@@ -90,10 +93,11 @@ const MidSection = () => {
 			<ExpandableContainer
 				label='Kategorier'
 			>
-				<CategoryContainer 
+				<CategoryContainer
 					onCategoryChange={onCategoryChange}
 				/>
 			</ExpandableContainer>
+			<h2 style={style.productHeader}> Produkter </h2>
 			<ProductContainer
 				filterTerm={productSearchQuery}
 				category=''
