@@ -22,7 +22,7 @@ const GlobalState = props => {
 		selectedCategory: '',
 		searchOffset: 0,
 		filterTerm: '',
-		sorting: 'POPULAR_DESC',
+		sorting: 'POPULARITY_DESC',
 		location: {lat: '59.34810925465446', long: '18.071363536039396', address: ''},
 		results: [],
 	};
