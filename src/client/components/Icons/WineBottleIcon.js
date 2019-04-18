@@ -1,7 +1,7 @@
-mport React from 'react';
+import React from 'react';
 import wineBottleIcon from '../../resources/images/icons8-wine-bottle-filled-100.png';
 
-const MapIcon = ({height, width, color}) => {
+const WineBottleIcon = ({height, width, color}) => {
 	return (
 		<img
 			src={wineBottleIcon}
