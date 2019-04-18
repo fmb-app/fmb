@@ -11,7 +11,6 @@ const style = {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F33A3E',
     borderStyle: 'none',
 	}
 }
