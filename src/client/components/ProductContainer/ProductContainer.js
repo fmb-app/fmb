@@ -75,29 +75,31 @@ const ProductsContainer = ({filterTerm, category, sorting, selectedProducts}) =>
 			style={style.scrollContainer}
 			onScroll={handleScroll}
 		>
-			{
-				selectedProducts
-					? context.selectedProducts
-						.map((product, key) =>
-							<Product
-								key={key}
-								label={product.name1}
-								altLabel={product.name2}
-								onClick={() => toggleProduct(product)}
-								isSelected={isSelected(product)}
-							/>
-						)
-					: context.products
-						.map((product, key) =>
-							<Product
-								key={key}
-								label={product.name1}
-								altLabel={product.name2}
-								onClick={() => toggleProduct(product)}
-								isSelected={isSelected(product)}
-							/>
-						)
-			}
+			<div style={style.products}>
+				{
+					selectedProducts
+						? context.selectedProducts
+							.map((product, key) =>
+								<Product
+									key={key}
+									label={product.name1}
+									altLabel={product.name2}
+									onClick={() => toggleProduct(product)}
+									isSelected={isSelected(product)}
+								/>
+							)
+						: context.products
+							.map((product, key) =>
+								<Product
+									key={key}
+									label={product.name1}
+									altLabel={product.name2}
+									onClick={() => toggleProduct(product)}
+									isSelected={isSelected(product)}
+								/>
+							)
+				}
+			</div>
 		</div>
 	);
 }
