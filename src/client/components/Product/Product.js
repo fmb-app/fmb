@@ -13,11 +13,12 @@ const productStyle = isSelected => {
 		textOverflow: 'ellipsis',
 		boxSizing: 'border-box',
 		display: 'flex',
+		justifyContent: 'space-between',
 		alignItems: 'center',
 	}
 }
 
-const Product = ({label, altLabel, onClick, isSelected}) => {
+const Product = ({label, altLabel, onClick, isSelected, icon}) => {
 	const productLabel = () => {
 		if (altLabel !== null) {
 			return label + ' - ' + altLabel;
@@ -31,7 +32,8 @@ const Product = ({label, altLabel, onClick, isSelected}) => {
 			style={productStyle(isSelected)}
 			onClick={onClick}
 		>
-			<p>{productLabel()}</p>
+			<p style={{width: '80%', textOverflow: 'ellipsis', overflow: 'hidden', textAlign: 'left'}}>{productLabel()}</p>
+			{icon}
 		</div>
 	);
 }

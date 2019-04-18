@@ -108,7 +108,9 @@ const BottomNavBar = (props) => {
             color={themes.standardTextColor}
             onClick={toggleCart}
             badge={
-              <div style={style.badge}>
+              context.selectedProducts.length == 0
+              ? null
+              : <div style={style.badge}>
               {context.selectedProducts.length}
               </div>}
           />
