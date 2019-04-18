@@ -1,9 +1,11 @@
 import React, { useContext } from 'react';
+import { Link } from 'react-router-dom'
 import moment from 'moment';
 import FmbContext from '../../context/FmbContext';
 import ExpandableContainer from '../ExpandableContainer/ExpandableContainer';
 import TravelRoute from '../TravelRoute/TravelRoute';
 import { themes } from '../../themes/Themes';
+import FMButton from '../Buttons/FMButton';
 
 
 const style = {
@@ -56,7 +58,18 @@ const Results = () => {
         <h2>Närmaste Systembolag:</h2>
         { context.results.length > 0
           ? <div>{context.results.length} Systembolag har produkte{context.selectedProducts.length > 1 ? 'rna' : 'n'}:</div>
-          : <div>Inga systembolag matchade din sökning :(</div>
+          : <div>Inga systembolag matchade din sökning :(
+                    <Link
+            to='/'
+            style={{ textDecoration: 'none', width: '100%' }}
+          >
+            <FMButton
+              label='Tillbaka till sök'
+              color={themes.standardTextColor}
+              bgcolor={themes.primaryButton}
+            />
+          </Link>
+            </div>
         }
       </div>
       { context.results &&

@@ -1,6 +1,9 @@
 import React, { useContext } from 'react';
 import FmbContext from '../../context/FmbContext';
 import Product from '../Product/Product';
+import BeerCanIcon from '../Icons/BeerCanIcon';
+import BeerBottleIcon from '../Icons/BeerBottleIcon';
+import WineBottleIcon from '../Icons/WineBottleIcon';
 import { themes } from '../../themes/Themes';
 
 const style = {
@@ -50,6 +53,35 @@ const ProductsContainer = ({filterTerm, category, sorting, selectedProducts}) =>
 			: context.setSelectedProducts(selected);
 	}
 
+	const getIcon = (cat, pack) => {
+		console.log(pack);
+		switch (cat) {
+			case 'Rött vin':
+			case 'Vitt vin':
+			case 'Vodka och brännvin':
+			case 'Mousserande vin':
+			case 'Cognac':
+			case 'Vin av flera typer':
+				return <WineBottleIcon 
+					heigth='20rem'
+					width='20rem'
+				/>
+			case 'Öl':
+				switch(pack) {
+					case 'Burk':
+						return <BeerCanIcon
+							heigth='20rem'
+							width='20rem'
+						/>
+					default:
+						return <BeerBottleIcon
+							heigth='20rem'
+							width='20rem'
+						/>
+				}
+		}
+	}
+
 	const isSelected = (product) => context.selectedProducts.filter((item) => item._id === product._id).length !== 0;
 
 	return (
@@ -68,6 +100,7 @@ const ProductsContainer = ({filterTerm, category, sorting, selectedProducts}) =>
 									altLabel={product.name2}
 									onClick={() => toggleProduct(product)}
 									isSelected={isSelected(product)}
+									icon={getIcon(product.category, product.package)}
 								/>
 							)
 						: context.products
@@ -78,6 +111,7 @@ const ProductsContainer = ({filterTerm, category, sorting, selectedProducts}) =>
 									altLabel={product.name2}
 									onClick={() => toggleProduct(product)}
 									isSelected={isSelected(product)}
+									icon={getIcon(product.category, product.package)}
 								/>
 							)
 				}
