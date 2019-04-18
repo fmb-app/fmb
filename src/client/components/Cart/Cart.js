@@ -5,30 +5,31 @@ import ProductContainer from '../ProductContainer/ProductContainer';
 import { themes } from '../../themes/Themes';
 
 const style = {
-	sidebar: {
-    height: '70%',
+	cart: {
+    height: '30rem',
 		width: '22rem',
-		textAlign: 'left',
-		padding: themes.mediumSpace,
-		backgroundColor: 'rgba(0,0,0, 0.5)',
-		borderRadius: themes.standardRadius,
-		boxSizing: 'border-box',
-		overflowY: 'auto',
-		color: themes.standardTextColor,
+		backgroundColor: '#1B1B32',
 		display: 'flex',
-		flexFlow: 'column nowrap',
-		alignContent: 'center'
+		flexDirection: 'column',
+    overflowY: 'auto',
+    borderRadius: themes.standardRadius,
+    textAlign: 'center',
+    color: themes.standardTextColor,
+    padding: themes.standardSpace,
+    boxSizing: 'border-box',
+    boxShadow: '0px 0px 10px 10px #000000',
+    marginBottom: themes.standardSpace,
 	}
 };
-const Sidebar = (props) => {
+const Cart = (props) => {
     const context = useContext(FmbContext);
     console.log(context)
     return (
-      <div style={style.sidebar}>
-        <h3>This is the sidebar</h3>
+      <div style={style.cart}>
+        <h3>Dina valda produkter</h3>
         <ProductContainer selectedProducts={true}/>
       </div>
     );
 }
 
-export default Sidebar;
+export default Cart;

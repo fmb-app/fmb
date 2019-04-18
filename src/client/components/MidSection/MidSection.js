@@ -12,9 +12,10 @@ import { themes } from '../../themes/Themes';
 
 const style = {
 	midSection: {
-		height: '70%',
+		height: '75%',
 		width: '22rem',
 		textAlign: 'left',
+		marginTop: themes.mediumSpace,
 		padding: themes.mediumSpace,
 		backgroundColor: 'rgba(0,0,0, 0.5)',
 		borderRadius: themes.standardRadius,
