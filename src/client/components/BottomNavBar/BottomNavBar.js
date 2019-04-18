@@ -30,6 +30,18 @@ const style = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  badge: {
+    backgroundColor: '#e01a8a',
+    borderRadius: '7px',
+    fontSize: '0.9rem',
+    marginLeft: '2.5rem',
+    marginBottom: '1rem',
+    padding: '0.1rem 0.3rem',
+    position: 'absolute',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
   }
 }
 
@@ -95,6 +107,10 @@ const BottomNavBar = (props) => {
             bgcolor={themes.primaryButton}
             color={themes.standardTextColor}
             onClick={toggleCart}
+            badge={
+              <div style={style.badge}>
+              {context.selectedProducts.length}
+              </div>}
           />
         </div>
       </div>

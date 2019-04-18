@@ -40,11 +40,13 @@ const ExpandableContainer = ({label, children, styleProps}) => {
 
 	return (
 		<div style={style.container}>
-			<div style={{...style.top, ...styleProps}}>
+			<div 
+				style={{...style.top, ...styleProps}}
+				onClick={handleClick}
+			>
 				<h3>{label}</h3>
 				<ExpandButton
 					rotated={expanded}
-					onClick={handleClick}
 				/>
 			</div>
 			<div style={expandedStyle()}>
