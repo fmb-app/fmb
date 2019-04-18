@@ -15,6 +15,7 @@ const GlobalState = props => {
 		categories: [],
 		products: [],
 		selectedProducts: [],
+		selectedCategory: '',
 		location: {lat: '59.34810925465446', long: '18.071363536039396', address: ''},
 		results: [],
 	};
