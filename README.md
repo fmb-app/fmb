@@ -99,3 +99,10 @@ The project is divided into two parts, the client and the server. Both folders r
  ### Public
  * favicon.png: our favicon
  * index.html: the main index file. This is where the app entry point is defined.
+
+## How to setup
+ * Clone the repo from Github.
+ * Run `npm install` from the root directory of the project to install necessary Node dependencies.
+ * Set up a MongoDB server and save the MONGO_DB_URI to a `.env` file in the project directory.
+ * Generate API keys for Google Places API, Trafiklab v3 and save them in the `.env` file.
+ * Deploy to Heroku or other hosting service.
