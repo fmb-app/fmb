@@ -7,7 +7,7 @@ import ProductContainer from '../ProductContainer/ProductContainer';
 import Product from '../Product/Product';
 import CategoryContainer from '../CategoryContainer/CategoryContainer';
 import ExpandableContainer from '../ExpandableContainer/ExpandableContainer';
-import RoundButton from '../Buttons/RoundButton';
+import FMButton from '../Buttons/FMButton';
 import { themes } from '../../themes/Themes';
 
 const style = {
@@ -31,7 +31,7 @@ const style = {
 		display: 'flex',
 		justifyContent: 'center',
     alignItems: 'center',
-    marginTop: themes.standardSpace,
+    marginTop: themes.largeSpace,
 	}
 }
 
@@ -58,7 +58,7 @@ const MidSection = () => {
 					'productNrs': context.selectedProducts.map(product => product.nr)
 				})
 			})
-				.then(res => res.json())
+				.then((res) => res.json())
 				.then((res) => {
 					context.setResults(res.stores);
 				})
@@ -107,10 +107,10 @@ const MidSection = () => {
 			<Link
 				to='/results'
 				onClick={findMyBork}
-				style={{ textDecoration: 'none' }}
+				style={{ textDecoration: 'none', width: '100%' }}
 			>
-				<RoundButton
-					label='FIND MY BORK'
+				<FMButton
+					label='FIND MY BORK!'
 					color={themes.standardTextColor}
 					bgcolor={themes.primaryButton}
 				/>
