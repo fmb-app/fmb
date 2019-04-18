@@ -3,6 +3,7 @@ import FmbContext from '../../context/FmbContext';
 import RegularButton from '../Buttons/RegularButton';
 import GPSIcon from '../Icons/GPSIcon';
 import CartIcon from '../Icons/CartIcon';
+import MapIcon from '../Icons/MapIcon';
 import Cart from '../Cart/Cart';
 import { themes } from '../../themes/Themes';
 import Map from '../Map/Map';
@@ -85,7 +86,7 @@ const BottomNavBar = (props) => {
             onClick={getCoordinates}
           />
           <RegularButton
-            label='Karta'
+            label={<MapIcon color='white' width='100%' />}
             bgcolor={themes.primaryButton}
             color={themes.standardTextColor}
             onClick={toggleMap}
