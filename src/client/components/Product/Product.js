@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { themes } from '../../themes/Themes';
 
-const productStyle = isSelected => { 
+const productStyle = isSelected => {
 	return {
 		padding: themes.standardSpace,
 		borderRadius: themes.standardRadius,
 		backgroundColor: isSelected ? 'blue' : 'red',
 		marginTop: themes.smallSpace,
 		height: '2rem',
-		overflow: 'hidden', 
+		overflow: 'hidden',
 	  whiteSpace: 'nowrap',
 		textOverflow: 'ellipsis',
 		boxSizing: 'border-box',

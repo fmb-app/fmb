@@ -1,27 +1,28 @@
 import React from 'react';
-import { Link, Route } from 'react-router-dom';
+import { Link, Route, Switch } from 'react-router-dom';
 import { DragDropContext } from 'react-beautiful-dnd';
 import GlobalState from './context/GlobalState';
 import BottomNavBar from './components/BottomNavBar/BottomNavBar';
 import MidSection from './components/MidSection/MidSection';
 import Results from './components/Results/ResultsPage';
+import ExpandableContainer from './components/ExpandableContainer/ExpandableContainer';
 import { themes } from './themes/Themes';
 import Map from './components/Map/Map';
 
 const style = {
 	header: {
 		display: 'flex',
+		flexDirection: 'column',
 		justifyContent: 'center',
 		alignItems: 'center',
 		width: '100%',
-		height: '6rem',
+		height: '5rem',
 		backgroundColor: 'rgba(0, 0, 0, 0.8)',
-		position: 'fixed',
 		top: '0',
 	},
 	headerFont: {
 		color: themes.secondaryGradient,
-		fontSize: '4rem',
+		fontSize: '3rem',
 		fontFamily: 'Marck Script',
 		wordSpacing: '-1rem',
 		background: 'linear-gradient(60deg, #e01a8a 39%,#ce8114 100%)',
@@ -39,7 +40,7 @@ const style = {
 		alignItems: 'center',
 		width: '100%',
 		height: '100vh',
-	}
+	},
 };
 
 const App = () => {
@@ -51,8 +52,10 @@ const App = () => {
 						<h1 style={style.headerFont}>Find my Bork</h1>
 					</Link>
 				</div>
-				<Route exact path={'/results'} component={Results} />
-				<Route exact path={'/'} component={MidSection} />
+				<Switch>
+					<Route exact path={'/results'} component={Results} />
+					<Route component={MidSection} />
+				</Switch>
 				<BottomNavBar />
 			</div>
 		</GlobalState>

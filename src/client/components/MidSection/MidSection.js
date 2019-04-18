@@ -12,10 +12,10 @@ import { themes } from '../../themes/Themes';
 
 const style = {
 	midSection: {
-		height: '70%',
+		height: '75%',
 		width: '22rem',
-		marginTop: '7rem',
 		textAlign: 'left',
+		marginTop: themes.mediumSpace,
 		padding: themes.mediumSpace,
 		backgroundColor: 'rgba(0,0,0, 0.5)',
 		borderRadius: themes.standardRadius,
@@ -24,6 +24,7 @@ const style = {
 		color: themes.standardTextColor,
 		display: 'flex',
 		flexFlow: 'column nowrap',
+		alignContent: 'center'
 	},
 	search: {
 		width: '100%',
@@ -85,6 +86,7 @@ const MidSection = () => {
 				priceHigh={Number.MAX_SAFE_INTEGER}
 				alcoholLow={0}
 				alcoholHigh={Number.MAX_SAFE_INTEGER}
+				selectedProducts={false}
 			/>
 			<div style={style.search}>
 			<Link
@@ -104,4 +106,3 @@ const MidSection = () => {
 }
 
 export default MidSection;
-

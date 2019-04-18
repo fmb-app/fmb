@@ -4,6 +4,7 @@ export const themes = {
 	standardTextColor: '#FAFAFA',
 	mediumSpace: '1rem',
 	largeSpace: '2rem',
+	extraLargeSpace: '3rem',
 	primaryButton: {
 		background: 'linear-gradient(45deg, #2cdd88 0%, #7db9e8 100%)',
 		transition: 'box-shadow 0.1s ease-out',
