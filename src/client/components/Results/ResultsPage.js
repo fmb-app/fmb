@@ -48,8 +48,6 @@ const Result = ({result}) => {
 }
 
 const Results = () => {
-  // const dest = {lat: 59.312870597238124, long: 18.061523437500004};  
-  // getTravelRoute(dest);
   const context = useContext(FmbContext);
 
   return (
