@@ -49,15 +49,35 @@ router.get('/products', async (req, res) => {
 });
 
 // Return all products in the database that matches the query and category.
-router.get('/products/:category/:query/:offset', async (req, res) => {
+router.get('/products/:category/:query/:offset/:sorting', async (req, res) => {
   const category = req.params.category === 'null' ? '' : req.params.category;
   const query = req.params.query === 'null' ? '' : req.params.query;
   const offset = Number(req.params.offset) || 0;
+  let sorting = {};
+  switch (req.params.sorting) {
+    case 'POPULAR_ASC':
+      sorting.hitCount = 1
+      break;
+    case 'POPULAR_DESC':
+      sorting.hitCount = -1
+      break;
+    case 'ALPHABETIC_ASC':
+      sorting.name1 = 1
+      break;
+    default:
+      sorting.name1 = -1
+      break;
+  }
 
   const toRegEx = (param) => new RegExp(param, 'i')
   Product.find({ category: toRegEx(category), $or: [{name1: toRegEx(query)}, {name2: toRegEx(query)}]},
     null,
-    { skip: offset, limit: 20 },
+    {
+      skip: offset,
+      limit: 20,
+      sort: sorting,
+      collation: {locale: 'sv' }
+    },
     (err, products) => {
       if (err) {
         console.log(err);
