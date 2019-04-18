@@ -51,22 +51,18 @@ On the backend we have some things left to figure out.
 
  2. A page with favorite search terms.
 
- 3. A map with the route to systembolaget.
+ 3. A map with the route to the selected systembolaget.
  
  4. We need to display the top choices for stores with the selected beverage.
- 
- 5. We need to display the travel route to the selected store.
 
 ## Project Structure
-The project is divided into two parts, the client and the server. Both folders reside in the src folder. The client is built separately and will be bundled into a /dist folder that is served statically by the backend.
-
-The project is divided into frontend, backend and database. For easier deployment in Heroku, the frontend and backend are both put in their respective folder in the src folder. The database is based on MongoDB, using the ODM library Mongoose. In the frontend (client) folder, resources contains resources such as images, themes contains some genereal CSS, components contain the components with the js, html and CSS combined in one file for each component, and context contains files regarding the context. The backend (server) folder contains the files for API calls and interaction with the database.
+The project is divided into two parts, the client and the server. Both folders reside in the src folder. The client is built separately and will be bundled into a /dist folder that is served statically by the backend. The database is based on MongoDB, using the ODM library Mongoose. 
 
 ### Server
 
  * server.mjs: This is where the Express app is initiated, and the routes are directed to their respective files.
- * /APICalls: This is where we put all our API calls(Google API and Systembolaget API)
-  - googleAPIcall.mjs: This is where we fetch the 20 closest stores.
+ * /api: This is where we put all our API calls(Google API and Systembolaget API)
+  - google.mjs: This is where we fetch the 20 closest stores.
   - bolaget.mjs: This is where we connect to Systembolagets API to load Products and Stores.
  * /models: This is where we put our Mongoose.js models(products and stores)
   - products.mjs: This is where the Product model is configured.
