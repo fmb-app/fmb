@@ -64,10 +64,12 @@ const BottomNavBar = (props) => {
 
 
     const toggleMap = () => {
+      setShowCart(false);
       setShowMap(!showMap);
     }
 
     const toggleCart = () => {
+      setShowMap(false);
       setShowCart(!showCart);
     }
 

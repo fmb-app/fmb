@@ -4,7 +4,7 @@ import Product from '../Product/Product';
 import { themes } from '../../themes/Themes';
 
 const style = {
-	container: {
+	scrollContainer: {
 		width: '100%',
 		height: '50%',
 		boxSizing: 'border-box',
@@ -13,12 +13,17 @@ const style = {
 		padding: themes.standardSpace,
 		backgroundColor: 'rgba(0,0,0,0.5)',
 		overflowY: 'auto',
+	},
+	products: {
+		width: '100%',
 		display: 'grid',
-		gridTemplateRows: '1fr',
+		gridTemplateColumns: '1fr',
 		boxSizing: 'border-box',
 		gridRowGap: themes.standardSpace,
-		alignContent: 'start',
+		justifyContent: 'start',
+		gridAutoFlow: 'row'
 	}
+
 }
 
 const ProductsContainer = ({filterTerm, category, priceLow, priceHigh, alcoholLow, alcoholHigh, selectedProducts}) => {
@@ -98,32 +103,34 @@ const ProductsContainer = ({filterTerm, category, priceLow, priceHigh, alcoholLo
 
 	return (
 		<div
-			style={style.container}
+			style={style.scrollContainer}
 			onScroll={handleScroll}
 		>
-			{
-				selectedProducts
-				? context.selectedProducts.map((product, key) =>
-					<Product
-					key={key}
-					label={product.name1}
-					altLabel={product.name2}
-					onClick={() => toggleProduct(product)}
-					isSelected={isSelected(product)}
-					/>
-				)
-				: getProductList()
-						.slice(0,numberOfProducts)
-						.map((product, key) =>
+			<div style={style.products}>
+				{
+					selectedProducts
+					? context.selectedProducts.map((product, key) =>
 						<Product
-						key={key}
-						label={product.name1}
-						altLabel={product.name2}
-						onClick={() => toggleProduct(product)}
-						isSelected={isSelected(product)}
+							key={key}
+							label={product.name1}
+							altLabel={product.name2}
+							onClick={() => toggleProduct(product)}
+							isSelected={isSelected(product)}
 						/>
-				)
-			}
+					)
+					: getProductList()
+							.slice(0,numberOfProducts)
+								.map((product, key) =>
+									<Product
+										key={key}
+										label={product.name1}
+										altLabel={product.name2}
+										onClick={() => toggleProduct(product)}
+										isSelected={isSelected(product)}
+									/>
+					)
+				}
+			</div>
 		</div>
 	);
 }
