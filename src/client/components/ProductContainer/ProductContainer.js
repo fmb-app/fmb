@@ -35,9 +35,8 @@ const ProductsContainer = ({filterTerm, category, sorting, selectedProducts}) =>
 	 * Updates the number of products if user has scrolled down to the bottom
 	 */
 	const handleScroll = async (event) => {
-		console.log('Handling Scroll.')
-		const lengthScrolled = event.target.scrollHeight - event.target.scrollTop;
-		const bottomReached = lengthScrolled === event.target.clientHeight;
+		const lengthScrolled = event.target.clientHeight + event.target.scrollTop;
+		const bottomReached = lengthScrolled >= event.target.scrollHeight;
 
 		if (bottomReached) {
 			console.log('Bottom REACHED!')
