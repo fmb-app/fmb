@@ -7,10 +7,10 @@ import { themes } from '../../themes/Themes';
 const style = {
 	cart: {
     height: '30rem',
-	width: '22rem',
-	backgroundColor: '#262632',
-	display: 'flex',
-	flexDirection: 'column',
+	  width: '22rem',
+	  backgroundColor: '#262632',
+	  display: 'flex',
+	  flexDirection: 'column',
     overflowY: 'auto',
     borderRadius: themes.standardRadius,
     textAlign: 'center',
