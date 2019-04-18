@@ -4,20 +4,21 @@ import { themes } from '../../themes/Themes'
 
 const style = {
 	button: {
-		borderRadius: '50%',
-		height: '4rem',
-		width: '4rem',
-		boxSizing: 'border-box',
+		height: '3rem',
+    maxWidth: '20rem',
+    width: '100%',
+    boxSizing: 'border-box',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     borderStyle: 'none',
+    borderRadius: themes.standardRadius
 	}
 }
 
-const RoundButton = ({ label, bgcolor, color, onClick, disabled }) => {
+const FMButton = ({ label, bgcolor, color, onClick, disabled }) => {
   return (
-    <div>
+    <div style={{display: 'flex', width: '100%'}}>
       <button
         style={[style.button, {...bgcolor, color}]}
         onClick={onClick}
@@ -29,4 +30,4 @@ const RoundButton = ({ label, bgcolor, color, onClick, disabled }) => {
   );
 }
 
-export default Radium(RoundButton);
+export default Radium(FMButton);
