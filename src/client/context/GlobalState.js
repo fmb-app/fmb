@@ -30,12 +30,12 @@ const GlobalState = props => {
 		dispatch({type: SET_SELECTED_PRODUCTS, product: product});
 	}
 
-	const setLocation = event => {
-		dispatch({type: SET_LOCATION, location: address: event.target.value}});
+	const removeSelectedProduct = product => {
+		dispatch({type: REMOVE_SELECTED_PRODUCT, product: product});
 	}
 
 	const setCoordinates = (coordinates) => {
-		dispatch({type: SET_LOCATION, location: {lat: coordinates.lat, long: coordinates.long});
+		dispatch({type: SET_LOCATION, location: {lat: coordinates.lat, long: coordinates.long}});
 	}
 
 	const removeCategory = (category) => {
@@ -85,7 +85,6 @@ const GlobalState = props => {
 				categories: state.categories,
 				removeCategory: removeCategory,
 				location: state.location,
-				setLocation: setLocation,
 				setCoordinates: setCoordinates,
 				setResults: setResults,
 				results: state.results,

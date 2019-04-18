@@ -93,8 +93,7 @@ const MidSection = () => {
 				style={{ textDecoration: 'none' }}
 			>
 				<RoundButton
-					style={{textDecoration: 'none'}}
-					label='Find my Bork'
+					label='FIND MY BORK'
 					color={themes.standardTextColor}
 					bgcolor={themes.primaryButton}
 				/>
