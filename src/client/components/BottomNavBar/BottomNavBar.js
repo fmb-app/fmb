@@ -1,6 +1,5 @@
 import React, {useContext, useState} from 'react';
 import FmbContext from '../../context/FmbContext';
-import InputField from '../InputFields/RegularInputField'
 import RegularButton from '../Buttons/RegularButton';
 import GPSIcon from '../Icons/GPSIcon';
 import CartIcon from '../Icons/CartIcon';
