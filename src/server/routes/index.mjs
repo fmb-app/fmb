@@ -100,6 +100,7 @@ router.get('/categories', (req, res) => {
 // Get the travel route from given coordinates to given coordinates. Uses Trafiklab API.
 router.get('/travel/:olat/:olong/:dlat/:dlong', async (req, res) => {
     const trip = await slFetch(req.params.olat, req.params.olong, req.params.dlat, req.params.dlong);
+    console.log('Trip', trip);
     res.json(trip);
 });
 
