@@ -27,7 +27,7 @@ const CategoryContainer = ({onCategoryChange}) => {
 	const bgColor = (cat) => {
 		const isSelected = cat === context.selectedCategory;
 		return {
-			backgroundColor: isSelected ? 'blue' : 'red'
+			backgroundColor: isSelected ? '#744253' : '#262632'
 		}
 	}
 

@@ -7,14 +7,15 @@ const style = {
 	container: {
 		display: 'flex',
 		flexDirection: 'column',
+		boxShadow: '0 0 5px 5px #000000',
 		marginTop: themes.standardSpace,
 		borderRadius: themes.standardRadius,
+		backgroundColor: '#262632',
 	},
 	top: {
 		width: '100%',
 		padding: themes.standardSpace,
 		display: 'flex',
-		backgroundColor: 'rgba(0,0,0, 0.5)',
 		flexDirection: 'row',
 		justifyContent: 'space-between',
 		alignItems: 'center',
@@ -32,7 +33,7 @@ const ExpandableContainer = ({label, children, styleProps}) => {
 	const expandedStyle = () => {
 		return {
 			transition: 'height 0.5s ease-in-out',
-			height: expanded ? '6rem' : '0rem',
+			height: expanded ? '10rem' : '0rem',
 			overflowY: 'auto',
 		}
 	}

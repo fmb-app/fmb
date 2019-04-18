@@ -1,7 +1,7 @@
 export const themes = {
 	standardSpace: '0.5rem',
 	standardRadius: '2px',
-	standardTextColor: '#FAFAFA',
+	standardTextColor: '#FAF1F2',
 	mediumSpace: '1rem',
 	largeSpace: '2rem',
 	extraLargeSpace: '3rem',

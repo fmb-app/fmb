@@ -5,7 +5,7 @@ const productStyle = isSelected => {
 	return {
 		padding: themes.standardSpace,
 		borderRadius: themes.standardRadius,
-		backgroundColor: isSelected ? 'blue' : 'red',
+		backgroundColor: isSelected ? '#744253' : '#262632',
 		marginTop: themes.smallSpace,
 		height: '2rem',
 		overflow: 'hidden',
