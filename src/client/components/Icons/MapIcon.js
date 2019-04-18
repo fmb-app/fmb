@@ -1,5 +1,5 @@
 import React from 'react';
-import mapIcon from '../../resources/images/MapIcon.svg';
+import mapIcon from '../../resources/images/mapIcon.svg';
 
 const MapIcon = ({height, width, color}) => {
 	return (
