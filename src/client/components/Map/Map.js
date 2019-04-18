@@ -14,9 +14,9 @@ const Map = () => {
 
   const setMapCoordinates = (e) => {
     console.log(e)
-    const {lat,lng} = e.target._latlng
+    const {lat, lng} = e.target._latlng
     console.log([lat,lng])
-    context.setCoordinates([lat,lng])
+    context.setCoordinates({lat: lat, long: lng})
   }
     return (
       <div style={style.map}>
@@ -35,7 +35,7 @@ const Map = () => {
           <TileLayer
             url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'
           />
-          <Marker position={context.location.data} draggable={true} onDragEnd={setMapCoordinates}>
+          <Marker position={[context.location.lat, context.location.long]} draggable={true} onDragEnd={setMapCoordinates}>
             <Popup>
               Popup for any custom information.
             </Popup>

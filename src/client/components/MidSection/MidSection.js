@@ -51,8 +51,8 @@ const MidSection = () => {
 				},
 				body: JSON.stringify({
 					'coords': {
-						'lat': context.location.data[0],
-						'long':  context.location.data[1]
+						'lat': context.location.lat, 
+						'long':  context.location.long
 					},
 					'productNrs': context.selectedProducts.map(product => product.nr)
 				})
@@ -94,7 +94,7 @@ const MidSection = () => {
 				style={{ textDecoration: 'none' }}
 			>
 				<RoundButton
-					label='Find my Bork'
+					label='FIND MY BORK'
 					color={themes.standardTextColor}
 					bgcolor={themes.primaryButton}
 				/>

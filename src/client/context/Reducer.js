@@ -29,12 +29,14 @@ const removeCategory = (category, state) => {
 	return {...state, category: updatedCategories};
 }
 
-const setLocation = (location, state) => {
-	return {...state, location: location};
-}
-
 const setResults = (results, state) => {
 	return {...state, results: results};
+}
+
+const setLocation = (coordinates, state) => {
+	console.log('korv')
+	console.log(coordinates)
+	return {...state, location: coordinates}
 }
 
 export const fmbReducer = (state, action) => {
@@ -49,10 +51,10 @@ export const fmbReducer = (state, action) => {
 			return setCategories(action.categories, state);
 		case REMOVE_CATEGORY:
 			return removeCategory(action.category, state);
-		case SET_LOCATION:
-			return setLocation(action.location, state);
 		case SET_RESULTS:
 			return setResults(action.results, state);
+		case SET_LOCATION:
+			return setLocation(action.location, state);
 		default:
 			return state;
 	}

@@ -8,7 +8,7 @@ const FmbContext = createContext({
 	results: [],
 	setSelectedProducts: product => {},
 	removeSelectedProduct: product => {},
-	setLocation: location => {},
+	setCoordinates: coordinates => {},
 	setResults: results => [{}]
 });
 

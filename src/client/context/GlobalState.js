@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useReducer } from 'react';
-import {geolocated} from 'react-geolocated';
 import FmbContext from './FmbContext';
 import { fmbReducer,
 				 SET_PRODUCTS,
@@ -16,7 +15,7 @@ const GlobalState = props => {
 		categories: [],
 		products: [],
 		selectedProducts: [],
-		location: {type: 'Address', data: ''},
+		location: {lat: '59.34810925465446', long: '18.071363536039396', address: ''},
 		results: [],
 	};
 
@@ -34,12 +33,9 @@ const GlobalState = props => {
 		dispatch({type: REMOVE_SELECTED_PRODUCT, product: product});
 	}
 
-	const setLocation = event => {
-		dispatch({type: SET_LOCATION, location: {type: 'Address', data: event.target.value}});
-	}
-
 	const setCoordinates = (coordinates) => {
-		dispatch({type: SET_LOCATION, location: {type: 'GPS', data: coordinates}});
+		console.log(coordinates.lat)
+		dispatch({type: SET_LOCATION, location: {lat: coordinates.lat, long: coordinates.long}});
 	}
 
 	const removeCategory = (category) => {
@@ -50,7 +46,9 @@ const GlobalState = props => {
 		dispatch({type: SET_RESULTS, results: results});
 	}
 
+	// This will run once when the app starts.
 	useEffect(() => {
+		// Get all product categories
     fetch('/api/categories', {
       method: 'GET',
       headers: {
@@ -66,6 +64,7 @@ const GlobalState = props => {
     	console.log(err);
     });
 
+		// Get all products
 		fetch('/api/products', {
 			method: 'GET',
 			headers: {
@@ -76,6 +75,19 @@ const GlobalState = props => {
 		}).then((res) => {
 			dispatch({type: SET_PRODUCTS, products: res})
 		});
+
+		// Ask the user for location permissions
+		navigator.geolocation.getCurrentPosition((position) => {
+			console.log(position.coords)
+			if (position.coords) {
+				setCoordinates(
+					{
+						lat: position.coords.latitude,
+						long: position.coords.longitude 
+					}
+					);
+			}
+    });
 	}, []);
 
 	return (
@@ -89,7 +101,6 @@ const GlobalState = props => {
 				categories: state.categories,
 				removeCategory: removeCategory,
 				location: state.location,
-				setLocation: setLocation,
 				setCoordinates: setCoordinates,
 				setResults: setResults,
 				results: state.results,
