@@ -54,7 +54,6 @@ const ProductsContainer = ({filterTerm, category, sorting, selectedProducts}) =>
 	}
 
 	const getIcon = (cat, pack) => {
-		console.log(pack);
 		switch (cat) {
 			case 'Rött vin':
 			case 'Vitt vin':
