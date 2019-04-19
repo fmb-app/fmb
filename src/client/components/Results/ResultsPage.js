@@ -39,6 +39,18 @@ const openingHours = (result) => {
   return `Öppettider: ${close == '00:00' ? 'Stängt för dagen': open + ' - ' +  close}`;
 }
 
+const NoHits = () => {
+  return <div>Inga systembolag matchade din sökning :(
+    <Link to='/' style={{ textDecoration: 'none', width: '100%' }}>
+      <FMButton
+        label='Tillbaka till sök'
+        color={themes.standardTextColor}
+        bgcolor={themes.primaryButton}
+      />
+    </Link>
+  </div>
+}
+
 const Result = ({result}) => {
   return (
     <ExpandableContainer
@@ -58,15 +70,7 @@ const Results = () => {
         <h2>Närmaste Systembolag:</h2>
         { context.results.length > 0
           ? <div>{context.results.length} Systembolag har produkte{context.selectedProducts.length > 1 ? 'rna' : 'n'}:</div>
-          : <div>Inga systembolag matchade din sökning :(
-              <Link to='/' style={{ textDecoration: 'none', width: '100%' }}>
-                <FMButton
-                  label='Tillbaka till sök'
-                  color={themes.standardTextColor}
-                  bgcolor={themes.primaryButton}
-                />
-              </Link>
-            </div>
+          : <NoHits />
         }
       </div>
       { context.results &&
