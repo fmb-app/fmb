@@ -86,6 +86,7 @@ const ProductsContainer = ({filterTerm, category, sorting, selectedProducts}) =>
 			case 'Gin och Genever':
 			case 'Likör':
 			case 'Armagnac och Brandy':
+			case 'Calvados':
 			case 'Vodka och Brännvin':
 			case 'Frukt och Druvsprit':
 			case 'Anissprit':
