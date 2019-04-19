@@ -4,6 +4,9 @@ import Product from '../Product/Product';
 import BeerCanIcon from '../Icons/BeerCanIcon';
 import BeerBottleIcon from '../Icons/BeerBottleIcon';
 import WineBottleIcon from '../Icons/WineBottleIcon';
+import ChampagneBottleIcon from '../Icons/ChampagneBottleIcon';
+import WhiskeyBottleIcon from '../Icons/WhiskeyBottleIcon';
+import CocktailIcon from '../Icons/CocktailIcon';
 import { themes } from '../../themes/Themes';
 
 const style = {
@@ -57,14 +60,51 @@ const ProductsContainer = ({filterTerm, category, sorting, selectedProducts}) =>
 		switch (cat) {
 			case 'Rött vin':
 			case 'Vitt vin':
-			case 'Vodka och brännvin':
-			case 'Mousserande vin':
+			case 'Rosévin':
 			case 'Cognac':
+			case 'Aperitif och dessert':
+			case 'Glögg och Glühwein':
+			case 'Röda - lägre alkoholhalt':
+			case 'Vita - lägre alkoholhalt':
+			case 'Rosé - lägre alkoholhalt':
+			case 'Blå stilla':
 			case 'Vin av flera typer':
 				return <WineBottleIcon 
 					heigth='20rem'
 					width='20rem'
 				/>
+			case 'Blå mousserande':
+			case 'Mousserande vin':
+				return <ChampagneBottleIcon
+					heigth='20rem'
+					width='20rem'
+				/>
+			case 'Whisky':
+			case 'Tequila och Mezcal':
+			case 'Akvavit och Kryddat brännvin':
+			case 'Rom':
+			case 'Gin och Genever':
+			case 'Likör':
+			case 'Armagnac och Brandy':
+			case 'Vodka och Brännvin':
+			case 'Frukt och Druvsprit':
+			case 'Anissprit':
+			case 'Sake':
+			case 'Vermouth':
+			case 'Punsch':
+			case 'Grappa och Marc':
+			case 'Smaksatt sprit':
+			case 'Sprit av flera typer':
+				return <WhiskeyBottleIcon
+					heigth='20rem'
+					width='20rem'
+				/>
+			case 'Drinkar och Cocktails':
+				return <CocktailIcon
+					heigth='20rem'
+					width='20rem'
+							/>
+			case 'Cider':
 			case 'Öl':
 				switch(pack) {
 					case 'Burk':
