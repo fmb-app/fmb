@@ -3,6 +3,7 @@ export const SET_RESULTS  	 		     = 'SET_RESULTS';
 export const SET_PRODUCTS  	         = 'SET_PRODUCTS';
 export const SET_SELECTED_PRODUCTS   = 'SET_SELECTED_PRODUCTS';
 export const REMOVE_SELECTED_PRODUCT = 'REMOVE_SELECTED_PRODUCT';
+export const RESET_SELECTED_PRODUCTS = 'RESET_SELECTED_PRODUCTS';
 export const SET_CATEGORIES  	       = 'SET_CATEGORIES';
 export const SET_SELECTED_CATEGORY   = 'SET_SELECTED_CATEGORY';
 export const SET_SEARCH_OFFSET       = 'SET_SEARCH_OFFSET';
@@ -22,6 +23,10 @@ const setSelectedProducts = (product, state) => {
 const removeSelectedProduct = (product, state) => {
 	const updated = state.selectedProducts.filter((item) => item._id !== product._id);
 	return {...state, selectedProducts: updated};
+}
+
+const resetSelectedProducts = (state) => {
+	return {...state, selectedProducts: []};
 }
 
 const setCategories = (categories, state) => {
@@ -60,6 +65,8 @@ export const fmbReducer = (state, action) => {
 			return setSelectedProducts(action.product, state);
 		case REMOVE_SELECTED_PRODUCT:
 			return removeSelectedProduct(action.product, state);
+		case RESET_SELECTED_PRODUCTS:
+			return resetSelectedProducts(state);
 		case SET_CATEGORIES:
 			return setCategories(action.categories, state);
 		case SET_SELECTED_CATEGORY:

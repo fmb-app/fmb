@@ -56,65 +56,49 @@ const BottomNavBar = (props) => {
     });
   }
 
-  const getFieldValue = () => context.location.lat + ' ' + context.location.long;
-
-  const getStores = () => {
-    const lat = context.location.lat;
-    const long  = context.location.long;
-    fetch('/api/stores/' + lat + "/" + long , {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-      }).then((res) => {
-        return res.json();
-      }).then((data) => {
-        context.setResults(data.results);
-    });
+  const toggleMap = () => {
+    setShowCart(false);
+    setShowMap(!showMap);
   }
 
+  const toggleCart = () => {
+    setShowMap(false);
+    setShowCart(!showCart);
+  }
 
-    const toggleMap = () => {
-      setShowCart(false);
-      setShowMap(!showMap);
-    }
-
-    const toggleCart = () => {
-      setShowMap(false);
-      setShowCart(!showCart);
-    }
-
-    return (
-      <div style={style.stickToBottom}>
-        <div style={style.popup}>
-          { showMap && <Map/>}
-          { showCart && <Cart/> }
-        </div>
-        <div style={style.navBar}>
-          <RegularButton
-            label={<GPSIcon color='white' width='100%' />}
-            bgcolor={themes.primaryButton}
-            onClick={getCoordinates}
-          />
-          <RegularButton
-            label={<MapIcon color='white' width='100%' />}
-            bgcolor={themes.primaryButton}
-            color={themes.standardTextColor}
-            onClick={toggleMap}
-          />
-          <RegularButton
-            label={<CartIcon color='white' width='100%' />}
-            bgcolor={themes.primaryButton}
-            color={themes.standardTextColor}
-            onClick={toggleCart}
-            badge={
-              <div style={style.badge}>
-              {context.selectedProducts.length}
-              </div>}
-          />
-        </div>
+  return (
+    <div style={style.stickToBottom}>
+      <div style={style.popup}>
+        { showMap && <Map/>}
+        { showCart && <Cart toggleCart={toggleCart} /> }
       </div>
-    );
-  }
+      <div style={style.navBar}>
+        <RegularButton
+          label={<GPSIcon color='white' width='100%' />}
+          bgcolor={themes.primaryButton}
+          onClick={getCoordinates}
+        />
+        <RegularButton
+          label={<MapIcon color='white' width='100%' />}
+          bgcolor={themes.primaryButton}
+          color={themes.standardTextColor}
+          onClick={toggleMap}
+        />
+        <RegularButton
+          label={<CartIcon color='white' width='100%' />}
+          bgcolor={themes.primaryButton}
+          color={themes.standardTextColor}
+          onClick={toggleCart}
+          badge={
+            context.selectedProducts.length == 0
+            ? null
+            : <div style={style.badge}>
+            {context.selectedProducts.length}
+            </div>}
+        />
+      </div>
+    </div>
+  );
+}
 
   export default BottomNavBar;

@@ -1,9 +1,10 @@
-import React, { useState, useEffect, useReducer } from 'react';
+import React, { useEffect, useReducer } from 'react';
 import FmbContext from './FmbContext';
 import { fmbReducer,
 				 SET_PRODUCTS,
 				 SET_SELECTED_PRODUCTS,
 				 REMOVE_SELECTED_PRODUCT,
+				 RESET_SELECTED_PRODUCTS,
 				 SET_LOCATION,
 				 SET_RESULTS,
 				 SET_CATEGORIES,
@@ -39,6 +40,10 @@ const GlobalState = props => {
 
 	const removeSelectedProduct = product => {
 		dispatch({type: REMOVE_SELECTED_PRODUCT, product: product});
+	}
+
+	const resetSelectedProducts = () => {
+		dispatch({type: RESET_SELECTED_PRODUCTS});
 	}
 
 	const setCoordinates = (coordinates) => {
@@ -136,6 +141,7 @@ const GlobalState = props => {
 				selectedProducts: state.selectedProducts,
 				setSelectedProducts: setSelectedProducts,
 				removeSelectedProduct: removeSelectedProduct,
+				resetSelectedProducts: resetSelectedProducts,
 				categories: state.categories,
 				filterTerm: state.filterTerm,
 				sorting: state.sorting,

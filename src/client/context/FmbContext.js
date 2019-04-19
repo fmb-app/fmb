@@ -15,6 +15,7 @@ const FmbContext = createContext({
 	setFilterTerm: term => {},
 	setSelectedProducts: product => {},
 	removeSelectedProduct: product => {},
+	resetSelectedProducts: () => {},
 	setSelectedCategory: category => {},
 	setCoordinates: coordinates => {},
 	setResults: results => [{}]

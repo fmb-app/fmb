@@ -2,6 +2,12 @@ import React, { useState, useContext, useEffect } from 'react';
 import moment from 'moment';
 import FmbContext from '../../context/FmbContext';
 import { themes } from '../../themes/Themes';
+import BusIcon from '../Icons/BusIcon';
+import WalkingIcon from '../Icons/WalkingIcon';
+import SubwayIcon from '../Icons/SubwayIcon';
+import TramIcon from '../Icons/TramIcon';
+import TrainIcon from '../Icons/TrainIcon';
+
 
 const style = {
 	container: {
@@ -17,6 +23,9 @@ const style = {
 	},
 	stop: {
 		padding: 'none',
+		display: 'flex',
+		flexFlow: 'column nowrap',
+		fontVariantCaps: 'all-small-caps'
 	}
 }
 
@@ -41,9 +50,37 @@ const getTravelTime = (startTime, endTime) => {
 	const start = moment.utc(startTime, "HH:mm:ss");
 	const end = moment.utc(endTime, "HH:mm:ss");
 	if (end.isBefore(start)) end.add(1, 'day'); // account for crossing over to midnight the next day
-	const d = moment.duration(end.diff(start));
-	const time = moment.utc(+d).format('H:mm');
-	return  time;
+	const diff = moment.duration(end.diff(start));
+	return moment.utc(+diff).format('mm');
+}
+
+const JourneySymbols = ({journey}) => {
+	const getJourneyIcon = (categoryCode) => {
+		switch (categoryCode) {
+			case '1':
+				return <SubwayIcon color='white' width='8px' />
+			case '3':
+				return <BusIcon color='white' width='8px' />
+			default:
+				return <TrainIcon color='white' width='8px' />
+		}
+	}
+
+	const icon = journey.type === 'WALK' 
+		? <WalkingIcon color='white' width='8px' height='6px'/>
+		: getJourneyIcon(journey.Product.catCode);
+
+	return (
+		<div>
+			{icon}
+			<span style={{fontWeight: '600', marginLeft: '5px'}}>
+				{ journey.Product
+						? journey.Product.name
+						: journey.duration.slice(2, journey.duration.length - 1) + ' min'
+				}
+			</span>
+		</div>
+	)
 }
 
 const TravelRoute = ({store}) => {
@@ -52,15 +89,25 @@ const TravelRoute = ({store}) => {
 
 	useEffect(() => {
 		getTravelRoute(context.location.lat, context.location.long, store.location.coords, setTrips);
-	}, [])
+	}, []);
 
 	return (
 		<div style={style.container}>
-			Restid: {trips.time && trips.time}
+			{ trips.time &&
+				<span>{trips.time && trips.time} min till {store.street}:</span>
+			}
 			{
-				trips.trip && trips.trip.map((partOfTrip, index) => 
+				trips.trip &&
+				trips.trip.map((journey, index) => 
 					<div style={style.stop} key={`trip-${index}`}>
-						{partOfTrip.Origin.time} från {partOfTrip.Origin.name} till {partOfTrip.Destination.name} {partOfTrip.type} {partOfTrip.Product && partOfTrip.Product.name} {partOfTrip.duration} 
+						<aside style={{display: 'flex', justifyContent: 'space-between'}}>
+							<div style={{fontWeight: '600'}}>{journey.Origin.time.slice(0, 5)} </div>
+							<div>{journey && journey.Origin.name}</div>
+						</aside>
+						<div style={{display: 'flex', justifyContent: 'space-between'}}>
+							<JourneySymbols journey={journey} />
+							<div>{journey && journey.Destination.name}</div>
+						</div>
 					</div>
 				)
 			}

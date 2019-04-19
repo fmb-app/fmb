@@ -20,36 +20,27 @@ const style = {
 		justifyContent: 'space-between',
 		alignItems: 'center',
 		boxSizing: 'border-box',
-	},
-}
+	}
+};
 
 const ExpandableContainer = ({label, children, styleProps}) => {
 	const [expanded, setExpanded] = useState(false);
 
-	const handleClick = () => {
-		setExpanded(!expanded);
-	}
+	const handleClick = () => { setExpanded(!expanded) }
 
-	const expandedStyle = () => {
-		return {
-			transition: 'height 0.5s ease-in-out',
-			height: expanded ? '10rem' : '0rem',
-			overflowY: 'auto',
-		}
+	const expandedStyle = {
+		transition: 'height 0.5s ease-in-out',
+		height: expanded ? '10rem' : '0rem',
+		overflowY: 'auto'
 	}
 
 	return (
 		<div style={style.container}>
-			<div 
-				style={{...style.top, ...styleProps}}
-				onClick={handleClick}
-			>
+			<div style={{...style.top, ...styleProps}} onClick={handleClick}>
 				<h3>{label}</h3>
-				<ExpandButton
-					rotated={expanded}
-				/>
+				<ExpandButton rotated={expanded} />
 			</div>
-			<div style={expandedStyle()}>
+			<div style={expandedStyle}>
 				{ expanded && children }
 			</div>
 		</div>

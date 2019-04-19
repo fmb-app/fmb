@@ -1,7 +1,7 @@
 import React from 'react';
 import beerCanIcon from '../../resources/images/icons8-beer-can-96.png';
 
-const beerCanIcon = ({height, width, color}) => {
+const BeerCanIcon = ({height, width, color}) => {
 	return (
 		<img
 			src={beerCanIcon}
@@ -12,4 +12,4 @@ const beerCanIcon = ({height, width, color}) => {
 	);
 }
 
-export default beerCanIcon;
+export default BeerCanIcon;

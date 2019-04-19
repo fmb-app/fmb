@@ -13,25 +13,20 @@ const productStyle = isSelected => {
 		textOverflow: 'ellipsis',
 		boxSizing: 'border-box',
 		display: 'flex',
+		justifyContent: 'space-between',
 		alignItems: 'center',
 	}
 }
 
-const Product = ({label, altLabel, onClick, isSelected}) => {
+const Product = ({label, altLabel, onClick, isSelected, icon}) => {
 	const productLabel = () => {
-		if (altLabel !== null) {
-			return label + ' - ' + altLabel;
-		} else {
-			return label;
-		}
+		return (altLabel !== null) ? label + ' - ' + altLabel : label;
 	}
 
 	return (
-		<div
-			style={productStyle(isSelected)}
-			onClick={onClick}
-		>
-			<p>{productLabel()}</p>
+		<div style={productStyle(isSelected)} onClick={onClick}>
+			<p style={{width: '80%', textOverflow: 'ellipsis', overflow: 'hidden', textAlign: 'left'}}>{productLabel()}</p>
+			{icon}
 		</div>
 	);
 }

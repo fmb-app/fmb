@@ -30,7 +30,7 @@ const RegularButton = ({ label, bgcolor, color, onClick, disabled, badge }) => {
         disabled={disabled}
       >
       {badge !== undefined && badge}
-      	{label}
+      {label}
       </button>
     </div>
   );

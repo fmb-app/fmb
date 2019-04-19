@@ -1,7 +1,7 @@
 import React from 'react';
 import clockIcon from '../../resources/images/icons8-clock-filled.svg';
 
-const clockIcon = ({height, width, color}) => {
+const ClockIcon = ({height, width, color}) => {
 	return (
 		<img
 			src={clockIcon}
@@ -12,4 +12,4 @@ const clockIcon = ({height, width, color}) => {
 	);
 }
 
-export default clockIcon;
+export default ClockIcon;
