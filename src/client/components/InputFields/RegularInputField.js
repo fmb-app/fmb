@@ -6,8 +6,9 @@ const style = {
   inputField: {
     width: '100%',
     maxWidth: '20rem',
-    height: '2rem',
-    padding: '0rem 1rem',
+    minHeight: '2.5rem',
+    padding: '1rem',
+    margin: '0.3rem 0',
     color: themes.standardTextColor,
     fontSize: '1rem',
     backgroundColor: 'rgba(255, 255, 255, 0.1)',
@@ -31,6 +32,7 @@ const RegularInputField = ({type, label, placeholder, value, onChange}) => {
       placeholder={placeholder}
       onChange={onChange}
       style={style.inputField}
+      value={value}
     />
   );
 }
