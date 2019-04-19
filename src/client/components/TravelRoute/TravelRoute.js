@@ -93,7 +93,9 @@ const TravelRoute = ({store}) => {
 
 	return (
 		<div style={style.container}>
-			<span>{trips.time && trips.time} min till {store.street}:</span>
+			{ trips.time &&
+				<span>{trips.time && trips.time} min till {store.street}:</span>
+			}
 			{
 				trips.trip &&
 				trips.trip.map((journey, index) => 
