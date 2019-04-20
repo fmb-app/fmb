@@ -34,7 +34,7 @@ const CategoryContainer = ({onCategoryChange}) => {
 	return (
 		<div style={style.container}>
 			{
-				context.categories.map((category, key) => 
+				context.categories.sort().map((category, key) => 
 					<div
 						key={key}
 						style={{...style.category, ...bgColor(category)}}
