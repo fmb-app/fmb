@@ -25,8 +25,7 @@ const style = {
 		padding: 'none',
 		display: 'flex',
 		flexFlow: 'column nowrap',
-		fontVariantCaps: 'all-small-caps',
-		borderTop: '0.1px white solid'
+		fontVariantCaps: 'all-small-caps'
 	}
 }
 
