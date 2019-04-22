@@ -35,7 +35,6 @@ const style = {
     backgroundColor: '#e01a8a',
     borderRadius: '7px',
     fontSize: '1rem',
-    fontWeight: '600',
     marginLeft: '25px',
     bottom: '0px',
     marginBottom: '1.4rem',
