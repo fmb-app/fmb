@@ -25,8 +25,8 @@ const Product = ({label, altLabel, onClick, isSelected, icon, volume}) => {
 
 	return (
 		<div style={productStyle(isSelected)} onClick={onClick}>
-			<p style={{width: '80%', textOverflow: 'ellipsis', overflow: 'hidden', textAlign: 'left'}}>{productLabel()} {volume}ml</p>
-			{icon}
+			<p style={{width: '80%', textOverflow: 'ellipsis', overflow: 'hidden', textAlign: 'left'}}>{productLabel()} </p>
+			{volume}ml {icon}
 		</div>
 	);
 }
