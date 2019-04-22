@@ -34,9 +34,10 @@ const style = {
   badge: {
     backgroundColor: '#e01a8a',
     borderRadius: '7px',
-    fontSize: '0.9rem',
-    marginLeft: '2.5rem',
-    marginBottom: '1rem',
+    fontSize: '1rem',
+    marginLeft: '25px',
+    bottom: '0px',
+    marginBottom: '1.4rem',
     padding: '0.1rem 0.3rem',
     position: 'absolute',
     display: 'flex',
@@ -74,20 +75,23 @@ const BottomNavBar = (props) => {
       </div>
       <div style={style.navBar}>
         <RegularButton
-          label={<GPSIcon color='white' width='100%' />}
+          label={<GPSIcon color='white' width='24px' />}
           bgcolor={themes.primaryButton}
+          width='70px'
           onClick={getCoordinates}
         />
         <RegularButton
-          label={<MapIcon color='white' width='100%' />}
+          label={<MapIcon color='white' width='24px' />}
           bgcolor={themes.primaryButton}
           color={themes.standardTextColor}
+          width='70px'
           onClick={toggleMap}
         />
         <RegularButton
-          label={<CartIcon color='white' width='100%' />}
+          label={<CartIcon color='white' width='24px' />}
           bgcolor={themes.primaryButton}
           color={themes.standardTextColor}
+          width='70px'
           onClick={toggleCart}
           badge={
             context.selectedProducts.length == 0
