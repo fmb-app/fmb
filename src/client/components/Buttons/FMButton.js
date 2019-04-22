@@ -12,7 +12,12 @@ const style = {
     justifyContent: 'center',
     alignItems: 'center',
     borderStyle: 'none',
-    borderRadius: themes.standardRadius
+    borderRadius: themes.standardRadius,
+    ':hover': {
+      cursor: 'pointer',
+      background: 'linear-gradient(45deg, #1ccd78 0%, #6da9d8 100%)',
+      color: 'rgb(240, 231, 232)'
+    }
 	}
 }
 

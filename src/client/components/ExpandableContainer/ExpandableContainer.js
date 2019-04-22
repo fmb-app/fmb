@@ -1,7 +1,7 @@
-import React, {useState, useEffect, useContext} from 'react';
-import ExpandArrowIcon from '../Icons/ExpandArrowIcon';
+import React, {useState} from 'react';
 import ExpandButton from '../Buttons/ExpandButton';
 import { themes } from '../../themes/Themes';
+import Radium from 'radium'
 
 const style = {
 	container: {
@@ -20,13 +20,26 @@ const style = {
 		justifyContent: 'space-between',
 		alignItems: 'center',
 		boxSizing: 'border-box',
+		':hover': {
+			cursor: 'pointer',
+			backgroundColor: '#363642'
+		}
 	}
 };
 
+const Top = ({style, label, expand, isExpanded}) => {
+	return (
+		<div style={style} onClick={expand}>
+			<h3>{label}</h3>
+			<ExpandButton rotated={isExpanded} />
+		</div>
+	)
+}
+
+const StyledTop = Radium(Top);
+
 const ExpandableContainer = ({label, children, styleProps}) => {
 	const [expanded, setExpanded] = useState(false);
-
-	const handleClick = () => { setExpanded(!expanded) }
 
 	const expandedStyle = {
 		transition: 'height 0.5s ease-in-out',
@@ -36,10 +49,12 @@ const ExpandableContainer = ({label, children, styleProps}) => {
 
 	return (
 		<div style={style.container}>
-			<div style={{...style.top, ...styleProps}} onClick={handleClick}>
-				<h3>{label}</h3>
-				<ExpandButton rotated={expanded} />
-			</div>
+			<StyledTop
+				style={{...style.top, ...styleProps}}
+				expand={() => { setExpanded(!expanded)}}
+				label={label}
+				isExpanded={expanded}
+			/>
 			<div style={expandedStyle}>
 				{ expanded && children }
 			</div>

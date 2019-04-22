@@ -9,6 +9,9 @@ export const themes = {
 		background: 'linear-gradient(45deg, #2cdd88 0%, #7db9e8 100%)',
 		transition: 'box-shadow 0.1s ease-out',
 		':hover': {
+			cursor: 'pointer',
+      background: 'linear-gradient(45deg, #1ccd78 0%, #6da9d8 100%)',
+      color: 'rgb(240, 231, 232)',
 			boxShadow: 'inset 0 0 4px rgba(255, 255, 255, 0.8)',
 		},
 		':active': {
