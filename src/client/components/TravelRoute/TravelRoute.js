@@ -7,6 +7,7 @@ import WalkingIcon from '../Icons/WalkingIcon';
 import SubwayIcon from '../Icons/SubwayIcon';
 import TramIcon from '../Icons/TramIcon';
 import TrainIcon from '../Icons/TrainIcon';
+import ClockIcon from '../Icons/ClockIcon';
 
 
 const style = {
@@ -67,7 +68,7 @@ const JourneySymbols = ({journey}) => {
 	}
 
 	const icon = journey.type === 'WALK' 
-		? <WalkingIcon color='white' width='8px' height='6px'/>
+		? <WalkingIcon color='white' width='10px' height='10px'/>
 		: getJourneyIcon(journey.Product.catCode);
 
 	return (
@@ -93,8 +94,16 @@ const TravelRoute = ({store}) => {
 
 	return (
 		<div style={style.container}>
+
+
 			{ trips.time &&
-				<span>{trips.time && trips.time} min till {store.street}:</span>
+				<div style={{fontSize: '0.8rem'}}>
+					<ClockIcon color='white' width='10px' height='10px' />
+					<span style={{paddingLeft: '5px', fontWeight: '600'}}>
+						{trips.time && trips.time} min
+					</span>
+					<span> till {store.street}:</span>
+				</div>
 			}
 			{
 				trips.trip &&
