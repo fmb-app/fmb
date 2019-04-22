@@ -70,14 +70,14 @@ const ProductsContainer = ({filterTerm, category, sorting, selectedProducts}) =>
 			case 'Blå stilla':
 			case 'Vin av flera typer':
 				return <WineBottleIcon 
-					heigth='20rem'
-					width='20rem'
+					height='27px'
+					width='19px'
 				/>
 			case 'Blå mousserande':
 			case 'Mousserande vin':
 				return <ChampagneBottleIcon
-					heigth='20rem'
-					width='20rem'
+					height='19px'
+					width='19px'
 				/>
 			case 'Whisky':
 			case 'Tequila och Mezcal':
@@ -97,26 +97,26 @@ const ProductsContainer = ({filterTerm, category, sorting, selectedProducts}) =>
 			case 'Smaksatt sprit':
 			case 'Sprit av flera typer':
 				return <WhiskeyBottleIcon
-					heigth='20rem'
-					width='20rem'
+					height='25px'
+					width='19px'
 				/>
 			case 'Drinkar och Cocktails':
 				return <CocktailIcon
-					heigth='20rem'
-					width='20rem'
+					height='19px'
+					width='19px'
 							/>
 			case 'Cider':
 			case 'Öl':
 				switch(pack) {
 					case 'Burk':
 						return <BeerCanIcon
-							heigth='20rem'
-							width='20rem'
+							height='23px'
+							width='19px'
 						/>
 					default:
 						return <BeerBottleIcon
-							heigth='20rem'
-							width='20rem'
+							height='29px'
+							width='19px'
 						/>
 				}
 		}
