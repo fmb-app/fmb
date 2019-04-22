@@ -1,7 +1,7 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import FmbContext from '../../context/FmbContext';
-import Product from '../Product/Product';
 import { themes } from '../../themes/Themes';
+import Radium from 'radium';
 
 const style = {
 	container: {
@@ -9,39 +9,51 @@ const style = {
 		boxSizing: 'border-box',
 		borderRadius: themes.standardRadius,
 		padding: themes.standardSpace,
-		backgroundColor: 'rgba(0,0,0,0.3)',
+		backgroundColor: 'rgba(0, 0, 0, 0.5)',
 		display: 'grid',
 		gridTemplateRows: '1fr',
 		boxSizing: 'border-box',
 		gridRowGap: themes.standardSpace,
 		alignContent: 'start',
 	},
-	category: {
-		padding: themes.standardSpace,
+	category: (isSelected) => {
+		return {
+			padding: themes.standardSpace,
+			backgroundColor: isSelected ? '#744253' : '#262632',
+			':hover': {
+				backgroundColor: isSelected ? '#845263' : '#363642',
+				cursor: 'pointer'
+			}
+		}
 	}
 }
 
+const Category = ({category, changeCategory, selectedCategory}) => {
+	return (
+		<div
+			style={style.category(category === selectedCategory)}
+			onClick={changeCategory}
+		>
+			{category}
+		</div>
+	)
+}
+
+const CategoryWithStyling = Radium(Category)
+
 const CategoryContainer = ({onCategoryChange}) => {
 	const context = useContext(FmbContext);
-
-	const bgColor = (cat) => {
-		const isSelected = cat === context.selectedCategory;
-		return {
-			backgroundColor: isSelected ? '#744253' : '#262632'
-		}
-	}
 
 	return (
 		<div style={style.container}>
 			{
 				context.categories.sort().map((category, key) => 
-					<div
+					<CategoryWithStyling
 						key={key}
-						style={{...style.category, ...bgColor(category)}}
-						onClick={() => {onCategoryChange(category)}}
-					>
-						{category}
-					</div>
+						changeCategory={() => { onCategoryChange(category)}}
+						category={category}
+						selectedCategory={context.selectedCategory}
+					/>
 				)
 			}
 		</div>
