@@ -25,7 +25,8 @@ const style = {
 		padding: 'none',
 		display: 'flex',
 		flexFlow: 'column nowrap',
-		fontVariantCaps: 'all-small-caps'
+		fontVariantCaps: 'all-small-caps',
+		borderTop: '0.1px white solid'
 	}
 }
 
@@ -100,10 +101,10 @@ const TravelRoute = ({store}) => {
 				trips.trip &&
 				trips.trip.map((journey, index) => 
 					<div style={style.stop} key={`trip-${index}`}>
-						<aside style={{display: 'flex', justifyContent: 'space-between'}}>
+						<div style={{display: 'flex', justifyContent: 'space-between'}}>
 							<div style={{fontWeight: '600'}}>{journey.Origin.time.slice(0, 5)} </div>
 							<div>{journey && journey.Origin.name}</div>
-						</aside>
+						</div>
 						<div style={{display: 'flex', justifyContent: 'space-between'}}>
 							<JourneySymbols journey={journey} />
 							<div>{journey && journey.Destination.name}</div>
