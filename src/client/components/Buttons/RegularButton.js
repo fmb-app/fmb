@@ -18,21 +18,19 @@ const style = {
     ':disabled': {
       background: 'linear-gradient(45deg, #6F6F6F 0%, #B0B0B0 100%)'
     }
-  },
+  }
 }
 
 const RegularButton = ({ label, bgcolor, color, width, onClick, disabled, badge }) => {
   return (
-    <div>
-      <button
-        style={[style.button, {...bgcolor, color, width}]}
-        onClick={onClick}
-        disabled={disabled}
-      >
-      {badge !== undefined && badge}
+    <button
+    style={[style.button, {...bgcolor, color, width}]}
+    onClick={onClick}
+      disabled={disabled}
+    >
       {label}
-      </button>
-    </div>
+      {badge}
+    </button>
   );
 }
 
