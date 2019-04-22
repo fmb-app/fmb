@@ -33,7 +33,7 @@ app.use((err, req, res, next) => {
   if (app.get('env') === 'development') {
     data.error = err;
   }
-  res.send(`<html><body><h1>${res.statusCode}</h1><div>${err.message}</div></body></html>`);
+  res.send(`<html><body><h1>${res.statusCode} 😢 </h1><div>${err.message}</div></body></html>`);
 });
 
 app.use((err, req, res, next) => {
