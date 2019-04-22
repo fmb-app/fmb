@@ -141,6 +141,7 @@ const ProductsContainer = ({filterTerm, category, sorting, selectedProducts}) =>
 									onClick={() => toggleProduct(product)}
 									isSelected={isSelected(product)}
 									icon={getIcon(product.category, product.package)}
+									volume={product.volume}
 								/>
 							)
 						: context.products
@@ -152,6 +153,7 @@ const ProductsContainer = ({filterTerm, category, sorting, selectedProducts}) =>
 									onClick={() => toggleProduct(product)}
 									isSelected={isSelected(product)}
 									icon={getIcon(product.category, product.package)}
+									volume={product.volume}
 								/>
 							)
 				}
