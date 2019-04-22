@@ -21,11 +21,11 @@ const style = {
   },
 }
 
-const RegularButton = ({ label, bgcolor, color, onClick, disabled, badge }) => {
+const RegularButton = ({ label, bgcolor, color, width, onClick, disabled, badge }) => {
   return (
     <div>
       <button
-        style={[style.button, {...bgcolor, color}]}
+        style={[style.button, {...bgcolor, color, width}]}
         onClick={onClick}
         disabled={disabled}
       >
