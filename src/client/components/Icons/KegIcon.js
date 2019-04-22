@@ -6,7 +6,7 @@ const KegIcon = ({height, width, color}) => {
 		<img
 			src={kegIcon}
 			alt='Keg'
-			heigth={height}
+			height={height}
 			width={width}
 		/>
 	);

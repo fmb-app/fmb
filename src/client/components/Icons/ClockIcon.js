@@ -6,7 +6,7 @@ const ClockIcon = ({height, width, color}) => {
 		<img
 			src={clockIcon}
 			alt='Clock'
-			heigth={height}
+			height={height}
 			width={width}
 		/>
 	);

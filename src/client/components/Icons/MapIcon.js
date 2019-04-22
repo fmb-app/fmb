@@ -6,7 +6,7 @@ const MapIcon = ({height, width, color}) => {
 		<img
 			src={mapIcon}
 			alt='Map'
-			heigth={height}
+			height={height}
 			width={width}
 		/>
 	);

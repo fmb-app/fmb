@@ -6,7 +6,7 @@ const WalkingIcon = ({height, width, color}) => {
 		<img
 			src={walkingIcon}
 			alt='Map'
-			heigth={height}
+			height={height}
 			width={width}
 		/>
 	);

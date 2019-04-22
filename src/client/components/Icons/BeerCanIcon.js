@@ -6,7 +6,7 @@ const BeerCanIcon = ({height, width, color}) => {
 		<img
 			src={beerCanIcon}
 			alt='Beer can'
-			heigth={height}
+			height={height}
 			width={width}
 		/>
 	);

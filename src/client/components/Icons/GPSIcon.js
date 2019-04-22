@@ -6,7 +6,7 @@ const GPSIcon = ({height, width, color}) => {
 		<img
 			src={targetIcon}
 			alt='GPS'
-			heigth={height}
+			height={height}
 			width={width}
 		/>
 	);

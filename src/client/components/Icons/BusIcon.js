@@ -6,7 +6,7 @@ const BusIcon = ({height, width, color}) => {
 		<img
 			src={busIcon}
 			alt='Map'
-			heigth={height}
+			height={height}
 			width={width}
 		/>
 	);

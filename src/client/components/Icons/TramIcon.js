@@ -6,7 +6,7 @@ const TramIcon = ({height, width, color}) => {
 		<img
 			src={tramIcon}
 			alt='Map'
-			heigth={height}
+			height={height}
 			width={width}
 		/>
 	);

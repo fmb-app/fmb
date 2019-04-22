@@ -6,7 +6,7 @@ const SubwayIcon = ({height, width, color}) => {
 		<img
 			src={subwayIcon}
 			alt='Map'
-			heigth={height}
+			height={height}
 			width={width}
 		/>
 	);
