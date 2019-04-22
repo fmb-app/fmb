@@ -1,10 +1,8 @@
-import React, {useState, useEffect, useContext} from 'react';
+import React, {useState, useContext} from 'react';
 import { Link } from 'react-router-dom'
 import FmbContext from '../../context/FmbContext';
 import RegularInputField from '../InputFields/RegularInputField';
-import RegularButton from '../Buttons/RegularButton';
 import ProductContainer from '../ProductContainer/ProductContainer';
-import Product from '../Product/Product';
 import CategoryContainer from '../CategoryContainer/CategoryContainer';
 import ExpandableContainer from '../ExpandableContainer/ExpandableContainer';
 import FMButton from '../Buttons/FMButton';
@@ -92,6 +90,8 @@ const MidSection = () => {
 			/>
 			<ExpandableContainer
 				label='Kategorier'
+				labelStyle={{fontSize: '1.17em', fontWeight: 'bold'}}
+				hover
 			>
 				<CategoryContainer
 					onCategoryChange={onCategoryChange}

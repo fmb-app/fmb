@@ -1,13 +1,10 @@
 import React from 'react';
 import { Link, Route, Switch } from 'react-router-dom';
-import { DragDropContext } from 'react-beautiful-dnd';
 import GlobalState from './context/GlobalState';
 import BottomNavBar from './components/BottomNavBar/BottomNavBar';
 import MidSection from './components/MidSection/MidSection';
 import Results from './components/Results/ResultsPage';
-import ExpandableContainer from './components/ExpandableContainer/ExpandableContainer';
 import { themes } from './themes/Themes';
-import Map from './components/Map/Map';
 
 const style = {
 	header: {
