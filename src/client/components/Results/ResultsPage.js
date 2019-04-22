@@ -54,7 +54,10 @@ const NoHits = () => {
 const Result = ({result}) => {
   return (
     <ExpandableContainer
-      label={bolagetName(result)}
+      label={result.name}
+      subLabel={result.street}
+      labelStyle={{fontSize: '1.5rem'}}
+      subLabelStyle={{fontVariant: 'all-small-caps'}}
     >
       <TravelRoute store={result} />
     </ExpandableContainer>
