@@ -48,8 +48,9 @@ const OpeningHours = ({result}) => {
 }
 
 const NoHits = () => {
-  return <div>Inga systembolag matchade din sökning :(
-    <Link to='/' style={{ textDecoration: 'none', width: '100%' }}>
+  return <div>
+    Inga systembolag matchade din sökning :(
+    <Link to='/' style={{ textDecoration: 'none', width: '100%', padding: '2rem 0'}}>
       <FMButton
         label='Tillbaka till sök'
         color={themes.standardTextColor}
@@ -62,8 +63,8 @@ const NoHits = () => {
 const Result = ({result}) => {
   return (
     <ExpandableContainer
-      label={result.name}
-      subLabel={result.street}
+      label={result.name || result.street}
+      subLabel={result.name ? result.street : result.city}
       labelRight={<OpeningHours result={result} />}
       labelStyle={{fontSize: '1.4rem'}}
       subLabelStyle={{fontVariant: 'all-small-caps'}}
@@ -80,9 +81,9 @@ const Results = () => {
     <div 	style={style.container}>
       <div style={style.top}>
         <h2>Närmaste Systembolag</h2>
-        { context.results.length > 0
+        { (context.results.length > 0  && context.selectedProducts.length > 0)
           ? <div>{context.results.length} Systembolag har produkte{context.selectedProducts.length > 1 ? 'rna' : 'n'}:</div>
-          : <NoHits />
+          : (context.results.length === 0 ? <NoHits /> : null)
         }
       </div>
       { context.results &&
