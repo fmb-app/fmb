@@ -9,6 +9,9 @@ import schedule from 'node-schedule';
 dotenv.config(); // Import environment variables
 
 // Update the database with the latest Systembolaget stock:
+updateAPIfromSystemet();
+
+// Schedule more updates every 24 hours:
 const rule = new schedule.RecurrenceRule();
 rule.dayOfWeek = [new schedule.Range(0, 6)];
 rule.hour = 0;
