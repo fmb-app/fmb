@@ -7,7 +7,6 @@ import TravelRoute from '../TravelRoute/TravelRoute';
 import { themes } from '../../themes/Themes';
 import FMButton from '../Buttons/FMButton';
 
-
 const style = {
   container: {
     width: '22rem',
@@ -30,13 +29,22 @@ const style = {
   }
 }
 
-const bolagetName = (result) => result.name ? result.name + ' - ' + result.street : result.street;
-
-const openingHours = (result) => {
+const OpeningHours = ({result}) => {
   const today = moment().format('YYYY-MM-DD');
-  const open = result.openingHours[today].from;
-  const close = result.openingHours[today].to
-  return `Öppettider: ${close == '00:00' ? 'Stängt för dagen': open + ' - ' +  close}`;
+  const openToday = result.openingHours[today].from;
+  const closeToday = result.openingHours[today].to;
+
+  const tomorrow = moment().add(1, 'd').format('YYYY-MM-DD');
+  const openTomorrow = result.openingHours[tomorrow].from;
+  const closeTomorrow = result.openingHours[tomorrow].to;
+
+  return (
+    <div style={{display: 'flex', flexFlow: 'column nowrap', fontSize: '0.6rem', alignItems: 'flex-end'}}>
+      <span style={{fontWeight: '800', fontVariant: 'all-small-caps', fontSize: '1rem'}}>Öppettider</span>
+      <span><span style={{fontWeight: '600'}}>Idag:</span> {closeToday == '00:00' ? 'Stängt' : openToday + ' - ' +  closeToday}</span>
+      <span><span style={{fontWeight: '600'}}>Imorgon:</span> {closeTomorrow == '00:00' ? 'Stängt' : openTomorrow + ' - ' +  closeTomorrow}</span>
+    </div>
+  )
 }
 
 const NoHits = () => {
@@ -56,7 +64,8 @@ const Result = ({result}) => {
     <ExpandableContainer
       label={result.name}
       subLabel={result.street}
-      labelStyle={{fontSize: '1.5rem'}}
+      labelRight={<OpeningHours result={result} />}
+      labelStyle={{fontSize: '1.4rem'}}
       subLabelStyle={{fontVariant: 'all-small-caps'}}
     >
       <TravelRoute store={result} />
@@ -70,7 +79,7 @@ const Results = () => {
   return (
     <div 	style={style.container}>
       <div style={style.top}>
-        <h2>Närmaste Systembolag:</h2>
+        <h2>Närmaste Systembolag</h2>
         { context.results.length > 0
           ? <div>{context.results.length} Systembolag har produkte{context.selectedProducts.length > 1 ? 'rna' : 'n'}:</div>
           : <NoHits />
