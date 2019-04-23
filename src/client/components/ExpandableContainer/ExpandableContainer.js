@@ -12,12 +12,12 @@ const style = {
 		borderRadius: themes.standardRadius,
 		backgroundColor: '#262632',
 	},
-	top: (hover, expanded) => { 
+	top: (hover, expanded, labelRight) => { 
 		return {
 			width: '100%',
 			padding: themes.standardSpace,
 			display: 'flex',
-			flexDirection: 'row',
+			flexDirection: labelRight ? 'column' : 'row',
 			justifyContent: 'space-between',
 			alignItems: 'center',
 			boxSizing: 'border-box',
@@ -29,21 +29,26 @@ const style = {
 	}
 };
 
-const Top = ({style, label, subLabel, expand, isExpanded, labelStyle, subLabelStyle}) => {
+const Top = ({style, label, subLabel, labelRight, expand, isExpanded, labelStyle, subLabelStyle}) => {
 	return (
 		<div style={style} onClick={expand}>
-			<div>
-				<div style={{...labelStyle}}>{label || subLabel}</div>
-				<div style={{...subLabelStyle}}>{label && subLabel}</div>
+			<div style={{display: 'flex', flexFlow: 'row nowrap', justifyContent: 'space-between', width: '100%'}}>
+				<div style={{display: 'flex', flexFlow: 'column nowrap'}}>
+					<div style={{...labelStyle}}>{label || subLabel}</div>
+					<div style={{...subLabelStyle}}>{label && subLabel}</div>
+				</div>
+				<div>
+					{labelRight}
+				</div>
 			</div>
-			<ExpandButton rotated={isExpanded} />
+				<ExpandButton rotated={isExpanded} />
 		</div>
 	)
 }
 
 const StyledTop = Radium(Top);
 
-const ExpandableContainer = ({label, subLabel, hover, children, labelStyle, subLabelStyle}) => {
+const ExpandableContainer = ({label, subLabel, labelRight, hover, children, labelStyle, subLabelStyle}) => {
 	const [expanded, setExpanded] = useState(false);
 
 	const expandedStyle = {
@@ -55,12 +60,13 @@ const ExpandableContainer = ({label, subLabel, hover, children, labelStyle, subL
 	return (
 		<div style={style.container}>
 			<StyledTop
-				style={{...style.top(hover, expanded)}}
+				style={{...style.top(hover, expanded, labelRight)}}
 				expand={() => { setExpanded(!expanded)}}
 				label={label}
 				labelStyle={labelStyle}
 				subLabelStyle={subLabelStyle}
 				subLabel={subLabel}
+				labelRight={labelRight}
 				isExpanded={expanded}
 			/>
 			<div style={expandedStyle}>
