@@ -14,7 +14,11 @@ let $ = null;
 const saveProductsToDB = () => {
   return new Promise(async (resolve, reject) => {
     console.log('saveProductsToDB():\tSaving products to database...');
-    const products = await systemet.products();
+    try {
+      const products = await systemet.products();
+    } catch (error) {
+      reject(new Error(error));
+    }
     products.map(product => {
       const myProduct = new Product({
         _id: Number(product.articleId),
@@ -31,6 +35,37 @@ const saveProductsToDB = () => {
       Product.findOneAndUpdate({_id: myProduct._id}, myProduct, {upsert: true},  err => {if (err) reject(err)});
     });
     console.log('saveProductsToDB():\tProducts saved to DB!');
+    resolve();
+  });
+}
+
+// Fetches all products from Systembolagets API and saves to our database.
+const updateProductsInDB = () => {
+  return new Promise(async (resolve, reject) => {
+    console.log('updateProductsInDB():\tUpdating products in database...');
+    let products = [];
+    try {
+      products = await systemet.products();
+    } catch (error) {
+      console.log('WE HAVE AN ERROR!');
+      reject(new Error(error));
+    }
+    products.map(product => {
+      const myProduct = {
+        _id: Number(product.articleId),
+        nr: product.nr,
+        name1: product.name,
+        name2: product.nameExtra,
+        category: product.category,
+        price: product.price,
+        volume: product.volume,
+        package: product.packaging,
+        alcohol: product.alcohol,
+        producer: product.producer
+      };
+      Product.findOneAndUpdate({_id: myProduct._id}, myProduct, {upsert: true},  err => {if (err) reject(err)});
+    });
+    console.log('updateProductsInDB():\tProducts updated!');
     resolve();
   });
 }
@@ -86,7 +121,8 @@ export const updateAPIfromSystemet = async () => {
   });
   let allLoads = await Promise.all([
     storesAndStock,
-    saveProductsToDB()
+    // saveProductsToDB(), // Use this the first time you run the server to create the products in DB.
+    updateProductsInDB() // Use this instead if you've run the server before (only updates products in DB).
   ]);
   console.log('updateAPIfromSystemet()\tDatabase updated with fresh Systembolaget API data!\n\n\n');
   return allLoads;
