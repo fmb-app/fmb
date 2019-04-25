@@ -14,7 +14,11 @@ let $ = null;
 const saveProductsToDB = () => {
   return new Promise(async (resolve, reject) => {
     console.log('saveProductsToDB():\tSaving products to database...');
-    const products = await systemet.products();
+    try {
+      const products = await systemet.products();
+    } catch (error) {
+      reject(new Error(error));
+    }
     products.map(product => {
       const myProduct = new Product({
         _id: Number(product.articleId),
@@ -31,6 +35,37 @@ const saveProductsToDB = () => {
       Product.findOneAndUpdate({_id: myProduct._id}, myProduct, {upsert: true},  err => {if (err) reject(err)});
     });
     console.log('saveProductsToDB():\tProducts saved to DB!');
+    resolve();
+  });
+}
+
+// Fetches all products from Systembolagets API and saves to our database.
+const updateProductsInDB = () => {
+  return new Promise(async (resolve, reject) => {
+    console.log('updateProductsInDB():\tUpdating products in database...');
+    let products = [];
+    try {
+      products = await systemet.products();
+    } catch (error) {
+      console.log('WE HAVE AN ERROR!');
+      reject(new Error(error));
+    }
+    products.map(product => {
+      const myProduct = {
+        _id: Number(product.articleId),
+        nr: product.nr,
+        name1: product.name,
+        name2: product.nameExtra,
+        category: product.category,
+        price: product.price,
+        volume: product.volume,
+        package: product.packaging,
+        alcohol: product.alcohol,
+        producer: product.producer
+      };
+      Product.findOneAndUpdate({_id: myProduct._id}, myProduct, {upsert: true},  err => {if (err) reject(err)});
+    });
+    console.log('updateProductsInDB():\tProducts updated!');
     resolve();
   });
 }
@@ -86,7 +121,8 @@ export const updateAPIfromSystemet = async () => {
   });
   let allLoads = await Promise.all([
     storesAndStock,
-    saveProductsToDB()
+    // saveProductsToDB(), // Use this the first time you run the server to create the products in DB.
+    updateProductsInDB() // Use this instead if you've run the server before (only updates products in DB).
   ]);
   console.log('updateAPIfromSystemet()\tDatabase updated with fresh Systembolaget API data!\n\n\n');
   return allLoads;
@@ -95,24 +131,34 @@ export const updateAPIfromSystemet = async () => {
 // Find the store ids of stores that carry all the products with the given productNrs.
 const findStoresWithGivenProductNrs = productNrs => {
   console.log(`findStoresWithGivenProductNrs():\tfindStoresWithGivenProductNrs - searching through ${sthlmStores.length} stores in Stockholm...`);
-  return new Promise(resolve => {
+  return new Promise((resolve, reject) => {
     let matchesToReturn = []; // The return object, the matching stores
     let matchingStores = sthlmStores;
     console.log('findStoresWithGivenProductNrs():\tStores in Stockholms Län:', matchingStores.length);
     console.log('findStoresWithGivenProductNrs():\tSearching for products with ids:', productNrs);
     productNrs.map(productNr => {
-      matchingStores = $(matchingStores).filter((i, store) => {
-        let result = false;
-        $(store).children().each((j, artikel) => {
-          if ($(artikel).text() == productNr) {
-            result = true;
-            return false;
-          }
-        })
-        return result;
-      });
+      try {
+        matchingStores = $(matchingStores)
+        .filter((i, store) => {
+          let result = false;
+          $(store).children().each((j, artikel) => {
+            if ($(artikel).text() == productNr) {
+              result = true;
+              return false;
+            }
+          })
+          return result;
+        });
+      } catch (error) {
+        reject(new Error(error));
+      }
     })
-    $(matchingStores).map((k, match) => { matchesToReturn.push($(match).attr('ButikNr')) });
+    try {
+      $(matchingStores)
+      .map((k, match) => { matchesToReturn.push($(match).attr('ButikNr')) });
+    } catch (error) {
+      reject(new Error(error));
+    }
     console.log(`findStoresWithGivenProductNrs():\tFound (${matchesToReturn.length}) matching stores.`);
     resolve(matchesToReturn);
   })
@@ -121,7 +167,12 @@ const findStoresWithGivenProductNrs = productNrs => {
 // Finds all stores that have all the given products in stock.
 export const getStoresWithProducts = async productNrs => {
   const timeBefore = Date.now();
-  let storeNrsWithGivenProducts = await findStoresWithGivenProductNrs(productNrs); //141212 Norrlands, 8685501 Kraken, 8608901 Tequila
+  let storeNrsWithGivenProducts = [];
+  try {
+    storeNrsWithGivenProducts = await findStoresWithGivenProductNrs(productNrs); //141212 Norrlands, 8685501 Kraken, 8608901 Tequila
+  } catch (error) {
+    console.log('Error while fetching stores with given productNrs:', error);
+  }
   let finalStores = [];
   await Promise.all(storeNrsWithGivenProducts.map(async storeNr => {
     const store = await findStore(storeNr);
