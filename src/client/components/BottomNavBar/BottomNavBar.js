@@ -70,7 +70,7 @@ const BottomNavBar = (props) => {
   return (
     <div style={style.stickToBottom}>
       <div style={style.popup}>
-        { showMap && <Map/>}
+        { showMap && <Map toggleMap={toggleMap} />}
         { showCart && <Cart toggleCart={toggleCart} /> }
       </div>
       <div style={style.navBar}>
