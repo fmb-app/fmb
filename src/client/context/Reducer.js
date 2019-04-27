@@ -10,6 +10,7 @@ export const SET_SEARCH_OFFSET       = 'SET_SEARCH_OFFSET';
 export const SET_SORTING   				   = 'SET_SORTING';
 export const SET_FILTER_TERM         = 'SET_FILTER_TERM';
 export const FETCH_PRODUCTS          = 'FETCH_PRODUCTS';
+export const SET_LOADING_STATUS			 = 'SET_LOADING_STATUS'
 
 const setProducts = (products, state) => {
 	return {...state, products: products};
@@ -57,6 +58,10 @@ const setFilterTerm = (term, state) => {
 	return {...state, filterTerm: term};
 }
 
+const setLoadingStatus = (status, state) => {
+	return {...state, loadingStatus: status};
+}
+
 export const fmbReducer = (state, action) => {
 	switch (action.type) {
 		case SET_PRODUCTS:
@@ -83,6 +88,8 @@ export const fmbReducer = (state, action) => {
 			return setFilterTerm(action.term, state);
 		case FETCH_PRODUCTS:
 			return fetchProducts(action.offset, state);
+		case SET_LOADING_STATUS:
+			return setLoadingStatus(action.status, state);
 		default:
 			return state;
 	}

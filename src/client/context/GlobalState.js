@@ -13,6 +13,7 @@ import { fmbReducer,
 				 SET_SORTING,
 				 SET_FILTER_TERM,
 				 FETCH_PRODUCTS,
+				 SET_LOADING_STATUS,
 			 } from './Reducer';
 
 const GlobalState = props => {
@@ -26,6 +27,7 @@ const GlobalState = props => {
 		sorting: 'POPULARITY_DESC',
 		location: {lat: '59.34810925465446', long: '18.071363536039396', address: ''},
 		results: [],
+		loadingStatus: 'LOADING',
 	};
 
 	const [state, dispatch] = useReducer(fmbReducer, initialState);
@@ -74,8 +76,13 @@ const GlobalState = props => {
 		dispatch({type: FETCH_PRODUCTS, offset: offset});
 	}
 
+	const setLoadingStatus = (status) => {
+		dispatch({type: SET_LOADING_STATUS, status: status});
+	}
+
 	// This will run once when the app starts.
 	useEffect(() => {
+		setLoadingStatus('LOADING');
 		// Get all product categories
     fetch('/api/categories', {
       method: 'GET',
@@ -88,6 +95,7 @@ const GlobalState = props => {
       	// Remove the last element since it is null
       	const categories = data.filter((cat, index) => cat !== null);
       	dispatch({type: SET_CATEGORIES, categories: categories});
+      	setLoadingStatus('LOADED');
     }).catch((err) => {
     	console.log(err);
     });
@@ -106,6 +114,7 @@ const GlobalState = props => {
 	}, []);
 
 	useEffect(() => {
+		setLoadingStatus('LOADING');
 		const cat    = state.selectedCategory     === '' ? 'null' : state.selectedCategory;
 		const term   = state.filterTerm   === '' ? 'null' : state.filterTerm;
 
@@ -124,6 +133,7 @@ const GlobalState = props => {
 				const updateProducts = [...state.products, ...products];
 				dispatch({type: SET_PRODUCTS, products: updateProducts});
 			}
+			setLoadingStatus('LOADED');
 		});
 	}, [
 			 state.selectedCategory,
@@ -155,6 +165,8 @@ const GlobalState = props => {
 				setCoordinates: setCoordinates,
 				setResults: setResults,
 				results: state.results,
+				loadingStatus: state.loadingStatus,
+				setLoadingStatus: setLoadingStatus,
 			}}
 		>
 			{props.children}

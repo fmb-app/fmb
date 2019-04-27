@@ -10,6 +10,8 @@ const FmbContext = createContext({
 	filterTerm: '',
 	sorting: '',
 	searchOffset: 0,
+	loadingStatus: '',
+	setLoadingStatus: status => {},
 	setSearchOffset: offset => {},
 	setSorting: sorting => {},
 	setFilterTerm: term => {},
