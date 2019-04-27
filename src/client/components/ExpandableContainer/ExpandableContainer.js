@@ -8,7 +8,7 @@ const style = {
 		display: 'flex',
 		flexDirection: 'column',
 		boxShadow: '0 0 5px 5px #000000',
-		marginTop: themes.standardSpace,
+		marginBottom: themes.standardSpace,
 		borderRadius: themes.standardRadius,
 		backgroundColor: '#262632',
 	},
