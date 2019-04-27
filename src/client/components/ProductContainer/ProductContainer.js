@@ -33,7 +33,7 @@ const style = {
 	}
 }
 
-const ProductsContainer = ({filterTerm, category, sorting, selectedProducts}) => {
+const ProductsContainer = ({products}) => {
 	const context = useContext(FmbContext);
 
 	/*
@@ -131,31 +131,18 @@ const ProductsContainer = ({filterTerm, category, sorting, selectedProducts}) =>
 		>
 			<div style={style.products}>
 				{
-					selectedProducts
-						? context.selectedProducts
-							.map((product, key) =>
-								<Product
-									key={key}
-									label={product.name1}
-									altLabel={product.name2}
-									onClick={() => toggleProduct(product)}
-									isSelected={isSelected(product)}
-									icon={getIcon(product.category, product.package)}
-									volume={product.volume}
-								/>
-							)
-						: context.products
-							.map((product, key) =>
-								<Product
-									key={key}
-									label={product.name1}
-									altLabel={product.name2}
-									onClick={() => toggleProduct(product)}
-									isSelected={isSelected(product)}
-									icon={getIcon(product.category, product.package)}
-									volume={product.volume}
-								/>
-							)
+					products
+					.map((product, key) =>
+						<Product
+							key={key}
+							label={product.name1}
+							altLabel={product.name2}
+							onClick={() => toggleProduct(product)}
+							isSelected={isSelected(product)}
+							icon={getIcon(product.category, product.package)}
+							volume={product.volume}
+						/>
+					)
 				}
 			</div>
 		</div>

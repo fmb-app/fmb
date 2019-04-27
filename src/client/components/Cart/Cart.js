@@ -32,7 +32,7 @@ const Cart = ({toggleCart}) => {
   return (
     <div style={style.cart}>
       <h3>Dina valda produkter</h3>
-      <ProductContainer selectedProducts={true}/>
+      <ProductContainer products={context.selectedProducts}/>
       { 
         context.selectedProducts.length > 0 &&
         <div style={style.resetButton}>
