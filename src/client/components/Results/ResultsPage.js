@@ -86,9 +86,11 @@ const Results = () => {
           : (context.results.length === 0 ? <NoHits /> : null)
         }
       </div>
-      { context.results &&
-        context.results.map((result, index) => <Result result={result} index={index+1} key={index+1} />)
-      }
+      <div style={{height: '100%', overflowY: 'auto'}}>
+        { context.results &&
+          context.results.map((result, index) => <Result result={result} index={index+1} key={index+1} />)
+        }
+      </div>
     </div>
   );
 }
