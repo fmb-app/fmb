@@ -29,6 +29,10 @@ app.use(express.urlencoded({ extended: true })); // Parse URLs
 app.use('/api', routes);
 app.use('/', express.static('dist'));
 
+app.use((req, res, next) => {
+  res.redirect('/');
+});
+
 // Set a 404 if the route wasn't found.
 app.use((req, res, next) => {
   var err = new Error('Not Found');
@@ -47,9 +51,6 @@ app.use((err, req, res, next) => {
     data.error = err;
   }
   res.send(`<html><body><h1>${res.statusCode} 😢 </h1><div>${err.message}</div></body></html>`);
-});
-
-app.use((err, req, res, next) => {
 });
 
 mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true }); // Connect to db
