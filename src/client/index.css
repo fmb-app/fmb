@@ -22,3 +22,18 @@ code {
 }
 
 textarea, select, input, button { outline: none; }
+
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+  
+::-webkit-scrollbar-track,
+::-webkit-scrollbar-thumb {
+  -webkit-border-radius: 8px;
+  border-radius: 8px;
+}
+
