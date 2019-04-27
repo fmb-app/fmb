@@ -27,12 +27,13 @@ const style = {
 		width: '80%',
 		textOverflow: 'ellipsis',
 		overflow: 'hidden',
-		textAlign: 'left'
+		textAlign: 'left',
+		fontWeight: '900'
 	},
 	volume : {
 		display: 'flex',
 		fontSize: '0.6rem',
-		alignItems: 'flex-end'
+		alignItems: 'flex-end',
 	}
 }
 

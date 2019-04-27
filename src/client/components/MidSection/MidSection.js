@@ -105,7 +105,7 @@ const MidSection = () => {
 				priceHigh={Number.MAX_SAFE_INTEGER}
 				alcoholLow={0}
 				alcoholHigh={Number.MAX_SAFE_INTEGER}
-				selectedProducts={false}
+				products={context.products}
 			/>
 			<div style={style.search}>
 			<Link
