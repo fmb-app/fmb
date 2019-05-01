@@ -38,8 +38,8 @@ const OpeningHours = ({result}) => {
   const closeToday = result.openingHours[today].to;
 
   const tomorrow = moment().add(1, 'd').format('YYYY-MM-DD');
-  const openTomorrow = result.openingHours[tomorrow].from;
-  const closeTomorrow = result.openingHours[tomorrow].to;
+  const openTomorrow = result.openingHours[tomorrow] && result.openingHours[tomorrow].from || '';
+  const closeTomorrow = result.openingHours[tomorrow] && result.openingHours[tomorrow].to || '';
 
   return (
     <div style={{display: 'flex', flexFlow: 'column nowrap', fontSize: '0.6rem', alignItems: 'flex-end'}}>
