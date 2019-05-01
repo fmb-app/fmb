@@ -23,6 +23,10 @@ const Map = ({toggleMap}) => {
     const {lat, lng} = e.target._latlng
     context.setCoordinates({lat: lat, long: lng})
   }
+  const onMapClickEventHandler = (e) => {
+    const {lat, lng} = e.latlng
+    context.setCoordinates({lat: lat, long: lng})
+  }
     return (
       <div style={{display: 'flex', flexFlow: 'column nowrap'}}>
         <div style={{display: 'flex', justifyContent: 'flex-end'}}>
@@ -38,11 +42,12 @@ const Map = ({toggleMap}) => {
             maxZoom={20}
             attributionControl={true}
             zoomControl={true}
-            doubleClickZoom={true}
+            doubleClickZoom={false}
             scrollWheelZoom={true}
             dragging={true}
             animate={true}
             easeLinearity={0.35}
+            onClick={onMapClickEventHandler}
           >
             <TileLayer
               url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'
