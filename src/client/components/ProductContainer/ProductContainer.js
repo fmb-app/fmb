@@ -7,6 +7,7 @@ import WineBottleIcon from '../Icons/WineBottleIcon';
 import ChampagneBottleIcon from '../Icons/ChampagneBottleIcon';
 import WhiskeyBottleIcon from '../Icons/WhiskeyBottleIcon';
 import CocktailIcon from '../Icons/CocktailIcon';
+import BottleSpinner from '../Loaders/BottleSpinner'
 import { themes } from '../../themes/Themes';
 
 const style = {
@@ -19,7 +20,9 @@ const style = {
 		borderRadius: themes.standardRadius,
 		padding: themes.standardSpace,
 		backgroundColor: 'rgba(0,0,0,0.5)',
-		overflowY: 'auto',
+		overflowY: 'scroll',
+		display: 'flex',
+		justifyContent: 'center',
 	},
 	products: {
 		boxShadow: 'inset 0 0 30px 30px #000000',
@@ -29,25 +32,17 @@ const style = {
 		boxSizing: 'border-box',
 		gridRowGap: themes.standardSpace,
 		justifyContent: 'start',
-		gridAutoFlow: 'row'
-	}
+		gridAutoFlow: 'row',
+		flexBasis: '100%',
+	},
+	loadingSpinner: {
+		position: 'fixed',
+		paddingTop: '4rem',
+	},
 }
 
-const ProductsContainer = ({products}) => {
+const ProductsContainer = ({products, handleScroll}) => {
 	const context = useContext(FmbContext);
-
-	/*
-	 * Updates the number of products if user has scrolled down to the bottom
-	 */
-	const handleScroll = async (event) => {
-		const lengthScrolled = event.target.clientHeight + event.target.scrollTop;
-		const bottomReached = lengthScrolled >= event.target.scrollHeight;
-
-		if (bottomReached) {
-			const newOffset = context.searchOffset + 20;
-			context.setSearchOffset(newOffset);
-		}
-	}
 
 	const toggleProduct = (selected) => {
 		const productExists = context.selectedProducts.filter((product) => product._id === selected._id).length !== 0;
@@ -124,25 +119,37 @@ const ProductsContainer = ({products}) => {
 
 	const isSelected = (product) => context.selectedProducts.filter((item) => item._id === product._id).length !== 0;
 
+	const isLoading = () => context.status.product.type === 'LOADING';
+
+	const displayProperty = () => isLoading() ? style.loading : {};
+
 	return (
 		<div
 			style={style.scrollContainer}
 			onScroll={handleScroll}
 		>
+			<div style={style.loadingSpinner}>
+				{
+					isLoading() &&
+					<BottleSpinner
+						style={style.bottle}
+					/>
+				}
+			</div>
 			<div style={style.products}>
 				{
 					products
-					.map((product, key) =>
-						<Product
-							key={key}
-							label={product.name1}
-							altLabel={product.name2}
-							onClick={() => toggleProduct(product)}
-							isSelected={isSelected(product)}
-							icon={getIcon(product.category, product.package)}
-							volume={product.volume}
-						/>
-					)
+						.map((product, key) =>
+							<Product
+								key={key}
+								label={product.name1}
+								altLabel={product.name2}
+								onClick={() => toggleProduct(product)}
+								isSelected={isSelected(product)}
+								icon={getIcon(product.category, product.package)}
+								volume={product.volume}
+							/>
+						)
 				}
 			</div>
 		</div>

@@ -10,7 +10,9 @@ export const SET_SEARCH_OFFSET       = 'SET_SEARCH_OFFSET';
 export const SET_SORTING   				   = 'SET_SORTING';
 export const SET_FILTER_TERM         = 'SET_FILTER_TERM';
 export const FETCH_PRODUCTS          = 'FETCH_PRODUCTS';
-export const SET_LOADING_STATUS			 = 'SET_LOADING_STATUS'
+export const SET_PRODUCT_STATUS			 = 'SET_PRODUCT_STATUS';
+export const SET_CATEGORY_STATUS		 = 'SET_CATEGORY_STATUS';
+export const SET_RESULT_STATUS			 = 'SET_RESULT_STATUS';
 
 const setProducts = (products, state) => {
 	return {...state, products: products};
@@ -58,8 +60,28 @@ const setFilterTerm = (term, state) => {
 	return {...state, filterTerm: term};
 }
 
-const setLoadingStatus = (status, state) => {
-	return {...state, loadingStatus: status};
+const setProductStatus = (status, state) => {
+	const updatedStatus = {
+		...state.status,
+		product: status,
+	}
+	return {...state, status: updatedStatus};
+}
+
+const setCategoryStatus = (status, state) => {
+	const updatedStatus = {
+		...state.status,
+		category: status,
+	}
+	return {...state, status: updatedStatus};
+}
+
+const setResultStatus = (status, state) => {
+	const updatedStatus = {
+		...state.status,
+		result: status,
+	}
+	return {...state, status: updatedStatus};
 }
 
 export const fmbReducer = (state, action) => {
@@ -88,8 +110,12 @@ export const fmbReducer = (state, action) => {
 			return setFilterTerm(action.term, state);
 		case FETCH_PRODUCTS:
 			return fetchProducts(action.offset, state);
-		case SET_LOADING_STATUS:
-			return setLoadingStatus(action.status, state);
+		case SET_PRODUCT_STATUS:
+			return setProductStatus(action.status, state);
+		case SET_CATEGORY_STATUS:
+			return setCategoryStatus(action.status, state);
+		case SET_RESULT_STATUS:
+			return setResultStatus(action.status, state);
 		default:
 			return state;
 	}

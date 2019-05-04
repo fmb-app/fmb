@@ -39,11 +39,6 @@ const style = {
 const MidSection = () => {
 	const context = useContext(FmbContext);
 
-	const [category, setCategory] = useState(null);
-	const [categorySearchQuery, setCategorySearchQuery] = useState('');
-	const [products, setProducts] = useState([]);
-	const [productSearchQuery, setProductSearchQuery] = useState('');
-
 	const findMyBork = () => {
 		return (
 			fetch(`/api/stores/`, {
@@ -80,6 +75,19 @@ const MidSection = () => {
 		context.setSearchOffset(0);
 	}
 
+	/*
+	 * Updates the number of products if user has scrolled down to the bottom
+	 */
+	const handleScroll = async (event) => {
+		const lengthScrolled = event.target.clientHeight + event.target.scrollTop;
+		const bottomReached = lengthScrolled >= event.target.scrollHeight;
+
+		if (bottomReached) {
+			const newOffset = context.searchOffset + 20;
+			context.setSearchOffset(newOffset);
+		}
+	}
+
 	return (
 		<div style={style.midSection}>
 			<h2>Sök Produkt</h2>
@@ -99,13 +107,8 @@ const MidSection = () => {
 			</ExpandableContainer>
 			<h2 style={style.productHeader}> Produkter </h2>
 			<ProductContainer
-				filterTerm={productSearchQuery}
-				category=''
-				priceLow={0}
-				priceHigh={Number.MAX_SAFE_INTEGER}
-				alcoholLow={0}
-				alcoholHigh={Number.MAX_SAFE_INTEGER}
 				products={context.products}
+				handleScroll={handleScroll}
 			/>
 			<div style={style.search}>
 			<Link

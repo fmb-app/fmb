@@ -1,0 +1,21 @@
+.container {
+  animation-duration: 0.8s;
+  animation-name: spinneroo;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+  height: 4rem;
+}
+
+@keyframes spinneroo {
+  0% {
+    transform: rotate(0deg);
+    filter: blur(0rem);
+  }
+  50% {
+    filter: blur(0.04rem);
+  }
+  100% {
+    transform: rotate(360deg);
+    filter: blur(0rem);
+  }
+}
