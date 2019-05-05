@@ -7,7 +7,7 @@ import WineBottleIcon from '../Icons/WineBottleIcon';
 import ChampagneBottleIcon from '../Icons/ChampagneBottleIcon';
 import WhiskeyBottleIcon from '../Icons/WhiskeyBottleIcon';
 import CocktailIcon from '../Icons/CocktailIcon';
-import BottleSpinner from '../Loaders/BottleSpinner'
+import BottleSpinner from '../Loaders/BottleSpinner';
 import { themes } from '../../themes/Themes';
 
 const style = {
@@ -137,9 +137,7 @@ const ProductsContainer = ({products, handleScroll}) => {
 			<div style={style.loadingSpinner}>
 				{
 					isLoading() &&
-					<BottleSpinner
-						style={style.bottle}
-					/>
+					<BottleSpinner />
 				}
 			</div>
 			<div style={style.products}>
