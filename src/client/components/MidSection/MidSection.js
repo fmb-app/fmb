@@ -11,7 +11,7 @@ import { themes } from '../../themes/Themes';
 const style = {
 	midSection: {
 		height: '75%',
-		width: '22rem',
+		maxWidth: '22rem',
 		textAlign: 'left',
 		marginTop: themes.mediumSpace,
 		padding: themes.mediumSpace,

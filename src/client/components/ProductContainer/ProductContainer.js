@@ -21,8 +21,8 @@ const style = {
 		padding: themes.standardSpace,
 		backgroundColor: 'rgba(0,0,0,0.5)',
 		overflowY: 'scroll',
-		display: 'flex',
-		justifyContent: 'center',
+		overflowX: 'hidden',
+		position: 'relative',
 	},
 	products: {
 		boxShadow: 'inset 0 0 30px 30px #000000',
@@ -36,8 +36,14 @@ const style = {
 		flexBasis: '100%',
 	},
 	loadingSpinner: {
-		position: 'fixed',
 		paddingTop: '4rem',
+		position: 'fixed',
+		maxWidth: '19rem',
+		width: '100%',
+		boxSizing: 'border-box',
+		display: 'flex',
+		flexDirection: 'row',
+		justifyContent: 'center',
 	},
 }
 
@@ -119,7 +125,7 @@ const ProductsContainer = ({products, handleScroll}) => {
 
 	const isSelected = (product) => context.selectedProducts.filter((item) => item._id === product._id).length !== 0;
 
-	const isLoading = () => context.status.product.type === 'LOADING';
+	const isLoading = () => context.status.product.type === 'LOADING' || true;
 
 	const displayProperty = () => isLoading() ? style.loading : {};
 
