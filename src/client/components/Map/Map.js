@@ -27,40 +27,41 @@ const Map = ({toggleMap}) => {
     const {lat, lng} = e.latlng
     context.setCoordinates({lat: lat, long: lng})
   }
-    return (
-      <div style={{display: 'flex', flexFlow: 'column nowrap'}}>
-        <div style={{display: 'flex', justifyContent: 'flex-end'}}>
-          <CloseButton
-            style={style.closeButton}
-            onClick={toggleMap}
-          />
-        </div>
-        <div style={style.map}>
-          <LeafletMap
-            center={[59.3498, 18.0707]}
-            zoom={10}
-            maxZoom={20}
-            attributionControl={true}
-            zoomControl={true}
-            doubleClickZoom={false}
-            scrollWheelZoom={true}
-            dragging={true}
-            animate={true}
-            easeLinearity={0.35}
-            onClick={onMapClickEventHandler}
-          >
-            <TileLayer
-              url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'
-            />
-            <Marker position={[context.location.lat, context.location.long]} draggable={true} onDragEnd={setMapCoordinates}>
-              <Popup>
-                Popup for any custom information.
-              </Popup>
-            </Marker>
-          </LeafletMap>
-        </div>
+
+  return (
+    <div style={{display: 'flex', flexFlow: 'column nowrap'}}>
+      <div style={{display: 'flex', justifyContent: 'flex-end'}}>
+        <CloseButton
+          style={style.closeButton}
+          onClick={toggleMap}
+        />
       </div>
-    );
+      <div style={style.map}>
+        <LeafletMap
+          center={[59.3498, 18.0707]}
+          zoom={10}
+          maxZoom={20}
+          attributionControl={true}
+          zoomControl={true}
+          doubleClickZoom={false}
+          scrollWheelZoom={true}
+          dragging={true}
+          animate={true}
+          easeLinearity={0.35}
+          onClick={onMapClickEventHandler}
+        >
+          <TileLayer
+            url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'
+          />
+          <Marker position={[context.location.lat, context.location.long]} draggable={true} onDragEnd={setMapCoordinates}>
+            <Popup>
+              Detta är platsen som sökningen och eventuella resvägar kommer baseras på.
+            </Popup>
+          </Marker>
+        </LeafletMap>
+      </div>
+    </div>
+  );
 }
 
 export default Map
