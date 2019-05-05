@@ -95,6 +95,7 @@ const MidSection = () => {
 				type='text'
 				placeholder='Sök produkt eller kategori'
 				onChange={(event) => onInputChange(event)}
+				value={context.filterTerm}
 			/>
 			<ExpandableContainer
 				label='Kategorier'
