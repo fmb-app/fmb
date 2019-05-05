@@ -125,7 +125,7 @@ const ProductsContainer = ({products, handleScroll}) => {
 
 	const isSelected = (product) => context.selectedProducts.filter((item) => item._id === product._id).length !== 0;
 
-	const isLoading = () => context.status.product.type === 'LOADING' || true;
+	const isLoading = () => context.status.product.type === 'LOADING';
 
 	const displayProperty = () => isLoading() ? style.loading : {};
 
