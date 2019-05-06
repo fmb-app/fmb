@@ -59,7 +59,7 @@ const ResultMap = ({result}) => {
           <TileLayer
             url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'
           />
-          <Marker position={[context.location.lat, context.location.long]} draggable={true}>
+          <Marker position={[context.location.lat, context.location.long]} draggable={false}>
             <Popup>
               Detta är platsen som sökningen och eventuella resvägar kommer baseras på.
             </Popup>
