@@ -21,7 +21,7 @@ const style = {
   }
 }
 
-const RegularButton = ({ label, bgcolor, color, width, onClick, disabled, badge }) => {
+const RegularButton = ({ label, bgcolor, color, width, onClick, disabled}) => {
   return (
     <button
     style={[style.button, {...bgcolor, color, width}]}
@@ -29,7 +29,6 @@ const RegularButton = ({ label, bgcolor, color, width, onClick, disabled, badge 
       disabled={disabled}
     >
       {label}
-      {badge}
     </button>
   );
 }
