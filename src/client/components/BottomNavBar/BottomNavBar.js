@@ -16,6 +16,7 @@ const style = {
     width: '100%',
     position: 'fixed',
     bottom: 0,
+    zIndex: 999
   },
   navBar: {
     backgroundColor: 'rgba(0,0,0,0.8)',
