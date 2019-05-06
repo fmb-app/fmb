@@ -24,8 +24,8 @@ const style = {
 const RegularButton = ({ label, bgcolor, color, width, onClick, disabled}) => {
   return (
     <button
-    style={[style.button, {...bgcolor, color, width}]}
-    onClick={onClick}
+      style={[style.button, {...bgcolor, color, width}]}
+      onClick={onClick}
       disabled={disabled}
     >
       {label}
