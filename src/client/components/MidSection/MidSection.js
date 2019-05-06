@@ -40,6 +40,7 @@ const MidSection = () => {
 	const context = useContext(FmbContext);
 
 	const findMyBork = () => {
+		context.setResultStatus({type: 'LOADING', message: 'Loading results'});
 		return (
 			fetch(`/api/stores/`, {
 				method: 'POST',
@@ -57,6 +58,7 @@ const MidSection = () => {
 				.then((res) => res.json())
 				.then((res) => {
 					context.setResults(res.stores);
+					context.setResultStatus({type: 'LOADED', message: 'Results successfully loaded'});
 				})
 		)
 	}

@@ -1,8 +1,9 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom'
-import FmbContext from '../../context/FmbContext';
-import Result from './Result.js';
 import { themes } from '../../themes/Themes';
+import FmbContext from '../../context/FmbContext';
+import BottleSpinner from '../Loaders/BottleSpinner';
+import Result from './Result.js';
 import FMButton from '../Buttons/FMButton';
 
 const style = {
@@ -27,6 +28,11 @@ const style = {
   },
   header: {
     padding: '0 0 1rem 0'
+  },
+  results: {
+    height: '100%',
+    overflowY: 'auto',
+    padding: '0.5rem',
   }
 }
 
@@ -46,20 +52,24 @@ const NoHits = () => {
 const Results = () => {
   const context = useContext(FmbContext);
 
+  const isLoading = () => context.status.result.type === 'LOADING';
+
   return (
     <div 	style={style.container}>
       <div style={style.top}>
         <h2 style={style.header}>Närmaste Systembolag</h2>
-        { (context.results.length > 0  && context.selectedProducts.length > 0)
-          ? <div>{context.results.length} Systembolag har produkte{context.selectedProducts.length > 1 ? 'rna' : 'n'}:</div>
-          : (context.results.length === 0 ? <NoHits /> : null)
-        }
       </div>
-      <div style={{height: '100%', overflowY: 'auto', padding: '0.5rem'}}>
-        { context.results &&
-          context.results.map((result, index) => <Result result={result} index={index+1} key={index+1} />)
-        }
-      </div>
+      { 
+        isLoading() ?
+        <BottleSpinner /> :
+        <div style={style.results}>
+          {
+            context.results.length < 1 ?
+            <NoHits /> :
+            context.results.map((result, index) => <Result result={result} index={index+1} key={index+1} />)
+          }
+        </div>
+      }
     </div>
   );
 }
