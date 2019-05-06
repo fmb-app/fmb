@@ -12,13 +12,13 @@ const style = {
 		borderRadius: themes.standardRadius,
 		backgroundColor: '#262632',
 	},
-	top: (placement, hover, expanded) => {
+	top: (placement, expanded, hover) => {
 		return {
 			display: 'flex',
 			flexDirection: placement,
 			justifyContent: 'space-between',
 			padding: themes.standardSpace,
-			backgroundColor: (hover || !expanded) && '#363642',
+			backgroundColor: hover && '#363642',
 			cursor: 'pointer',
 		}
 	},
@@ -33,6 +33,7 @@ const style = {
 
 const ExpandableContainer = ({label, arrowPlacement = 'right', children}) => {
 	const [expanded, setExpanded] = useState(false);
+	const [hover,    setHover]    = useState(false);
 
 	const placement = () => {
 		switch (arrowPlacement) {
@@ -52,8 +53,10 @@ const ExpandableContainer = ({label, arrowPlacement = 'right', children}) => {
 	return (
 		<div style={style.container}>
 			<div 
-				style={style.top(placement())} 
+				style={style.top(placement(), expanded, hover)} 
 				onClick={() => {setExpanded(!expanded)}}
+				onMouseEnter={() => setHover(true)}
+				onMouseLeave={() => setHover(false)}
 			>
 				{ label }
 				<ExpandButton rotated={expanded} />

@@ -55,7 +55,7 @@ const Results = () => {
           : (context.results.length === 0 ? <NoHits /> : null)
         }
       </div>
-      <div style={{height: '100%', overflowY: 'auto', padding: '0 0.5rem'}}>
+      <div style={{height: '100%', overflowY: 'auto', padding: '0.5rem'}}>
         { context.results &&
           context.results.map((result, index) => <Result result={result} index={index+1} key={index+1} />)
         }

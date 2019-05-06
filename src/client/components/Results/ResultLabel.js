@@ -14,6 +14,12 @@ const style = {
 	address: {
 
 	},
+	addressName: {
+
+	},
+	addressStreet: {
+		fontVariant: 'all-small-caps',
+	},
 	openingHours: {
 		display: 'flex',
 		flexFlow: 'column nowrap',
@@ -25,8 +31,11 @@ const style = {
 		fontVariant: 'all-small-caps',
 		fontSize: '1rem',
 	},
-	time: {
+	day: {
 		fontWeight: '600',
+	},
+	time: {
+		fontWeight: '400',
 	}
 };
 
@@ -38,29 +47,23 @@ const openingHours = (result, daysFromToday) => {
   return close === '00:00' ? 'Stängt' : open + ' - ' + close;
 }
 
-
 const ResultLabel = ({result}) => {
-	const [timeToday,    setTimeToday] 	  = useState('');
-	const [timeTomorrow, setTimeTomorrow] = useState('');
-
-	useEffect(() => {
-		setTimeToday(openingHours(result, 0));
-		setTimeTomorrow(openingHours(result, 1));
-	}, []);
-
 	return (
 		<div style={style.top}>
 			<div style={style.address}>
-				<h3>
+				<h3 style={style.addressName}>
 					{result.name || result.street}
 				</h3>
+				<h4 style={style.addressStreet}>
+					{result.name ? result.street : result.city}
+				</h4>
 			</div>
 			<div style={style.openingHours}>
 				<h4 style={style.timeHeading}>
 					Öppettider
 				</h4>
-				<p>Idag: <span style={style.time}>{timeToday}</span></p>
-				<p>Imorgon: <span style={style.time}>{timeTomorrow}</span></p>
+				<p style={style.day}>Idag: <span style={style.time}>{openingHours(result, 0)}</span></p>
+				<p style={style.day}>Imorgon: <span style={style.time}>{openingHours(result, 1)}</span></p>
 			</div>
 		</div>
 	)
