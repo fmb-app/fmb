@@ -42,7 +42,7 @@ const style = {
 
 const GPSButton = ({getCoordinates}) => {
   return <div style={style.gpsButton} onClick={getCoordinates}>
-    Använd min position
+    Använd min plats
     <div style={{marginLeft: '0.4rem'}}>
       <GPSIcon width='16px' height='16px' />
     </div>
