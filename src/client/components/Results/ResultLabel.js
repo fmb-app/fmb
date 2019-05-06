@@ -47,7 +47,7 @@ const openingHours = (result, daysFromToday) => {
   return close === '00:00' ? 'Stängt' : open + ' - ' + close;
 }
 
-const ResultLabel = ({result}) => {
+export const ResultLabel = ({result}) => {
 	return (
 		<div style={style.top}>
 			<div style={style.address}>
