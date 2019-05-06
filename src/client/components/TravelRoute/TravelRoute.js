@@ -8,7 +8,7 @@ import SubwayIcon from '../Icons/SubwayIcon';
 import TramIcon from '../Icons/TramIcon';
 import TrainIcon from '../Icons/TrainIcon';
 import ClockIcon from '../Icons/ClockIcon';
-
+import BottleSpinner from '../Loaders/BottleSpinner';
 
 const style = {
 	container: {
@@ -27,24 +27,14 @@ const style = {
 		display: 'flex',
 		flexFlow: 'column nowrap',
 		fontVariantCaps: 'all-small-caps'
+	},
+	spinner: {
+		width: '100%',
+		height: '100%',
+		display: 'flex',
+		justifyContent: 'center',
+		alignItems: 'center'
 	}
-}
-
-const getTravelRoute = (startLat, startLong, destination, setTrips) => {
-  return (
-    fetch(`/api/travel/${startLat}/${startLong}/${destination.lat}/${destination.long}`, {   
-      method: 'GET',
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
-        .then(res => res.json()) 
-        .then((travelRoutes) => {
-          const trip = travelRoutes.Trip[0].LegList.Leg;
-          setTrips({trip: trip, time: getTravelTime(trip[0].Origin.time, trip[trip.length-1].Destination.time)});
-
-        })
-    )
 }
 
 const getTravelTime = (startTime, endTime) => {
@@ -88,42 +78,68 @@ const TravelRoute = ({store}) => {
 	const context = useContext(FmbContext);
 	const [trips, setTrips] = useState({});
 
+	const getTravelRoute = (startLat, startLong, destination, setTrips) => {
+		context.setTravelStatus({type: 'LOADING', message: 'Loading travel route'});
+	  return (
+	    fetch(`/api/travel/${startLat}/${startLong}/${destination.lat}/${destination.long}`, {   
+	      method: 'GET',
+	        headers: {
+	          'Content-Type': 'application/json'
+	        }
+	      })
+	        .then(res => res.json()) 
+	        .then((travelRoutes) => {
+	          const trip = travelRoutes.Trip[0].LegList.Leg;
+	          setTrips({trip: trip, time: getTravelTime(trip[0].Origin.time, trip[trip.length-1].Destination.time)});
+	          context.setTravelStatus({type: 'LOADED', message: 'Loading travel route'});
+	        })
+	   )
+	}
+
 	useEffect(() => {
 		getTravelRoute(context.location.lat, context.location.long, store.location.coords, setTrips);
 	}, []);
 
+	const isLoading = () => context.status.travel.type === 'LOADING';
+
 	return (
-		<div style={style.container}>
-
-
-			{ trips.time &&
-			<div style={{display: 'flex', flexFlow: 'column nowrap'}}>
-				<span style={{fontWeight: '800', fontVariant: 'all-small-caps', fontSize: '1rem', paddingBottom: '0.5rem'}}>Resväg:</span>
-				<div style={{fontSize: '0.7rem'}}>
-					<ClockIcon color='white' width='10px' height='10px' />
-					<span style={{paddingLeft: '5px', fontWeight: '600'}}>
-						{trips.time && trips.time} min
-					</span>
-					<span> till {store.street}:</span>
-				</div>
-			</div>
-			}
-			{
-				trips.trip &&
-				trips.trip.map((journey, index) => 
-					<div style={style.stop} key={`trip-${index}`}>
-						<div style={{display: 'flex', justifyContent: 'space-between'}}>
-							<div style={{fontWeight: '600'}}>{journey.Origin.time.slice(0, 5)} </div>
-							<div>{journey && journey.Origin.name}</div>
-						</div>
-						<div style={{display: 'flex', justifyContent: 'space-between'}}>
-							<JourneySymbols journey={journey} />
-							<div>{journey && journey.Destination.name}</div>
+		<>
+	  	{
+	  		isLoading() ?
+	  		<div style={style.spinner}>
+  				<BottleSpinner />
+				</div>:
+				<div style={style.container}>
+					{ trips.time &&
+					<div style={{display: 'flex', flexFlow: 'column nowrap'}}>
+						<span style={{fontWeight: '800', fontVariant: 'all-small-caps', fontSize: '1rem', paddingBottom: '0.5rem'}}>Resväg:</span>
+						<div style={{fontSize: '0.7rem'}}>
+							<ClockIcon color='white' width='10px' height='10px' />
+							<span style={{paddingLeft: '5px', fontWeight: '600'}}>
+								{trips.time && trips.time} min
+							</span>
+							<span> till {store.street}:</span>
 						</div>
 					</div>
-				)
+					}
+					{
+						trips.trip &&
+						trips.trip.map((journey, index) => 
+							<div style={style.stop} key={`trip-${index}`}>
+								<div style={{display: 'flex', justifyContent: 'space-between'}}>
+									<div style={{fontWeight: '600'}}>{journey.Origin.time.slice(0, 5)} </div>
+									<div>{journey && journey.Origin.name}</div>
+								</div>
+								<div style={{display: 'flex', justifyContent: 'space-between'}}>
+									<JourneySymbols journey={journey} />
+									<div>{journey && journey.Destination.name}</div>
+								</div>
+							</div>
+						)
+					}
+				</div>
 			}
-		</div>
+		</>
 	);
 }
 
