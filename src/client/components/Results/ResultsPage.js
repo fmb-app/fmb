@@ -1,8 +1,9 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom'
-import FmbContext from '../../context/FmbContext';
-import Result from './Result.js';
 import { themes } from '../../themes/Themes';
+import FmbContext from '../../context/FmbContext';
+import BottleSpinner from '../Loaders/BottleSpinner';
+import Result from './Result.js';
 import FMButton from '../Buttons/FMButton';
 import ResultMap from '../Map/ResultMap';
 
@@ -29,6 +30,11 @@ const style = {
   },
   header: {
     padding: '0 0 1rem 0'
+  },
+  results: {
+    height: '100%',
+    overflowY: 'auto',
+    padding: '0.5rem',
   }
 }
 
@@ -48,6 +54,8 @@ const NoHits = () => {
 const Results = () => {
   const context = useContext(FmbContext);
 
+  const isLoading = () => context.status.result.type === 'LOADING';
+
   return (
     <div 	style={style.container}>
       <div style={style.top}>
@@ -66,6 +74,17 @@ const Results = () => {
           context.results.map((result, index) => <Result result={result} index={index+1} key={index+1} />)
         }
       </div>
+      {
+        isLoading() ?
+        <BottleSpinner /> :
+        <div style={style.results}>
+          {
+            context.results.length < 1 ?
+            <NoHits /> :
+            context.results.map((result, index) => <Result result={result} index={index+1} key={index+1} />)
+          }
+        </div>
+      }
     </div>
   );
 }
