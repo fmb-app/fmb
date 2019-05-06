@@ -4,6 +4,8 @@ import FmbContext from '../../context/FmbContext';
 import Result from './Result.js';
 import { themes } from '../../themes/Themes';
 import FMButton from '../Buttons/FMButton';
+import ResultMap from '../Map/ResultMap';
+
 
 const style = {
   container: {
@@ -54,6 +56,10 @@ const Results = () => {
           ? <div>{context.results.length} Systembolag har produkte{context.selectedProducts.length > 1 ? 'rna' : 'n'}:</div>
           : (context.results.length === 0 ? <NoHits /> : null)
         }
+      </div>
+      <div width='15rem'>
+        <ResultMap>
+        </ResultMap>
       </div>
       <div style={{height: '100%', overflowY: 'auto', padding: '0.5rem'}}>
         { context.results &&
