@@ -1,11 +1,9 @@
 import React, {useContext} from 'react'
 import FmbContext from '../../context/FmbContext'
 import { Map as LeafletMap, TileLayer, Marker, Popup } from 'react-leaflet';
-import CloseButton from '../Buttons/CloseButton';
-import GPSIcon from '../Icons/GPSIcon';
 import { themes } from '../../themes/Themes';
-import Radium from 'radium';
 import SystemetMarkerIcon from '../Icons/SystemetMarkerIcon';
+import ResultLabel from '../Results/ResultLabel';
 
 const style = {
   map: {
@@ -34,10 +32,7 @@ const style = {
     cursor: 'pointer',
     top: '2.2rem',
     position: 'relative',
-    zIndex: '998',
-    ':hover': {
-      backgroundColor: '#F02A9A'
-    }
+    zIndex: '998'
   }
 }
 
@@ -45,8 +40,6 @@ const style = {
 
 const ResultMap = ({result}) => {
   const context = useContext(FmbContext);
-
-  console.log(result);
 
   return (
     <div style={{display: 'flex', flexFlow: 'column nowrap'}}>
@@ -74,7 +67,7 @@ const ResultMap = ({result}) => {
           {result.map((result) =>
             <Marker position={[result.location.coords.lat,result.location.coords.long]} icon={ SystemetMarkerIcon }>
               <Popup>
-                {result.name ? result.name : result.street}
+                <ResultLabel result={result} />
               </Popup>
             </Marker>
          )}
