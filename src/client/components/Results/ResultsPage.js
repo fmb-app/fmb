@@ -5,12 +5,8 @@ import FmbContext from '../../context/FmbContext';
 import BottleSpinner from '../Loaders/BottleSpinner';
 import Result from './Result.js';
 import FMButton from '../Buttons/FMButton';
-<<<<<<< HEAD
 import ResultMap from '../Map/ResultMap';
-
-=======
 import Switch from '../Switches/Switch';
->>>>>>> 0dc81212a9428d234b1ab2649c78341865bd7351
 
 const style = {
   container: {
@@ -107,7 +103,7 @@ const ResultsPage = () => {
               <div >
                 {
                   showMap
-                  ? <Map />
+                  ? <ResultMap result={context.results}/>
                   : <div style={style.listView}>
                       <Results results={context.results} />
                     </div>
