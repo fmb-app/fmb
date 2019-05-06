@@ -10,7 +10,7 @@ const svgStyle = (width, height) => {
 
 const CartIcon = ({height, width, color, onClick}) => {
 	return (
-		<img 
+		<img
 			src={cartIcon}
 			alt='Arrow'
 			style={svgStyle(width, height)}
