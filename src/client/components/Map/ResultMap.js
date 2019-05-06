@@ -58,7 +58,7 @@ const ResultMap = ({result}) => {
           attributionControl={true}
           zoomControl={true}
           doubleClickZoom={false}
-          scrollWheelZoom={false}
+          scrollWheelZoom={true}
           dragging={true}
           animate={true}
           easeLinearity={0.35}
