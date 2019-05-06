@@ -4,18 +4,19 @@ const style = {
   outer: (hover) => {
     return {
       backgroundColor: hover ? 'rgba(96, 96, 96, 0.6)' : 'rgba(80,80,80, 0.5)',
-      width: '80px',
+      width: '70px',
       padding: '1px',
       borderRadius: '2px',
-      cursor: 'pointer'
+      cursor: 'pointer',
+      margin: '0.7rem'
     }
   },
   inner: (right) => {
     return {
       position: 'relative',
       backgroundColor: '#ff9900',
-      width: '35px',
-      height: '22px',
+      width: '28px',
+      height: '14px',
       margin: '2px',
       borderRadius: '2px',
       left: right ? '50%' : '0',
