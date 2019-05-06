@@ -5,6 +5,7 @@ import CloseButton from '../Buttons/CloseButton';
 import GPSIcon from '../Icons/GPSIcon';
 import { themes } from '../../themes/Themes';
 import Radium from 'radium';
+import SystemetMarkerIcon from '../Icons/SystemetMarkerIcon';
 
 const style = {
   map: {
@@ -42,10 +43,10 @@ const style = {
 
 
 
-const ResultMap = ({systembolag}) => {
+const ResultMap = ({result}) => {
   const context = useContext(FmbContext);
 
-
+  console.log(result);
 
   return (
     <div style={{display: 'flex', flexFlow: 'column nowrap'}}>
@@ -70,6 +71,13 @@ const ResultMap = ({systembolag}) => {
               Detta är platsen som sökningen och eventuella resvägar kommer baseras på.
             </Popup>
           </Marker>
+          {result.map((result) =>
+            <Marker position={[result.location.coords.lat,result.location.coords.long]} icon={ SystemetMarkerIcon }>
+              <Popup>
+                {result.name ? result.name : result.street}
+              </Popup>
+            </Marker>
+         )}
         </LeafletMap>
       </div>
     </div>

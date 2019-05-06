@@ -60,19 +60,6 @@ const Results = () => {
     <div 	style={style.container}>
       <div style={style.top}>
         <h2 style={style.header}>Närmaste Systembolag</h2>
-        { (context.results.length > 0  && context.selectedProducts.length > 0)
-          ? <div>{context.results.length} Systembolag har produkte{context.selectedProducts.length > 1 ? 'rna' : 'n'}:</div>
-          : (context.results.length === 0 ? <NoHits /> : null)
-        }
-      </div>
-      <div width='15rem'>
-        <ResultMap>
-        </ResultMap>
-      </div>
-      <div style={{height: '100%', overflowY: 'auto', padding: '0.5rem'}}>
-        { context.results &&
-          context.results.map((result, index) => <Result result={result} index={index+1} key={index+1} />)
-        }
       </div>
       {
         isLoading() ?
@@ -81,7 +68,12 @@ const Results = () => {
           {
             context.results.length < 1 ?
             <NoHits /> :
-            context.results.map((result, index) => <Result result={result} index={index+1} key={index+1} />)
+            <div>
+            <ResultMap result={context.results}/>
+              {
+                context.results.map((result, index) => <Result result={result} index={index+1} key={index+1} />)
+              }
+            </div>
           }
         </div>
       }
