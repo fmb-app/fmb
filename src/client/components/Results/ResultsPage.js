@@ -30,11 +30,6 @@ const style = {
   header: {
     padding: '0 0 0.5rem 0'
   },
-  results: {
-    maxHeight: '100%',
-    overflowY: 'auto',
-    padding: '0.5rem',
-  },
   toggle: {
     display: 'flex',
     flexFlow: 'row nowrap',
@@ -43,6 +38,11 @@ const style = {
     fontWeight: 'bold',
     fontSize: '0.6rem',
     textTransform: 'uppercase'
+  },
+  listView: {
+    maxHeight: '50vh',
+    padding: '0.5rem',
+    overflowY: 'auto'
   }
 }
 
@@ -89,7 +89,7 @@ const ResultsPage = () => {
       { 
         isLoading() ?
         <BottleSpinner /> :
-        <div style={style.results}>
+        <div>
           {
             context.results.length < 1 ?
             <NoHits /> :
@@ -103,7 +103,7 @@ const ResultsPage = () => {
                 {
                   showMap
                   ? <Map />
-                  : <div>
+                  : <div style={style.listView}>
                       <Results results={context.results} />
                     </div>
                 }
