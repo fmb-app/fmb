@@ -19,7 +19,7 @@ const ExpandButton = ({rotated, onClick}) => {
 		>
 			<ExpandArrowIcon
 				width='2rem'
-				height='2rem'
+				height='1rem'
 				onClick={onClick}
 			/>
 		</div>

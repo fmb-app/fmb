@@ -1,9 +1,7 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom'
-import moment from 'moment';
 import FmbContext from '../../context/FmbContext';
-import ExpandableContainer from '../ExpandableContainer/ExpandableContainer';
-import TravelRoute from '../TravelRoute/TravelRoute';
+import Result from './Result.js';
 import { themes } from '../../themes/Themes';
 import FMButton from '../Buttons/FMButton';
 
@@ -32,24 +30,6 @@ const style = {
   }
 }
 
-const OpeningHours = ({result}) => {
-  const today = moment().format('YYYY-MM-DD');
-  const openToday = result.openingHours[today].from;
-  const closeToday = result.openingHours[today].to;
-
-  const tomorrow = moment().add(1, 'd').format('YYYY-MM-DD');
-  const openTomorrow = result.openingHours[tomorrow] && result.openingHours[tomorrow].from || '';
-  const closeTomorrow = result.openingHours[tomorrow] && result.openingHours[tomorrow].to || '';
-
-  return (
-    <div style={{display: 'flex', flexFlow: 'column nowrap', fontSize: '0.6rem', alignItems: 'flex-end'}}>
-      <span style={{fontWeight: '800', fontVariant: 'all-small-caps', fontSize: '1rem'}}>Öppettider</span>
-      <span><span style={{fontWeight: '600'}}>Idag:</span> {closeToday == '00:00' ? 'Stängt' : openToday + ' - ' +  closeToday}</span>
-      <span><span style={{fontWeight: '600'}}>Imorgon:</span> {closeTomorrow == '00:00' ? 'Stängt' : openTomorrow + ' - ' +  closeTomorrow}</span>
-    </div>
-  )
-}
-
 const NoHits = () => {
   return <div>
     Inga systembolag matchade din sökning :(
@@ -61,20 +41,6 @@ const NoHits = () => {
       />
     </Link>
   </div>
-}
-
-const Result = ({result}) => {
-  return (
-    <ExpandableContainer
-      label={result.name || result.street}
-      subLabel={result.name ? result.street : result.city}
-      labelRight={<OpeningHours result={result} />}
-      labelStyle={{fontSize: '1.4rem'}}
-      subLabelStyle={{fontVariant: 'all-small-caps'}}
-    >
-      <TravelRoute store={result} />
-    </ExpandableContainer>
-  );
 }
 
 const Results = () => {

@@ -12,68 +12,57 @@ const style = {
 		borderRadius: themes.standardRadius,
 		backgroundColor: '#262632',
 	},
-	top: (hover, expanded, labelRight) => { 
+	top: (placement, hover, expanded) => {
 		return {
-			width: '100%',
-			padding: themes.standardSpace,
 			display: 'flex',
-			flexDirection: labelRight ? 'column' : 'row',
+			flexDirection: placement,
 			justifyContent: 'space-between',
-			alignItems: 'center',
-			boxSizing: 'border-box',
-			':hover': {
-				cursor: 'pointer',
-				backgroundColor: (hover || !expanded) && '#363642'
-			}
+			padding: themes.standardSpace,
+			backgroundColor: (hover || !expanded) && '#363642',
+			cursor: 'pointer',
+		}
+	},
+	expanded: (expanded) => {
+		return {
+			transition: 'height 0.5s ease-in-out',
+			height: expanded ? '12rem' : '0rem',
+			overflowY: 'auto'
 		}
 	}
 };
 
-const Top = ({style, label, subLabel, labelRight, expand, isExpanded, labelStyle, subLabelStyle}) => {
-	return (
-		<div style={style} onClick={expand}>
-			<div style={{display: 'flex', flexFlow: 'row nowrap', justifyContent: 'space-between', width: '100%'}}>
-				<div style={{display: 'flex', flexFlow: 'column nowrap'}}>
-					<div style={{...labelStyle}}>{label || subLabel}</div>
-					<div style={{...subLabelStyle}}>{label && subLabel}</div>
-				</div>
-				<div>
-					{labelRight}
-				</div>
-			</div>
-				<ExpandButton rotated={isExpanded} />
-		</div>
-	)
-}
-
-const StyledTop = Radium(Top);
-
-const ExpandableContainer = ({label, subLabel, labelRight, hover, children, labelStyle, subLabelStyle}) => {
+const ExpandableContainer = ({label, arrowPlacement = 'right', children}) => {
 	const [expanded, setExpanded] = useState(false);
 
-	const expandedStyle = {
-		transition: 'height 0.5s ease-in-out',
-		height: expanded ? '12rem' : '0rem',
-		overflowY: 'auto'
+	const placement = () => {
+		switch (arrowPlacement) {
+			case 'left':
+				return 'row-reverse';
+			case 'top':
+				return 'column-reverse';
+			case 'right':
+				return 'row';
+			case 'bottom':
+				return 'column';
+			default:
+				return 'row';
+		}
 	}
 
 	return (
 		<div style={style.container}>
-			<StyledTop
-				style={{...style.top(hover, expanded, labelRight)}}
-				expand={() => { setExpanded(!expanded)}}
-				label={label}
-				labelStyle={labelStyle}
-				subLabelStyle={subLabelStyle}
-				subLabel={subLabel}
-				labelRight={labelRight}
-				isExpanded={expanded}
-			/>
-			<div style={expandedStyle}>
+			<div 
+				style={style.top(placement())} 
+				onClick={() => {setExpanded(!expanded)}}
+			>
+				{ label }
+				<ExpandButton rotated={expanded} />
+			</div>
+			<div style={style.expanded(expanded)}>
 				{ expanded && children }
 			</div>
 		</div>
 	);
-}
+};
 
 export default ExpandableContainer;

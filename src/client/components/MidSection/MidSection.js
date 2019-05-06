@@ -98,8 +98,9 @@ const MidSection = () => {
 				value={context.filterTerm}
 			/>
 			<ExpandableContainer
-				label='Kategorier'
-				labelStyle={{fontSize: '1.17em', fontWeight: 'bold'}}
+				label={<h3>Kategorier</h3>}
+				//labelStyle={{fontSize: '1.17em', fontWeight: 'bold'}}
+				arrowPlacement='right'
 				hover
 			>
 				<CategoryContainer

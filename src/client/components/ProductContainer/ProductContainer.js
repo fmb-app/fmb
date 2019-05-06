@@ -134,12 +134,12 @@ const ProductsContainer = ({products, handleScroll}) => {
 			style={style.scrollContainer}
 			onScroll={handleScroll}
 		>
+			{
+				isLoading() &&
 			<div style={style.loadingSpinner}>
-				{
-					isLoading() &&
 					<BottleSpinner />
-				}
 			</div>
+			}
 			<div style={style.products}>
 				{
 					products
