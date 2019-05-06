@@ -52,7 +52,7 @@ const ResultMap = ({result}) => {
     <div style={{display: 'flex', flexFlow: 'column nowrap'}}>
       <div style={style.map}>
         <LeafletMap
-          center={[59.3498, 18.0707]}
+          center={[context.location.lat, context.location.long]}
           zoom={14}
           maxZoom={20}
           attributionControl={true}
@@ -66,7 +66,7 @@ const ResultMap = ({result}) => {
           <TileLayer
             url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'
           />
-          <Marker position={[context.location.lat, context.location.long]} draggable={true}>
+          <Marker position={[context.location.lat, context.location.long]} draggable={false}>
             <Popup>
               Detta är platsen som sökningen och eventuella resvägar kommer baseras på.
             </Popup>

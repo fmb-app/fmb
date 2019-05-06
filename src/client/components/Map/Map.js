@@ -83,7 +83,7 @@ const Map = ({toggleMap}) => {
       </div>
       <div style={style.map}>
         <LeafletMap
-          center={[59.3498, 18.0707]}
+          center={[context.location.lat, context.location.long]}
           zoom={10}
           maxZoom={20}
           attributionControl={true}
