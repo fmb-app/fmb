@@ -1,15 +1,16 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom'
 import { themes } from '../../themes/Themes';
 import FmbContext from '../../context/FmbContext';
 import BottleSpinner from '../Loaders/BottleSpinner';
 import Result from './Result.js';
 import FMButton from '../Buttons/FMButton';
+import Switch from '../Switches/Switch';
 
 const style = {
   container: {
     width: '22rem',
-    height: '75%',
+    maxHeight: '75%',
     marginTop: themes.mediumSpace,
     textAlign: 'left',
     padding: themes.mediumSpace,
@@ -18,7 +19,7 @@ const style = {
     boxSizing: 'border-box',
     display: 'flex',
     flexFlow: 'column nowrap',
-    overflowY: 'auto',
+   
     color: 'white'
   },
   top: {
@@ -27,12 +28,21 @@ const style = {
     alignItems: 'center'
   },
   header: {
-    padding: '0 0 1rem 0'
+    padding: '0 0 0.5rem 0'
   },
   results: {
-    height: '100%',
+    maxHeight: '100%',
     overflowY: 'auto',
     padding: '0.5rem',
+  },
+  toggle: {
+    display: 'flex',
+    flexFlow: 'row nowrap',
+    justifyContent: 'center',
+    alignItems: 'center',
+    fontWeight: 'bold',
+    fontSize: '0.6rem',
+    textTransform: 'uppercase'
   }
 }
 
@@ -49,8 +59,25 @@ const NoHits = () => {
   </div>
 }
 
-const Results = () => {
+const Results = ({results}) => {
+  return (
+    <div>
+      {results.map((result, index) => <Result result={result} index={index+1} key={index+1} />)}
+    </div>
+  )
+}
+
+const Map = () => {
+  return (
+    <div>
+      THIS IS A MAP
+    </div>
+  )
+}
+
+const ResultsPage = () => {
   const context = useContext(FmbContext);
+  const [showMap, toggleMap] = useState(false);
 
   const isLoading = () => context.status.result.type === 'LOADING';
 
@@ -66,7 +93,22 @@ const Results = () => {
           {
             context.results.length < 1 ?
             <NoHits /> :
-            context.results.map((result, index) => <Result result={result} index={index+1} key={index+1} />)
+            <div>
+              <div style={style.toggle}>
+                Listvy
+                <Switch isRight={showMap} onToggle={(toggle) => {toggleMap(toggle)}} />
+                Kartvy
+              </div>
+              <div >
+                {
+                  showMap
+                  ? <Map />
+                  : <div>
+                      <Results results={context.results} />
+                    </div>
+                }
+              </div>
+            </div>
           }
         </div>
       }
@@ -74,4 +116,4 @@ const Results = () => {
   );
 }
 
-export default Results;
+export default ResultsPage;
