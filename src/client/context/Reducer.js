@@ -13,6 +13,7 @@ export const FETCH_PRODUCTS          = 'FETCH_PRODUCTS';
 export const SET_PRODUCT_STATUS			 = 'SET_PRODUCT_STATUS';
 export const SET_CATEGORY_STATUS		 = 'SET_CATEGORY_STATUS';
 export const SET_RESULT_STATUS			 = 'SET_RESULT_STATUS';
+export const SET_TRAVEL_STATUS			 = 'SET_TRAVEL_STATUS';
 
 const setProducts = (products, state) => {
 	return {...state, products: products};
@@ -84,6 +85,14 @@ const setResultStatus = (status, state) => {
 	return {...state, status: updatedStatus};
 }
 
+const setTravelStatus = (status, state) => {
+	const updatedStatus = {
+		...state.status,
+		travel: status,
+	}
+	return {...state, status: updatedStatus};
+}
+
 export const fmbReducer = (state, action) => {
 	switch (action.type) {
 		case SET_PRODUCTS:
@@ -116,6 +125,8 @@ export const fmbReducer = (state, action) => {
 			return setCategoryStatus(action.status, state);
 		case SET_RESULT_STATUS:
 			return setResultStatus(action.status, state);
+		case SET_TRAVEL_STATUS:
+			return setTravelStatus(action.status, state);
 		default:
 			return state;
 	}

@@ -16,6 +16,7 @@ import { fmbReducer,
 				 SET_PRODUCT_STATUS,
 				 SET_CATEGORY_STATUS,
 				 SET_RESULT_STATUS,
+				 SET_TRAVEL_STATUS,
 			 } from './Reducer';
 
 const GlobalState = props => {
@@ -34,9 +35,10 @@ const GlobalState = props => {
 		},
 		results: [],
 		status: {
-			product: {type: 'LOADING', messsage: ''},
+			product:  {type: 'LOADING', messsage: ''},
 			category: {type: 'LOADING', messsage: ''},
-			result: {type: 'LOADING', messsage: ''},
+			result:   {type: 'LOADING', messsage: ''},
+			travel:   {type: 'LOADING', messsage: ''},
 		}
 	};
 
@@ -96,6 +98,10 @@ const GlobalState = props => {
 
 	const setResultStatus = (status) => {
 		dispatch({type: SET_RESULT_STATUS, status: status});
+	}
+
+	const setTravelStatus = (status) => {
+		dispatch({type: SET_TRAVEL_STATUS, status: status});
 	}
 
 	/*
@@ -190,6 +196,7 @@ const GlobalState = props => {
 				setProductStatus: setProductStatus,
 				setCategoryStatus: setCategoryStatus,
 				setResultStatus: setResultStatus,
+				setTravelStatus: setTravelStatus,
 			}}
 		>
 			{props.children}

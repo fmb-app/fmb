@@ -18,6 +18,7 @@ const FmbContext = createContext({
 	setProductStatus: status => {},
 	setCategoryStatus: status => {},
 	setResultStatus: status => {},
+	setTravelStatus: status => {},
 	setSearchOffset: offset => {},
 	setSorting: sorting => {},
 	setFilterTerm: term => {},

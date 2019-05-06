@@ -2,9 +2,9 @@ import React, { useContext } from 'react';
 import { Link } from 'react-router-dom'
 import { themes } from '../../themes/Themes';
 import FmbContext from '../../context/FmbContext';
-import BottleSpinner from '../Loaders/BottleSpinner';
 import Result from './Result.js';
 import FMButton from '../Buttons/FMButton';
+import BottleSpinner from '../Loaders/BottleSpinner';
 
 const style = {
   container: {
