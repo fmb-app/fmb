@@ -29,7 +29,18 @@ app.use(express.urlencoded({ extended: true })); // Parse URLs
 app.use('/api', routes);
 app.use('/', express.static('dist'));
 
+// Middleware that redirects all http requests to https
 app.use((req, res, next) => {
+  console.log('KOOOOOOOOOOOOOOOOOOOOOOORV');
+  // The 'x-forwarded-proto' check is for Heroku
+  if (!req.secure && req.get('x-forwarded-proto') !== 'https' && process.env.NODE_ENV !== "development") {
+    return res.redirect('https://' + req.get('host') + req.url);
+  }
+  next();
+});
+
+app.use((req, res, next) => {
+  console.log('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
   res.redirect('/');
 });
 
