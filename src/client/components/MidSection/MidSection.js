@@ -82,7 +82,7 @@ const MidSection = () => {
 	 */
 	const handleScroll = async (event) => {
 		const lengthScrolled = event.target.clientHeight + event.target.scrollTop;
-		const bottomReached = lengthScrolled >= event.target.scrollHeight;
+		const bottomReached = lengthScrolled >= event.target.scrollHeight-100;
 
 		if (bottomReached) {
 			const newOffset = context.searchOffset + 20;
